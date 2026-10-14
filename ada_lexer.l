@@ -1,10 +1,5 @@
-/* =====================================================================
-   ada_lexer.l -- Лексический анализатор языка Ada (генератор: flex).
-   Читает исходный текст и печатает список лексем в формате "ТИП   значение".
-   ===================================================================== */
-
 %option noyywrap
-%option caseless  /* Ada нечувствителен к регистру */
+%option caseless
 
 %{
 #include <stdio.h>
@@ -12,6 +7,10 @@
 #include <string.h>
 #include <ctype.h>
 #include <math.h>
+#include "pars.tab.h"
+
+extern int yyparse(void);
+extern FILE* yyin;
 
 static int line_num = 1; /* Текущий номер строки для ошибок */
 
@@ -57,7 +56,8 @@ static void handle_decimal_int(const char *text) {
     }
     char out[64];
     snprintf(out, sizeof(out), "%ld", v);
-    print_tok("NUMBER_INT", out);
+    print_tok("CONST_INTEGER", out);
+    yylval.int_const = (int)v;
 }
 
 /* Обработка десятичного вещественного (3.14, 1_000.5E-2) */
@@ -67,7 +67,8 @@ static void handle_decimal_real(const char *text) {
     double v = strtod(buf, NULL);
     char out[64];
     snprintf(out, sizeof(out), "%g", v);
-    print_tok("NUMBER_REAL", out);
+    print_tok("CONST_FLOAT", out);
+    yylval.float_const = (float)v;
 }
 
 /* Обработка целого в другой СС (16#FF#, 2#1010#) */
@@ -87,7 +88,8 @@ static void handle_based_int(const char *text) {
         v = (long)(v * pow(10.0, atoi(exp_ptr + 1)));
     char out[64];
     snprintf(out, sizeof(out), "%ld", v);
-    print_tok("NUMBER_BASED_INT", out);
+    print_tok("CONST_INTEGER", out);
+    yylval.int_const = (int)v;
 }
 
 /* Обработка вещественного в другой СС (16#F.8#, 2#101.01#E2) */
@@ -128,7 +130,8 @@ static void handle_based_real(const char *text) {
 
     char out[64];
     snprintf(out, sizeof(out), "%g", value);
-    print_tok("NUMBER_BASED_REAL", out);
+    print_tok("CONST_FLOAT", out);
+    yylval.float_const = (float)value;
 }
 
 /* Обработка символьного литерала ('A', ''') */
@@ -136,7 +139,8 @@ static void handle_char_literal(const char *text) {
     char out[32];
     char c = (strcmp(text, "'''") == 0) ? '\'' : text[1];
     snprintf(out, sizeof(out), "'%c' (code %d)", c, (int)(unsigned char)c);
-    print_tok("CHAR_LITERAL", out);
+    print_tok("CONST_CHARACTER", out);
+    yylval.char_const = c;
 }
 %}
 
@@ -144,7 +148,7 @@ DIGIT   [0-9]
 EXP     ([eE][+-]?{DIGIT}+)?
 BASE    {DIGIT}{1,2}
 
-%x STRLIT /* Стартовое состояние для тела строкового литерала */
+%x STRLIT 
 
 %%
 
@@ -154,138 +158,104 @@ BASE    {DIGIT}{1,2}
 \n                           { line_num++; }
 
  /* Числовые литералы (Flex сам выберет самое длинное совпадение) */
-{BASE}"#"[0-9A-Fa-f](_?[0-9A-Fa-f])*"."[0-9A-Fa-f](_?[0-9A-Fa-f])*"#"{EXP}   { handle_based_real(yytext); }
-{BASE}"#"[0-9A-Fa-f](_?[0-9A-Fa-f])*"#"{EXP}                                  { handle_based_int(yytext); }
-{DIGIT}(_?{DIGIT})*"."{DIGIT}(_?{DIGIT})*{EXP}                                { handle_decimal_real(yytext); }
-{DIGIT}(_?{DIGIT})*{EXP}                                                      { handle_decimal_int(yytext); }
+{BASE}"#"[0-9A-Fa-f](_?[0-9A-Fa-f])*"."[0-9A-Fa-f](_?[0-9A-Fa-f])*"#"{EXP}   { handle_based_real(yytext); return CONST_FLOAT; }
+{BASE}"#"[0-9A-Fa-f](_?[0-9A-Fa-f])*"#"{EXP}                                  { handle_based_int(yytext); return CONST_INTEGER; }
+{DIGIT}(_?{DIGIT})*"."{DIGIT}(_?{DIGIT})*{EXP}                                { handle_decimal_real(yytext); return CONST_FLOAT; }
+{DIGIT}(_?{DIGIT})*{EXP}                                                      { handle_decimal_int(yytext); return CONST_INTEGER; }
 
  /* Символьные литералы */
-\'\'\'                       { handle_char_literal(yytext); }
-\'[^'\n]\'                   { handle_char_literal(yytext); }
+\'\'\'                       { handle_char_literal(yytext); return CONST_CHARACTER; }
+\'[^'\n]\'                   { handle_char_literal(yytext); return CONST_CHARACTER; }
 
  /* Строковые литералы (используется состояние STRLIT) */
 \"                            { strbuf_reset(); BEGIN(STRLIT); }
 <STRLIT>\"\"                  { strbuf_append("\"", 1); }
 <STRLIT>[^"\n]+               { strbuf_append(yytext, yyleng); }
-<STRLIT>\"                    { print_tok("STRING_LITERAL", strbuf); BEGIN(INITIAL); }
+<STRLIT>\"                    {
+                                print_tok("CONST_STRING", strbuf);
+                                yylval.string_const = new string(strbuf);
+                                BEGIN(INITIAL);
+                                return CONST_STRING;
+                              }
 <STRLIT>\n                    { fprintf(stderr, "Lexical error at line %d: newline inside string literal\n", line_num);
                                  line_num++; BEGIN(INITIAL); }
 <STRLIT><<EOF>>               { fprintf(stderr, "Lexical error at line %d: unterminated string literal\n", line_num);
                                  BEGIN(INITIAL); yyterminate(); }
 
  /* Двухсимвольные разделители */
-"=>"    { print_tok("DELIM_ARROW",       "=>"); }
-".."    { print_tok("DELIM_DOTDOT",      ".."); }
-"**"    { print_tok("DELIM_STARSTAR",    "**"); }
-":="    { print_tok("DELIM_ASSIGN",      ":="); }
-"/="    { print_tok("DELIM_NOTEQUAL",    "/="); }
-">="    { print_tok("DELIM_GE",          ">="); }
-"<="    { print_tok("DELIM_LE",          "<="); }
-"<<"    { print_tok("DELIM_LABEL_OPEN",  "<<"); }
-">>"    { print_tok("DELIM_LABEL_CLOSE", ">>"); }
-"<>"    { print_tok("DELIM_BOX",         "<>"); }
+":="    { print_tok("ASSIGNMENT",    ":="); return ASSIGNMENT; }
+".."    { print_tok("DOUBLE_DOT",    ".."); return DOUBLE_DOT; }
+"/="    { print_tok("NOT_EQUAL",     "/="); return NOT_EQUAL; }
+">="    { print_tok("MORE_OR_EQUAL", ">="); return MORE_OR_EQUAL; }
+"<="    { print_tok("LESS_OR_EQUAL", "<="); return LESS_OR_EQUAL; }
 
  /* Односимвольные разделители и знаки операций */
-"&"     { print_tok("DELIM_AMPERSAND", "&"); }
-"'"     { print_tok("DELIM_TICK",      "'"); }
-"("     { print_tok("DELIM_LPAREN",    "("); }
-")"     { print_tok("DELIM_RPAREN",    ")"); }
-"*"     { print_tok("DELIM_STAR",      "*"); }
-"+"     { print_tok("DELIM_PLUS",      "+"); }
-","     { print_tok("DELIM_COMMA",     ","); }
-"-"     { print_tok("DELIM_MINUS",     "-"); }
-"."     { print_tok("DELIM_DOT",       "."); }
-"/"     { print_tok("DELIM_SLASH",     "/"); }
-":"     { print_tok("DELIM_COLON",     ":"); }
-";"     { print_tok("DELIM_SEMICOLON", ";"); }
-"<"     { print_tok("DELIM_LESS",      "<"); }
-"="     { print_tok("DELIM_EQUAL",     "="); }
-">"     { print_tok("DELIM_GREATER",   ">"); }
-"|"     { print_tok("DELIM_BAR",       "|"); }
+"&"     { print_tok("&", "&"); return '&'; }
+"'"     { print_tok("'",  "'"); return '\''; }
+"("     { print_tok("(",  "("); return '('; }
+")"     { print_tok(")",  ")"); return ')'; }
+"*"     { print_tok("*",  "*"); return '*'; }
+"+"     { print_tok("+",  "+"); return '+'; }
+","     { print_tok(",",  ","); return ','; }
+"-"     { print_tok("-",  "-"); return '-'; }
+"."     { print_tok(".",  "."); return '.'; }
+"/"     { print_tok("/",  "/"); return '/'; }
+":"     { print_tok(":",  ":"); return ':'; }
+";"     { print_tok(";",  ";"); return ';'; }
+"<"     { print_tok("<",  "<"); return '<'; }
+"="     { print_tok("=",  "="); return '='; }
+">"     { print_tok(">",  ">"); return '>'; }
+"|"     { print_tok("|",  "|"); return '|'; }
 
  /* Зарезервированные слова (обязательно идут до правила для идентификаторов) */
-"abort"         { print_tok("KEYWORD", "abort"); }
-"abs"           { print_tok("KEYWORD", "abs"); }
-"abstract"      { print_tok("KEYWORD", "abstract"); }
-"accept"        { print_tok("KEYWORD", "accept"); }
-"access"        { print_tok("KEYWORD", "access"); }
-"aliased"       { print_tok("KEYWORD", "aliased"); }
-"all"           { print_tok("KEYWORD", "all"); }
-"and"           { print_tok("KEYWORD", "and"); }
-"array"         { print_tok("KEYWORD", "array"); }
-"at"            { print_tok("KEYWORD", "at"); }
-"begin"         { print_tok("KEYWORD", "begin"); }
-"body"          { print_tok("KEYWORD", "body"); }
-"case"          { print_tok("KEYWORD", "case"); }
-"constant"      { print_tok("KEYWORD", "constant"); }
-"declare"       { print_tok("KEYWORD", "declare"); }
-"delay"         { print_tok("KEYWORD", "delay"); }
-"delta"         { print_tok("KEYWORD", "delta"); }
-"digits"        { print_tok("KEYWORD", "digits"); }
-"do"            { print_tok("KEYWORD", "do"); }
-"else"          { print_tok("KEYWORD", "else"); }
-"elsif"         { print_tok("KEYWORD", "elsif"); }
-"end"           { print_tok("KEYWORD", "end"); }
-"entry"         { print_tok("KEYWORD", "entry"); }
-"exception"     { print_tok("KEYWORD", "exception"); }
-"exit"          { print_tok("KEYWORD", "exit"); }
-"for"           { print_tok("KEYWORD", "for"); }
-"function"      { print_tok("KEYWORD", "function"); }
-"generic"       { print_tok("KEYWORD", "generic"); }
-"goto"          { print_tok("KEYWORD", "goto"); }
-"if"            { print_tok("KEYWORD", "if"); }
-"in"            { print_tok("KEYWORD", "in"); }
-"interface"     { print_tok("KEYWORD", "interface"); }
-"is"            { print_tok("KEYWORD", "is"); }
-"limited"       { print_tok("KEYWORD", "limited"); }
-"loop"          { print_tok("KEYWORD", "loop"); }
-"mod"           { print_tok("KEYWORD", "mod"); }
-"new"           { print_tok("KEYWORD", "new"); }
-"not"           { print_tok("KEYWORD", "not"); }
-"null"          { print_tok("KEYWORD", "null"); }
-"of"            { print_tok("KEYWORD", "of"); }
-"or"            { print_tok("KEYWORD", "or"); }
-"others"        { print_tok("KEYWORD", "others"); }
-"out"           { print_tok("KEYWORD", "out"); }
-"overriding"    { print_tok("KEYWORD", "overriding"); }
-"package"       { print_tok("KEYWORD", "package"); }
-"parallel"      { print_tok("KEYWORD", "parallel"); }
-"pragma"        { print_tok("KEYWORD", "pragma"); }
-"private"       { print_tok("KEYWORD", "private"); }
-"procedure"     { print_tok("KEYWORD", "procedure"); }
-"protected"     { print_tok("KEYWORD", "protected"); }
-"raise"         { print_tok("KEYWORD", "raise"); }
-"range"         { print_tok("KEYWORD", "range"); }
-"record"        { print_tok("KEYWORD", "record"); }
-"rem"           { print_tok("KEYWORD", "rem"); }
-"renames"       { print_tok("KEYWORD", "renames"); }
-"requeue"       { print_tok("KEYWORD", "requeue"); }
-"return"        { print_tok("KEYWORD", "return"); }
-"reverse"       { print_tok("KEYWORD", "reverse"); }
-"select"        { print_tok("KEYWORD", "select"); }
-"separate"      { print_tok("KEYWORD", "separate"); }
-"some"          { print_tok("KEYWORD", "some"); }
-"subtype"       { print_tok("KEYWORD", "subtype"); }
-"synchronized"  { print_tok("KEYWORD", "synchronized"); }
-"tagged"        { print_tok("KEYWORD", "tagged"); }
-"task"          { print_tok("KEYWORD", "task"); }
-"terminate"     { print_tok("KEYWORD", "terminate"); }
-"then"          { print_tok("KEYWORD", "then"); }
-"type"          { print_tok("KEYWORD", "type"); }
-"until"         { print_tok("KEYWORD", "until"); }
-"use"           { print_tok("KEYWORD", "use"); }
-"when"          { print_tok("KEYWORD", "when"); }
-"while"         { print_tok("KEYWORD", "while"); }
-"with"          { print_tok("KEYWORD", "with"); }
-"xor"           { print_tok("KEYWORD", "xor"); }
+"integer"       { print_tok("INTEGER",     "integer"); return INTEGER; }
+"boolean"       { print_tok("BOOLEAN",     "boolean"); return BOOLEAN; }
+"float"         { print_tok("FLOAT",       "float");   return FLOAT; }
+"character"     { print_tok("CHARACTER",   "character"); return CHARACTER; }
+"string"        { print_tok("STRING",      "string");  return STRING; }
+"while"         { print_tok("WHILE",       "while");   return WHILE; }
+"for"           { print_tok("FOR",         "for");     return FOR; }
+"in"            { print_tok("IN",          "in");      return IN; }
+"of"            { print_tok("OF",          "of");      return OF; }
+"loop"          { print_tok("LOOP",        "loop");    return LOOP; }
+"if"            { print_tok("IF",          "if");      return IF; }
+"then"          { print_tok("THEN",        "then");    return THEN; }
+"elsif"         { print_tok("ELSIF",       "elsif");   return ELSIF; }
+"else"          { print_tok("ELSE",        "else");    return ELSE; }
+"array"         { print_tok("ARRAY",       "array");   return ARRAY; }
+"type"          { print_tok("TYPE",        "type");    return TYPE; }
+"range"         { print_tok("RANGE",       "range");   return RANGE; }
+"exit"          { print_tok("EXIT",        "exit");    return EXIT; }
+"when"          { print_tok("WHEN",        "when");    return WHEN; }
+"function"      { print_tok("FUNCTION",    "function"); return FUNCTION; }
+"procedure"     { print_tok("PROCEDURE",   "procedure"); return PROCEDURE; }
+"is"            { print_tok("IS",          "is");      return IS; }
+"return"        { print_tok("RETURN",      "return");  return RETURN; }
+"begin"         { print_tok("BEGIN_TOKEN", "begin");   return BEGIN_TOKEN; }
+"end"           { print_tok("END",         "end");     return END; }
+"abs"           { print_tok("ABS",         "abs");     return ABS; }
+"not"           { print_tok("NOT",         "not");     return NOT; }
+"and"           { print_tok("AND",         "and");     return AND; }
+"or"            { print_tok("OR",          "or");      return OR; }
+"xor"           { print_tok("XOR",         "xor");     return XOR; }
+"true"          { print_tok("CONST_BOOL",  "true");  yylval.int_const = 1; return CONST_BOOL; }
+"false"         { print_tok("CONST_BOOL",  "false"); yylval.int_const = 0; return CONST_BOOL; }
 
  /* Идентификаторы */
-[A-Za-z][A-Za-z0-9_]*   { print_tok("IDENTIFIER", yytext); }
+[A-Za-z][A-Za-z0-9_]*   {
+                            print_tok("ID", yytext);
+                            yylval.id_const = new string(yytext);
+                            return ID;
+                        }
 
  /* Ловушка для лексических ошибок */
 .   { fprintf(stderr, "Lexical error at line %d: unexpected character '%c'\n", line_num, yytext[0]); }
 
 %%
+
+void yyerror(const char* s) {
+    fprintf(stderr, "Parse error at line %d: %s\n", line_num, s);
+}
 
 /* Точка входа: читает из файла (если передан аргумент) или из stdin */
 int main(int argc, char **argv) {
@@ -296,7 +266,7 @@ int main(int argc, char **argv) {
             return 1;
         }
     }
-    yylex();
+    yyparse();
     if (argc > 1) fclose(yyin);
     return 0;
 }
