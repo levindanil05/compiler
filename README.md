@@ -22,3 +22,9 @@ pip install flex
 - in / out / in out у параметров.
 
 - Строковые литералы как выражения в списках (уже есть), вызовы Put_Line(...) с Width => 3 (именованные параметры — отдельное правило).
+(решено)
+
+Для парсера:
+bison -d pars.y
+flex ada_lexer.l
+g++ -x c++ pars.tab.c -x c++ lex.yy.c class_nodes.cpp -o parser.exe -lm

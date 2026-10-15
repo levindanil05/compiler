@@ -188,6 +188,7 @@ BASE    {DIGIT}{1,2}
 "/="    { print_tok("NOT_EQUAL",     "/="); return NOT_EQUAL; }
 ">="    { print_tok("MORE_OR_EQUAL", ">="); return MORE_OR_EQUAL; }
 "<="    { print_tok("LESS_OR_EQUAL", "<="); return LESS_OR_EQUAL; }
+"=>"    { print_tok("ARROW",          "=>"); return ARROW; }
 
  /* Односимвольные разделители и знаки операций */
 "&"     { print_tok("&", "&"); return '&'; }
@@ -240,6 +241,16 @@ BASE    {DIGIT}{1,2}
 "xor"           { print_tok("XOR",         "xor");     return XOR; }
 "true"          { print_tok("CONST_BOOL",  "true");  yylval.int_const = 1; return CONST_BOOL; }
 "false"         { print_tok("CONST_BOOL",  "false"); yylval.int_const = 0; return CONST_BOOL; }
+"with"          { print_tok("WITH",       "with");      return WITH; }
+"use"           { print_tok("USE",        "use");       return USE; }
+"record"        { print_tok("RECORD",     "record");    return RECORD; }
+"constant"      { print_tok("CONSTANT",   "constant");  return CONSTANT; }
+"case"          { print_tok("CASE",       "case");      return CASE; }
+"exception"     { print_tok("EXCEPTION",  "exception"); return EXCEPTION; }
+"others"        { print_tok("OTHERS",     "others");    return OTHERS; }
+"out"           { print_tok("OUT",        "out");       return OUT; }
+"mod"           { print_tok("MOD",        "mod");       return MOD; }
+"rem"           { print_tok("REM",        "rem");       return REM; }
 
  /* Идентификаторы */
 [A-Za-z][A-Za-z0-9_]*   {

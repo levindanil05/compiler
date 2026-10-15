@@ -104,7 +104,18 @@ using namespace std;
     RETURN = 296,                  /* RETURN  */
     BEGIN_TOKEN = 297,             /* BEGIN_TOKEN  */
     END = 298,                     /* END  */
-    DOUBLE_DOT = 299               /* DOUBLE_DOT  */
+    DOUBLE_DOT = 299,              /* DOUBLE_DOT  */
+    WITH = 300,                    /* WITH  */
+    USE = 301,                     /* USE  */
+    RECORD = 302,                  /* RECORD  */
+    CONSTANT = 303,                /* CONSTANT  */
+    CASE = 304,                    /* CASE  */
+    EXCEPTION = 305,               /* EXCEPTION  */
+    OTHERS = 306,                  /* OTHERS  */
+    OUT = 307,                     /* OUT  */
+    MOD = 308,                     /* MOD  */
+    REM = 309,                     /* REM  */
+    ARROW = 310                    /* ARROW  */
   };
   typedef enum yytokentype yytoken_kind_t;
 #endif
@@ -113,7 +124,7 @@ using namespace std;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 70 "pars.y"
+#line 80 "pars.y"
  
 
 	ProgramNode* prg;
@@ -142,7 +153,7 @@ union YYSTYPE
 	RangeNode* rng;
 	TypeNode* v_type;
 
-#line 146 "pars.tab.h"
+#line 157 "pars.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
