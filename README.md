@@ -28,3 +28,4 @@ pip install flex
 bison -d pars.y
 flex ada_lexer.l
 g++ -x c++ pars.tab.c -x c++ lex.yy.c class_nodes.cpp -o parser.exe -lm
+./parser.exe test.adb

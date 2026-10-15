@@ -124,36 +124,31 @@ using namespace std;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 80 "pars.y"
- 
+#line 63 "pars.y"
 
-	ProgramNode* prg;
+    ProgramNode* prg;
+    int int_const;
+    float float_const;
+    string* string_const;
+    string* id_const;
+    char char_const;
+    SubProgramItemNode* item;
+    ItemListNode* itemlst;
+    DeclarationListNode* decl_lst;
+    DeclarationNode* decl;
+    VarListNode* var_lst;
+    FuncParamListNode* param_lst;
+    StmtListNode* stmt_lst;
+    StmtNode* stmt;
+    ElseStmtNode* els_stmt;
+    ElsifStmtNode* elsf_stmt;
+    ElsifStmtListNode* elsf_lst_stmt;
+    ExprNode* expr;
+    ExprListNode* expr_list;
+    RangeNode* rng;
+    TypeNode* v_type;
 
-	int int_const;
-	float float_const;
-	string* string_const;
-	string* id_const;
-	char char_const;
-	
-	SubProgramItemNode* item;
-	ItemListNode* itemlst;
-	DeclarationListNode* decl_lst;
-	DeclarationNode* decl;
-	VarListNode* var_lst;
-
-	FuncParamListNode* param_lst;
-	StmtListNode* stmt_lst;
-	StmtNode* stmt;
-	ElseStmtNode* els_stmt;
-	ElsifStmtNode* elsf_stmt;
-	ElsifStmtListNode* elsf_lst_stmt;
-
-	ExprNode* expr;
-	ExprListNode* expr_list;
-	RangeNode* rng;
-	TypeNode* v_type;
-
-#line 157 "pars.tab.h"
+#line 152 "pars.tab.h"
 
 };
 typedef union YYSTYPE YYSTYPE;
