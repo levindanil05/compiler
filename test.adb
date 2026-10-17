@@ -6,9 +6,7 @@ with Ada.Numerics.Elementary_Functions; use Ada.Numerics.Elementary_Functions;
 
 procedure Factory_Simulator_Test is
 
-   -- =========================================================================
-   -- 1. ТИПЫ И ПЕРЕЧИСЛЕНИЯ
-   -- =========================================================================
+   -- Раздел 1. Типы и перечисления.
    
    type Part_Kind is (
       Gear, Shaft, Bearing, Bolt, Nut, Washer, Spring, Valve, Piston, Cylinder,
@@ -33,9 +31,7 @@ procedure Factory_Simulator_Test is
    type Matrix_Type is array (Matrix_Index, Matrix_Index) of Float;
    type Config_Array is array (1 .. 50) of Integer;
 
-   -- =========================================================================
-   -- 2. КОНСТАНТЫ И ИНИЦИАЛИЗАЦИЯ МАССИВОВ
-   -- =========================================================================
+   -- Раздел 2. Константы и инициализация массивов.
 
    Default_Config : constant Config_Array := (
       10, 20, 30, 40, 50, 60, 70, 80, 90, 100,
@@ -45,9 +41,7 @@ procedure Factory_Simulator_Test is
       14, 24, 34, 44, 54, 64, 74, 84, 94, 104
    );
 
-   -- =========================================================================
-   -- 3. ФУНКЦИИ С БОЛЬШИМИ ОПЕРАТОРАМИ CASE
-   -- =========================================================================
+   -- Раздел 3. Функции с большими операторами case.
 
    function Get_Base_Weight (P : Part_Kind) return Float is
    begin
@@ -97,9 +91,7 @@ procedure Factory_Simulator_Test is
       end case;
    end Status_To_String;
 
-   -- =========================================================================
-   -- 4. МАТЕМАТИКА МАТРИЦ
-   -- =========================================================================
+   -- Раздел 4. Математика матриц.
 
    procedure Initialize_Matrix (M : out Matrix_Type; Val : Float) is
    begin
@@ -124,9 +116,7 @@ procedure Factory_Simulator_Test is
       end loop;
    end Multiply_Matrices;
 
-   -- =========================================================================
-   -- 5. БОЛЬШАЯ ЦЕПОЧКА IF-ELSIF
-   -- =========================================================================
+   -- Раздел 5. Большая цепочка if-elsif.
 
    procedure Assign_Priority (ID : Station_ID; Priority : out Integer) is
    begin
@@ -184,9 +174,7 @@ procedure Factory_Simulator_Test is
       end if;
    end Assign_Priority;
 
-   -- =========================================================================
-   -- 6. ГЛАВНЫЙ БЛОК И ВЛОЖЕННЫЕ ЦИКЛЫ
-   -- =========================================================================
+   -- Раздел 6. Главный блок и вложенные циклы.
 
    Stations : Station_Array;
    Mat_A, Mat_B, Mat_C : Matrix_Type;
@@ -196,7 +184,7 @@ procedure Factory_Simulator_Test is
 begin
    Put_Line("=== FACTORY SIMULATOR TEST STARTED ===");
    
-   -- Инициализация станций
+   -- Инициализация станций.
    for I in Station_ID loop
       Stations(I).ID := I;
       Stations(I).Kind := Part_Kind'Val((Integer(I) mod 30));
@@ -205,21 +193,21 @@ begin
       Stations(I).Load := Default_Config(Integer(I));
    end loop;
 
-   -- Инициализация и перемножение матриц
+   -- Инициализация и перемножение матриц.
    Initialize_Matrix(Mat_A, 1.05);
    Initialize_Matrix(Mat_B, 0.95);
    Multiply_Matrices(Mat_A, Mat_B, Mat_C);
 
    Put_Line("Processing stations...");
    
-   -- Обработка станций
+   -- Обработка станций.
    for I in Station_ID loop
       Assign_Priority(I, Current_Priority);
       
       if Stations(I).Status = Running then
          Total_Weight := Total_Weight + Get_Base_Weight(Stations(I).Kind);
          
-         -- Симуляция нагрузки
+         -- Симуляция нагрузки.
          for J in 1 .. 10 loop
             Stations(I).Efficiency := Stations(I).Efficiency * 1.01;
             if Stations(I).Efficiency > 150.0 then
@@ -229,7 +217,7 @@ begin
          end loop;
       end if;
       
-      -- Вывод статуса (каждый 10-й)
+      -- Вывод статуса (каждый 10-й).
       if Integer(I) mod 10 = 0 then
          Put("Station "); 
          Put(Integer(I), Width => 3);
