@@ -1,31 +1,91 @@
-Для лексера
-pip install flex
-\ada_lexer.exe test.adb
-при наличии всех файлов(ada_lexer.exe, ada_lexer.l, lex.yy.c, test.adb)
+# Лексер и парсер языка Ada
 
-В pars.y надо дописывать правила под:
+Учебная реализация лексического и синтаксического анализаторов языка Ada с использованием Flex, Bison и C++.
 
-- with PKG; и use PKG; в начале файла.
+## Полезные ссылки
 
-- Перечисления: type T is (A, B, C);
+- [Ada Reference Manual](https://www.adaic.org/ada-resources/standards/ada95/)
+- [WinFlexBison](https://github.com/lexxmark/winflexbison/releases)
+- [MSYS2](https://www.msys2.org/)
+- [Visual Studio Code](https://code.visualstudio.com/)
 
-- Диапазонные типы: type T is range E .. E;
+## Настройка Windows
 
-- Записи: type T is record ... end record;
+### 1. Установка Flex и Bison
 
-- Константы: X : constant T := ...;
+Скачайте [WinFlexBison](https://github.com/lexxmark/winflexbison/releases), распакуйте архив и добавьте путь к папке с `win_flex.exe` и `win_bison.exe` в переменную среды `Path`.
 
-- case ... is when ... => ... end case;
+Проверьте установку в PowerShell:
 
-- exception when ... => ...;
+```powershell
+win_flex --version
+win_bison --version
+```
 
-- in / out / in out у параметров.
+### 2. Установка GCC и G++
 
-- Строковые литералы как выражения в списках (уже есть), вызовы Put_Line(...) с Width => 3 (именованные параметры — отдельное правило).
-(решено)
+Установите [MSYS2](https://www.msys2.org/), откройте терминал **MSYS2 UCRT64** и выполните:
 
-Для парсера:
-bison -d pars.y
-flex ada_lexer.l
-g++ -x c++ pars.tab.c -x c++ lex.yy.c class_nodes.cpp -o parser.exe -lm
-./parser.exe test.adb
+```bash
+pacman -Syu
+pacman -S --needed mingw-w64-ucrt-x86_64-gcc make
+```
+
+Добавьте папку `ucrt64\bin` из каталога установки MSYS2 в переменную среды `Path`. Проверьте установку:
+
+```powershell
+g++ --version
+```
+
+### 3. Visual Studio Code
+
+Установите [Visual Studio Code](https://code.visualstudio.com/) и расширение `C/C++`. Откройте корневую папку проекта.
+
+## Структура проекта
+
+```text
+compiler/
+├── lexer/
+│   └── lexer.l
+├── parser/
+│   └── pars.y
+├── ast/
+│   ├── class_nodes.h
+│   └── class_nodes.cpp
+├── tests/
+│   └── test.adb
+└── README.md
+```
+
+## Как запустить через терминал
+
+Откройте PowerShell в корневой папке проекта, где находятся каталоги `lexer`, `parser`, `ast` и `tests`.
+
+**1. Сгенерируйте парсер:**
+
+```powershell
+win_bison -d -o pars.tab.c parser/pars.y
+```
+
+**2. Сгенерируйте лексер:**
+
+```powershell
+win_flex -o lex.yy.c lexer/lexer.l
+```
+
+**3. Скомпилируйте проект:**
+
+```powershell
+g++ -std=c++11 -Iast -x c++ pars.tab.c -x c++ lex.yy.c ast/class_nodes.cpp -o compiler.exe -lm
+```
+
+**4. Запустите на тестовом файле:**
+
+```powershell
+.\compiler.exe tests/test.adb
+```
+
+Для запуска на другом файле укажите путь к нему вместо `tests/test.adb`.
+
+После изменения `lexer/lexer.l` или `parser/pars.y` повторите шаги 1–4.
+
