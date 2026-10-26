@@ -102,6 +102,7 @@ ProgramNode* global_program;
 %type <item> proc_implementation
 %type <itemlst> item_list
 %type <decl_lst> declaration_list_empty
+%type <decl_lst> decl_body_list
 %type <decl> declaration
 %type <decl> type_declaration
 %type <decl> var_declaration
@@ -176,7 +177,6 @@ declaration_list_empty:
       %empty          { $$ = 0; }
     | decl_body_list       { $$ = $1; }
     ;
-%type <decl_lst> decl_body_list
 decl_body_list:
       declaration ';'                       { $$ = new DeclarationListNode($1); }
     | decl_body_list declaration ';'        { $$ = DeclarationListNode::Append($1, $2); }
