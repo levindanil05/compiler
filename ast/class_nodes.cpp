@@ -2,6 +2,7 @@
 
 #include <string>
 #include <iostream>
+#include <stack>
 
 using namespace std;
 
@@ -484,212 +485,14 @@ DeclarationListNode::DeclarationListNode(DeclarationListNode* list) {
     this->decs = list->decs;
 }
 
-namespace {
+// Структура для хранения задачи в стеке
+struct TraversalTask {
+    enum Type { PROGRAM, ITEM, ITEM_LIST, DECL, DECL_LIST, STMT, STMT_LIST, EXPR, EXPR_LIST, TYPE, RANGE } type;
+    void* node;
+    int depth;
+};
 
-// Выводит узел с отступом, соответствующим его глубине в дереве.
-void printNode(const Node* node, const string& label, int depth) {
-    if (!node) return;
-
-    cout << string(static_cast<size_t>(depth) * 2, ' ')
-         << label << " [id=" << node->NodeId << "]\n";
-}
-
-// Возвращает текстовое название выражения.
-string expressionLabel(const ExprNode* expr) {
-    if (!expr) return "Expression";
-
-    switch (expr->Type) {
-        case ExprNode::const_bool:
-            return string("Boolean: ") + (expr->Bool ? "true" : "false");
-        case ExprNode::const_character:
-            return string("Character: ") + expr->Char;
-        case ExprNode::const_string:
-            return "String: " + (expr->String ? *expr->String : string(""));
-        case ExprNode::const_integer:
-            return "Integer: " + to_string(expr->Integer);
-        case ExprNode::const_float:
-            return "Float: " + to_string(expr->Float);
-        case ExprNode::id_:
-            return "Identifier: " + (expr->Name ? *expr->Name : string(""));
-        case ExprNode::expr_plus_expr: return "Operator: +";
-        case ExprNode::expr_minus_expr: return "Operator: -";
-        case ExprNode::expr_mult_expr: return "Operator: *";
-        case ExprNode::expr_div_expr: return "Operator: /";
-        case ExprNode::expr_more_expr: return "Operator: >";
-        case ExprNode::expr_less_expr: return "Operator: <";
-        case ExprNode::expr_more_equal_expr: return "Operator: >=";
-        case ExprNode::expr_less_equal_expr: return "Operator: <=";
-        case ExprNode::expr_equal_expr: return "Operator: =";
-        case ExprNode::expr_not_equal_expr: return "Operator: /=";
-        case ExprNode::expr_or_expr: return "Operator: or";
-        case ExprNode::expr_and_expr: return "Operator: and";
-        case ExprNode::expr_xor_expr: return "Operator: xor";
-        case ExprNode::not_expr: return "Operator: not";
-        case ExprNode::uminus_expr: return "Unary operator: -";
-        case ExprNode::expr_abs_expr: return "Operator: abs";
-        case ExprNode::func_call:
-            return "Function call: " + (expr->Name ? *expr->Name : string(""));
-        case ExprNode::literal:
-            return "Expression list";
-        default:
-            return "Expression";
-    }
-}
-
-// Выводит выражение и его операнды.
-void printExpr(const ExprNode* expr, int depth);
-
-// Выводит список выражений.
-void printExprList(const ExprListNode* exprList, int depth) {
-    if (!exprList || !exprList->exprs) return;
-
-    for (const auto* expr : *exprList->exprs) {
-        printExpr(expr, depth);
-    }
-}
-
-void printExpr(const ExprNode* expr, int depth) {
-    if (!expr) return;
-
-    printNode(expr, expressionLabel(expr), depth);
-    printExpr(expr->Left_operator, depth + 1);
-    printExpr(expr->Right_operator, depth + 1);
-    printExprList(expr->Expr_list, depth + 1);
-}
-
-// Выводит диапазон и его границы.
-void printRange(const RangeNode* range, int depth) {
-    if (!range) return;
-
-    printNode(range, "Range", depth);
-    printExpr(range->Left_operator, depth + 1);
-    printExpr(range->Right_operator, depth + 1);
-}
-
-// Выводит тип данных.
-void printType(const TypeNode* type, int depth) {
-    if (!type) return;
-
-    string label;
-
-    switch (type->Type) {
-        case TypeNode::const_bool: label = "Type: Boolean"; break;
-        case TypeNode::const_character: label = "Type: Character"; break;
-        case TypeNode::const_string: label = "Type: String"; break;
-        case TypeNode::const_integer: label = "Type: Integer"; break;
-        case TypeNode::const_float: label = "Type: Float"; break;
-        case TypeNode::array_: label = "Type: Array"; break;
-        case TypeNode::id_:
-            label = "Type: " + (type->Name ? *type->Name : string("identifier"));
-            break;
-    }
-
-    printNode(type, label, depth);
-}
-
-// Выводит объявление переменной или типа.
-void printDeclaration(const DeclarationNode* dec, int depth) {
-    if (!dec) return;
-
-    printNode(
-        dec,
-        dec->Type == DeclarationNode::type_dec
-            ? "Type declaration"
-            : "Variable declaration",
-        depth
-    );
-
-    if (dec->name) {
-        cout << string(static_cast<size_t>(depth + 1) * 2, ' ')
-             << "Name: " << *dec->name << '\n';
-    }
-
-    if (dec->vlist && dec->vlist->vars) {
-        for (const auto* var : *dec->vlist->vars) {
-            if (var && var->name) {
-                cout << string(static_cast<size_t>(depth + 1) * 2, ' ')
-                     << "Variable: " << *var->name << '\n';
-            }
-        }
-    }
-
-    printType(dec->varrtype, depth + 1);
-    printRange(dec->rng, depth + 1);
-    printExpr(dec->expr, depth + 1);
-}
-
-// Выводит список объявлений.
-void printDeclarationList(const DeclarationListNode* declarations, int depth) {
-    if (!declarations || !declarations->decs) return;
-
-    for (const auto* dec : *declarations->decs) {
-        printDeclaration(dec, depth);
-    }
-}
-
-void printStmtList(const StmtListNode* stmtList, int depth);
-
-// Выводит оператор и его дочерние узлы.
-void printStmt(const StmtNode* stmt, int depth) {
-    if (!stmt) return;
-
-    string label;
-
-    switch (stmt->Type) {
-        case StmtNode::return_: label = "Return"; break;
-        case StmtNode::whileloop: label = "While loop"; break;
-        case StmtNode::forloop: label = "For loop"; break;
-        case StmtNode::simpleLoop: label = "Loop"; break;
-        case StmtNode::id_:
-            label = "Call: " + (stmt->Name ? *stmt->Name : string(""));
-            break;
-        case StmtNode::if_: label = "If statement"; break;
-        case StmtNode::exit_: label = "Exit"; break;
-        case StmtNode::assigment_: label = "Assignment"; break;
-    }
-
-    printNode(stmt, label, depth);
-
-    if (stmt->Name && stmt->Type == StmtNode::forloop) {
-        cout << string(static_cast<size_t>(depth + 1) * 2, ' ')
-             << "Iterator: " << *stmt->Name << '\n';
-    }
-
-    printExpr(stmt->Expr, depth + 1);
-    printExpr(stmt->Left_operator, depth + 1);
-    printExpr(stmt->Right_operator, depth + 1);
-    printExprList(stmt->Expr_list, depth + 1);
-    printRange(stmt->rng, depth + 1);
-    printStmtList(stmt->stmtlst, depth + 1);
-
-    if (stmt->elsif_lst && stmt->elsif_lst->elsifs) {
-        for (const auto* branch : *stmt->elsif_lst->elsifs) {
-            if (!branch) continue;
-
-            printNode(branch, "Elsif branch", depth + 1);
-            printExpr(branch->Expr, depth + 2);
-            printStmtList(branch->stmtlst, depth + 2);
-        }
-    }
-
-    if (stmt->else_stmt) {
-        printNode(stmt->else_stmt, "Else branch", depth + 1);
-        printStmtList(stmt->else_stmt->stmtlst, depth + 2);
-    }
-}
-
-// Выводит список операторов.
-void printStmtList(const StmtListNode* stmtList, int depth) {
-    if (!stmtList || !stmtList->stmts) return;
-
-    for (const auto* stmt : *stmtList->stmts) {
-        printStmt(stmt, depth);
-    }
-}
-
-}
-
-// Выводит AST программы в консоль.
+// Итеративный вывод дерева (без рекурсии)
 void printTree(ProgramNode* root) {
     if (!root) {
         cout << "AST is empty: parsing did not produce a program.\n";
@@ -697,49 +500,176 @@ void printTree(ProgramNode* root) {
     }
 
     cout << "\n=== Abstract Syntax Tree ===\n";
-    printNode(root, "Program", 0);
+    cout << "Program [id=" << root->NodeId << "]\n";
 
     if (!root->itemlist || !root->itemlist->items) {
         cout << "=== End of AST ===\n";
         return;
     }
 
-    for (const auto* item : *root->itemlist->items) {
-        if (!item) continue;
+    std::stack<TraversalTask> stack;
 
-        string label;
-
-        switch (item->Type) {
-            case SubProgramItemNode::func_dec:
-                label = "Function declaration";
-                break;
-            case SubProgramItemNode::proc_dec:
-                label = "Procedure declaration";
-                break;
-            case SubProgramItemNode::func_imp:
-                label = "Function implementation";
-                break;
-            case SubProgramItemNode::proc_imp:
-                label = "Procedure implementation";
-                break;
-        }
-
-        if (item->name) {
-            label += ": " + *item->name;
-        }
-
-        printNode(item, label, 1);
-
-        if (item->paramlist && item->paramlist->params) {
-            for (const auto* param : *item->paramlist->params) {
-                printDeclaration(param, 2);
-            }
-        }
-
-        printType(item->varrtype, 2);
-        printDeclarationList(item->decllist, 2);
-        printStmtList(item->stmtlst, 2);
+    // Кладем элементы в стек в ОБРАТНОМ порядке, чтобы они выводились слева направо
+    for (auto it = root->itemlist->items->rbegin(); it != root->itemlist->items->rend(); ++it) {
+        stack.push({TraversalTask::ITEM, *it, 1});
     }
 
+    while (!stack.empty()) {
+        TraversalTask task = stack.top();
+        stack.pop();
+
+        string indent(task.depth * 2, ' ');
+
+        if (task.type == TraversalTask::ITEM) {
+            auto* item = static_cast<SubProgramItemNode*>(task.node);
+            if (!item) continue;
+
+            string label = "SubProgram";
+            if (item->Type == SubProgramItemNode::func_dec) label = "Function declaration";
+            if (item->Type == SubProgramItemNode::proc_dec) label = "Procedure declaration";
+            if (item->Type == SubProgramItemNode::func_imp) label = "Function implementation";
+            if (item->Type == SubProgramItemNode::proc_imp) label = "Procedure implementation";
+            
+            if (item->name) label += ": " + *item->name;
+            cout << indent << label << " [id=" << item->NodeId << "]\n";
+
+            if (item->stmtlst) stack.push({TraversalTask::STMT_LIST, item->stmtlst, task.depth + 1});
+            if (item->decllist) stack.push({TraversalTask::DECL_LIST, item->decllist, task.depth + 1});
+            if (item->varrtype) stack.push({TraversalTask::TYPE, item->varrtype, task.depth + 1});
+            
+            if (item->paramlist && item->paramlist->params) {
+                for (auto p_it = item->paramlist->params->rbegin(); p_it != item->paramlist->params->rend(); ++p_it) {
+                     stack.push({TraversalTask::DECL, *p_it, task.depth + 1});
+                }
+            }
+        } 
+        else if (task.type == TraversalTask::STMT_LIST) {
+            auto* list = static_cast<StmtListNode*>(task.node);
+            if (!list || !list->stmts) continue;
+            for (auto it = list->stmts->rbegin(); it != list->stmts->rend(); ++it) {
+                stack.push({TraversalTask::STMT, *it, task.depth});
+            }
+        }
+        else if (task.type == TraversalTask::STMT) {
+            auto* stmt = static_cast<StmtNode*>(task.node);
+            if (!stmt) continue;
+            
+            string label = "Statement";
+            if (stmt->Type == StmtNode::return_) label = "Return";
+            if (stmt->Type == StmtNode::whileloop) label = "While loop";
+            if (stmt->Type == StmtNode::forloop) label = "For loop";
+            if (stmt->Type == StmtNode::simpleLoop) label = "Loop";
+            if (stmt->Type == StmtNode::if_) label = "If statement";
+            if (stmt->Type == StmtNode::exit_) label = "Exit";
+            if (stmt->Type == StmtNode::assigment_) label = "Assignment";
+            if (stmt->Type == StmtNode::id_) label = "Call: " + (stmt->Name ? *stmt->Name : string(""));
+            
+            cout << indent << label << " [id=" << stmt->NodeId << "]\n";
+
+            if (stmt->else_stmt) stack.push({TraversalTask::STMT_LIST, stmt->else_stmt->stmtlst, task.depth + 1});
+            if (stmt->elsif_lst && stmt->elsif_lst->elsifs) {
+                for (auto it = stmt->elsif_lst->elsifs->rbegin(); it != stmt->elsif_lst->elsifs->rend(); ++it) {
+                    stack.push({TraversalTask::STMT_LIST, (*it)->stmtlst, task.depth + 1});
+                }
+            }
+            if (stmt->stmtlst) stack.push({TraversalTask::STMT_LIST, stmt->stmtlst, task.depth + 1});
+            if (stmt->rng) stack.push({TraversalTask::RANGE, stmt->rng, task.depth + 1});
+            if (stmt->Expr_list && stmt->Expr_list->exprs) {
+                for (auto it = stmt->Expr_list->exprs->rbegin(); it != stmt->Expr_list->exprs->rend(); ++it) {
+                    stack.push({TraversalTask::EXPR, *it, task.depth + 1});
+                }
+            }
+            if (stmt->Right_operator) stack.push({TraversalTask::EXPR, stmt->Right_operator, task.depth + 1});
+            if (stmt->Left_operator) stack.push({TraversalTask::EXPR, stmt->Left_operator, task.depth + 1});
+            if (stmt->Expr) stack.push({TraversalTask::EXPR, stmt->Expr, task.depth + 1});
+        }
+        else if (task.type == TraversalTask::EXPR) {
+            auto* expr = static_cast<ExprNode*>(task.node);
+            if (!expr) continue;
+            
+            string label = "Expression";
+            if (expr->Type == ExprNode::const_bool) label = "Boolean: " + string(expr->Bool ? "true" : "false");
+            if (expr->Type == ExprNode::const_character) label = "Character: " + string(1, expr->Char);
+            if (expr->Type == ExprNode::const_string) label = "String: " + (expr->String ? *expr->String : string(""));
+            if (expr->Type == ExprNode::const_integer) label = "Integer: " + to_string(expr->Integer);
+            if (expr->Type == ExprNode::const_float) label = "Float: " + to_string(expr->Float);
+            if (expr->Type == ExprNode::id_) label = "Identifier: " + (expr->Name ? *expr->Name : string(""));
+            if (expr->Type == ExprNode::expr_plus_expr) label = "Operator: +";
+            if (expr->Type == ExprNode::expr_minus_expr) label = "Operator: -";
+            if (expr->Type == ExprNode::expr_mult_expr) label = "Operator: *";
+            if (expr->Type == ExprNode::expr_div_expr) label = "Operator: /";
+            if (expr->Type == ExprNode::expr_more_expr) label = "Operator: >";
+            if (expr->Type == ExprNode::expr_less_expr) label = "Operator: <";
+            if (expr->Type == ExprNode::expr_more_equal_expr) label = "Operator: >=";
+            if (expr->Type == ExprNode::expr_less_equal_expr) label = "Operator: <=";
+            if (expr->Type == ExprNode::expr_equal_expr) label = "Operator: =";
+            if (expr->Type == ExprNode::expr_not_equal_expr) label = "Operator: /=";
+            if (expr->Type == ExprNode::expr_or_expr) label = "Operator: or";
+            if (expr->Type == ExprNode::expr_and_expr) label = "Operator: and";
+            if (expr->Type == ExprNode::expr_xor_expr) label = "Operator: xor";
+            if (expr->Type == ExprNode::not_expr) label = "Operator: not";
+            if (expr->Type == ExprNode::uminus_expr) label = "Unary operator: -";
+            if (expr->Type == ExprNode::expr_abs_expr) label = "Operator: abs";
+            if (expr->Type == ExprNode::func_call) label = "Function call: " + (expr->Name ? *expr->Name : string(""));
+            if (expr->Type == ExprNode::literal) label = "Expression list";
+            
+            cout << indent << label << " [id=" << expr->NodeId << "]\n";
+
+            if (expr->Expr_list && expr->Expr_list->exprs) {
+                for (auto it = expr->Expr_list->exprs->rbegin(); it != expr->Expr_list->exprs->rend(); ++it) {
+                    stack.push({TraversalTask::EXPR, *it, task.depth + 1});
+                }
+            }
+            if (expr->Right_operator) stack.push({TraversalTask::EXPR, expr->Right_operator, task.depth + 1});
+            if (expr->Left_operator) stack.push({TraversalTask::EXPR, expr->Left_operator, task.depth + 1});
+        }
+        else if (task.type == TraversalTask::TYPE) {
+            auto* type = static_cast<TypeNode*>(task.node);
+            if (!type) continue;
+            string label = "Type";
+            if (type->Type == TypeNode::const_bool) label = "Type: Boolean";
+            if (type->Type == TypeNode::const_character) label = "Type: Character";
+            if (type->Type == TypeNode::const_string) label = "Type: String";
+            if (type->Type == TypeNode::const_integer) label = "Type: Integer";
+            if (type->Type == TypeNode::const_float) label = "Type: Float";
+            if (type->Type == TypeNode::array_) label = "Type: Array";
+            if (type->Type == TypeNode::id_) label = "Type: " + (type->Name ? *type->Name : string("identifier"));
+            cout << indent << label << " [id=" << type->NodeId << "]\n";
+        }
+        else if (task.type == TraversalTask::RANGE) {
+            auto* rng = static_cast<RangeNode*>(task.node);
+            if (!rng) continue;
+            cout << indent << "Range [id=" << rng->NodeId << "]\n";
+            if (rng->Right_operator) stack.push({TraversalTask::EXPR, rng->Right_operator, task.depth + 1});
+            if (rng->Left_operator) stack.push({TraversalTask::EXPR, rng->Left_operator, task.depth + 1});
+        }
+        else if (task.type == TraversalTask::DECL_LIST) {
+            auto* list = static_cast<DeclarationListNode*>(task.node);
+            if (!list || !list->decs) continue;
+            for (auto it = list->decs->rbegin(); it != list->decs->rend(); ++it) {
+                stack.push({TraversalTask::DECL, *it, task.depth});
+            }
+        }
+        else if (task.type == TraversalTask::DECL) {
+            auto* dec = static_cast<DeclarationNode*>(task.node);
+            if (!dec) continue;
+            string label = (dec->Type == DeclarationNode::type_dec) ? "Type declaration" : "Variable declaration";
+            cout << indent << label << " [id=" << dec->NodeId << "]\n";
+            
+            if (dec->expr) stack.push({TraversalTask::EXPR, dec->expr, task.depth + 1});
+            if (dec->rng) stack.push({TraversalTask::RANGE, dec->rng, task.depth + 1});
+            if (dec->varrtype) stack.push({TraversalTask::TYPE, dec->varrtype, task.depth + 1});
+            if (dec->vlist && dec->vlist->vars) {
+                for (auto it = dec->vlist->vars->rbegin(); it != dec->vlist->vars->rend(); ++it) {
+                    if (*it && (*it)->name) {
+                         cout << string((task.depth + 1) * 2, ' ') << "Variable: " << *((*it)->name) << '\n';
+                    }
+                }
+            }
+            if (dec->name) {
+                cout << string((task.depth + 1) * 2, ' ') << "Name: " << *dec->name << '\n';
+            }
+        }
+    }
     cout << "=== End of AST ===\n";
 }
