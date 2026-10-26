@@ -83,6 +83,10 @@ ProgramNode* global_program;
     RangeNode* rng;
     TypeNode* v_type;
 }
+%printer { fprintf(yyo, "%s", $$ ? $$->c_str() : "null"); } <id_const> <string_const>
+%printer { fprintf(yyo, "%d", $$); } <int_const>
+%printer { fprintf(yyo, "%f", $$); } <float_const>
+%printer { fprintf(yyo, "%c", $$); } <char_const>
 %type <prg> program
 %type <id_const> ID
 %type <string_const> CONST_STRING
