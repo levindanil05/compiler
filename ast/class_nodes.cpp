@@ -671,8 +671,7 @@ void printTree(ProgramNode* root) {
                 stack.push({TraversalTask::DECL, *it, task.depth});
             }
         }
-        else if (task.type == TraversalTask::DECL) {
-			        else if (task.type == TraversalTask::DECL) {
+                else if (task.type == TraversalTask::DECL) {
             auto* dec = static_cast<DeclarationNode*>(task.node);
             if (!dec) continue;
 
@@ -686,26 +685,23 @@ void printTree(ProgramNode* root) {
                 if (item->name) label += ": " + *item->name;
                 cout << indent << label << " [id=" << item->NodeId << "]\n";
 
-                if (item->stmtlst) stack.push({TraversalTask::STMT_LIST, item->stmtlst, task.depth + 1});
-                if (item->decllist) stack.push({TraversalTask::DECL_LIST, item->decllist, task.depth + 1});
-                if (item->varrtype) stack.push({TraversalTask::TYPE, item->varrtype, task.depth + 1});
+                if (item->stmtlst) stack.push(TraversalTask{TraversalTask::STMT_LIST, item->stmtlst, task.depth + 1});
+                if (item->decllist) stack.push(TraversalTask{TraversalTask::DECL_LIST, item->decllist, task.depth + 1});
+                if (item->varrtype) stack.push(TraversalTask{TraversalTask::TYPE, item->varrtype, task.depth + 1});
                 if (item->paramlist && item->paramlist->params) {
                     for (auto p_it = item->paramlist->params->rbegin(); p_it != item->paramlist->params->rend(); ++p_it) {
-                         stack.push({TraversalTask::DECL, *p_it, task.depth + 1});
+                         stack.push(TraversalTask{TraversalTask::DECL, *p_it, task.depth + 1});
                     }
                 }
-                continue; // Важно! Переходим к следующему элементу стека
+                continue; 
             }
 
-            // ... дальше идет твой старый код для Variable declaration / Type declaration
-            auto* dec = static_cast<DeclarationNode*>(task.node);
-            if (!dec) continue;
             string label = (dec->Type == DeclarationNode::type_dec) ? "Type declaration" : "Variable declaration";
             cout << indent << label << " [id=" << dec->NodeId << "]\n";
             
-            if (dec->expr) stack.push({TraversalTask::EXPR, dec->expr, task.depth + 1});
-            if (dec->rng) stack.push({TraversalTask::RANGE, dec->rng, task.depth + 1});
-            if (dec->varrtype) stack.push({TraversalTask::TYPE, dec->varrtype, task.depth + 1});
+            if (dec->expr) stack.push(TraversalTask{TraversalTask::EXPR, dec->expr, task.depth + 1});
+            if (dec->rng) stack.push(TraversalTask{TraversalTask::RANGE, dec->rng, task.depth + 1});
+            if (dec->varrtype) stack.push(TraversalTask{TraversalTask::TYPE, dec->varrtype, task.depth + 1});
             if (dec->vlist && dec->vlist->vars) {
                 for (auto it = dec->vlist->vars->begin(); it != dec->vlist->vars->end(); ++it) {
                     if (*it && (*it)->name) {

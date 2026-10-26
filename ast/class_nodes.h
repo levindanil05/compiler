@@ -82,6 +82,7 @@ public:
 class DeclarationNode : public Node {
 public:
     enum type { type_dec, var_dec, subprog_dec };
+	SubProgramItemNode* subprog = NULL; 
 
     type Type;
     TypeNode* varrtype = NULL;
