@@ -188,13 +188,13 @@ declaration: type_declaration {$$ = $1;}
             ;
 type_declaration:
       TYPE ID IS ARRAY '(' array_index_list ')' OF var_type
-        {$$ = new DeclarationNode(DeclarationNode::type_dec);}
+        {$$ = DeclarationNode::TypeDeclaration(DeclarationNode::type_dec, $2, nullptr, $8);}
     | TYPE ID IS '(' enum_id_list ')'
-        {$$ = new DeclarationNode(DeclarationNode::type_dec);}
+        {$$ = DeclarationNode::TypeDeclaration(DeclarationNode::type_dec, $2, nullptr, nullptr);}
     | TYPE ID IS RANGE range
-        {$$ = new DeclarationNode(DeclarationNode::type_dec);}
+        {$$ = DeclarationNode::TypeDeclaration(DeclarationNode::type_dec, $2, $5, nullptr);}
     | TYPE ID IS RECORD record_field_list END RECORD
-        {$$ = new DeclarationNode(DeclarationNode::type_dec);}
+        {$$ = DeclarationNode::TypeDeclaration(DeclarationNode::type_dec, $2, nullptr, nullptr);}
     ;
 array_index_list:
       expression
