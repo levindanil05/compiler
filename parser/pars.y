@@ -233,8 +233,8 @@ func_param_list: var_declaration {$$ = new FuncParamListNode($1);}
                ;
 stmt_list_empty:
       %empty                    { $$ = 0; }
-    | stmt_list                      { $$ = new StmtListNode($1); }
-    | stmt_list exception_part       { $$ = new StmtListNode($1); }
+    | stmt_list                 { $$ = $1; }
+    | stmt_list exception_part  { $$ = $1; }
     ;
 stmt_list : stmt { $$ = new StmtListNode($1); }
           | stmt_list stmt { $$ = StmtListNode::Append($1, $2); }
