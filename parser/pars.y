@@ -354,7 +354,13 @@ expression: CONST_BOOL {$$ = ExprNode::ExprFromBoolConst (ExprNode::const_bool,$
           | expression '.' ID %prec '.' {$$ = ExprNode::ExprOperation (ExprNode::id_,$1, NULL); }
           | ID '\'' ID {$$ = ExprNode::ExprFromId (ExprNode::id_,$1); }
           | ID '\'' ID '(' expression_list ')' {$$ = ExprNode::ExprFromFuncCall (ExprNode::func_call,$1, $5); }
-          | '(' expression_list ')' {$$ = ExprNode::ExprFromExprLiteral (ExprNode::literal,$2); }
+		  | '(' expression_list ')' { 
+			if ($2 && $2->exprs->size() == 1) {
+			$$ = $2->exprs->front(); 
+			} else {
+			$$ = ExprNode::ExprFromExprLiteral(ExprNode::literal, $2);
+			}
+		  }
           ;
 range : expression DOUBLE_DOT expression  {$$ = new RangeNode($1,$3);}
       ;
