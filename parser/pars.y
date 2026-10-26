@@ -175,11 +175,12 @@ declaration_list_empty:
       %empty          { $$ = 0; }
     | decl_body_list       { $$ = 0; }
     ;
+%type <decl_lst> decl_body_list
 decl_body_list:
-      declaration ';'                       { }
-    | item                                  { }
-    | decl_body_list declaration ';'        { }
-    | decl_body_list item                   { }
+      declaration ';'                       { $$ = new DeclarationListNode($1); }
+    | decl_body_list declaration ';'        { $$ = DeclarationListNode::Append($1, $2); }
+    | item                                  { $$ = 0; } // пока заглушка
+    | decl_body_list item                   { $$ = $1; }
     ;
 declaration: type_declaration {$$ = $1;}
             | var_declaration {$$ = $1;}
