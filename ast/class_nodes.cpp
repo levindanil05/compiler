@@ -80,6 +80,12 @@ DeclarationNode* DeclarationNode::VarDeclaration(
     return dec;
 }
 
+DeclarationNode* DeclarationNode::SubProgramDeclaration(SubProgramItemNode* item) {
+    DeclarationNode* dec = new DeclarationNode(DeclarationNode::subprog_dec);
+    dec->subprog = item;
+    return dec;
+}
+
 // Создаёт объявление переменных с диапазоном массива.
 DeclarationNode* DeclarationNode::VarDeclarationArray(
     type Type,
@@ -487,7 +493,7 @@ DeclarationListNode::DeclarationListNode(DeclarationListNode* list) {
 
 // Структура для хранения задачи в стеке
 struct TraversalTask {
-    enum Type { PROGRAM, ITEM, ITEM_LIST, DECL, DECL_LIST, STMT, STMT_LIST, EXPR, EXPR_LIST, TYPE, RANGE } type;
+    enum Type { PROGRAM, ITEM, ITEM_LIST, DECL, DECL_LIST, STMT, STMT_LIST, EXPR, EXPR_LIST, TYPE, RANGE, ELSE_STMT, ELSIF_STMT } type;
     void* node;
     int depth;
 };
@@ -566,10 +572,10 @@ void printTree(ProgramNode* root) {
             
             cout << indent << label << " [id=" << stmt->NodeId << "]\n";
 
-            if (stmt->else_stmt) stack.push({TraversalTask::STMT_LIST, stmt->else_stmt->stmtlst, task.depth + 1});
+            if (stmt->else_stmt) stack.push({TraversalTask::ELSE_STMT, stmt->else_stmt, task.depth + 1});
             if (stmt->elsif_lst && stmt->elsif_lst->elsifs) {
                 for (auto it = stmt->elsif_lst->elsifs->rbegin(); it != stmt->elsif_lst->elsifs->rend(); ++it) {
-                    stack.push({TraversalTask::STMT_LIST, (*it)->stmtlst, task.depth + 1});
+                    stack.push({TraversalTask::ELSIF_STMT, *it, task.depth + 1});
                 }
             }
             if (stmt->stmtlst) stack.push({TraversalTask::STMT_LIST, stmt->stmtlst, task.depth + 1});
@@ -582,6 +588,19 @@ void printTree(ProgramNode* root) {
             if (stmt->Right_operator) stack.push({TraversalTask::EXPR, stmt->Right_operator, task.depth + 1});
             if (stmt->Left_operator) stack.push({TraversalTask::EXPR, stmt->Left_operator, task.depth + 1});
             if (stmt->Expr) stack.push({TraversalTask::EXPR, stmt->Expr, task.depth + 1});
+        }
+		    else if (task.type == TraversalTask::ELSE_STMT) {
+            auto* els = static_cast<ElseStmtNode*>(task.node);
+            if (!els) continue;
+            cout << indent << "Else branch [id=" << els->NodeId << "]\n";
+            if (els->stmtlst) stack.push({TraversalTask::STMT_LIST, els->stmtlst, task.depth + 1});
+        }
+        else if (task.type == TraversalTask::ELSIF_STMT) {
+            auto* elsf = static_cast<ElsifStmtNode*>(task.node);
+            if (!elsf) continue;
+            cout << indent << "Elsif branch [id=" << elsf->NodeId << "]\n";
+            if (elsf->stmtlst) stack.push({TraversalTask::STMT_LIST, elsf->stmtlst, task.depth + 1});
+            if (elsf->Expr) stack.push({TraversalTask::EXPR, elsf->Expr, task.depth + 1});
         }
         else if (task.type == TraversalTask::EXPR) {
             auto* expr = static_cast<ExprNode*>(task.node);
@@ -653,6 +672,32 @@ void printTree(ProgramNode* root) {
             }
         }
         else if (task.type == TraversalTask::DECL) {
+			        else if (task.type == TraversalTask::DECL) {
+            auto* dec = static_cast<DeclarationNode*>(task.node);
+            if (!dec) continue;
+
+            if (dec->Type == DeclarationNode::subprog_dec) {
+                auto* item = dec->subprog;
+                string label = "SubProgram";
+                if (item->Type == SubProgramItemNode::func_dec) label = "Function declaration";
+                if (item->Type == SubProgramItemNode::proc_dec) label = "Procedure declaration";
+                if (item->Type == SubProgramItemNode::func_imp) label = "Function implementation";
+                if (item->Type == SubProgramItemNode::proc_imp) label = "Procedure implementation";
+                if (item->name) label += ": " + *item->name;
+                cout << indent << label << " [id=" << item->NodeId << "]\n";
+
+                if (item->stmtlst) stack.push({TraversalTask::STMT_LIST, item->stmtlst, task.depth + 1});
+                if (item->decllist) stack.push({TraversalTask::DECL_LIST, item->decllist, task.depth + 1});
+                if (item->varrtype) stack.push({TraversalTask::TYPE, item->varrtype, task.depth + 1});
+                if (item->paramlist && item->paramlist->params) {
+                    for (auto p_it = item->paramlist->params->rbegin(); p_it != item->paramlist->params->rend(); ++p_it) {
+                         stack.push({TraversalTask::DECL, *p_it, task.depth + 1});
+                    }
+                }
+                continue; // Важно! Переходим к следующему элементу стека
+            }
+
+            // ... дальше идет твой старый код для Variable declaration / Type declaration
             auto* dec = static_cast<DeclarationNode*>(task.node);
             if (!dec) continue;
             string label = (dec->Type == DeclarationNode::type_dec) ? "Type declaration" : "Variable declaration";

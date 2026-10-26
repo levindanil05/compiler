@@ -180,8 +180,8 @@ declaration_list_empty:
 decl_body_list:
       declaration ';'                       { $$ = new DeclarationListNode($1); }
     | decl_body_list declaration ';'        { $$ = DeclarationListNode::Append($1, $2); }
-    | item                                  { $$ = 0; } // пока заглушка
-    | decl_body_list item                   { $$ = $1; }
+    | item                                  { $$ = new DeclarationListNode(DeclarationNode::SubProgramDeclaration($1)); }
+    | decl_body_list item                   { $$ = DeclarationListNode::Append($1, DeclarationNode::SubProgramDeclaration($2)); }
     ;
 declaration: type_declaration {$$ = $1;}
             | var_declaration {$$ = $1;}

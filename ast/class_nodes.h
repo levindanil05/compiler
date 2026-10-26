@@ -81,7 +81,7 @@ public:
 // Узел объявления типа или переменных.
 class DeclarationNode : public Node {
 public:
-    enum type { type_dec, var_dec };
+    enum type { type_dec, var_dec, subprog_dec };
 
     type Type;
     TypeNode* varrtype = NULL;
@@ -91,6 +91,8 @@ public:
     VarListNode* vlist = NULL;
 
     DeclarationNode(type Type);
+	
+	static DeclarationNode* SubProgramDeclaration(SubProgramItemNode* item);
 
     static DeclarationNode* TypeDeclaration(type Type, string* name,
         RangeNode* rng, TypeNode* varrtype);
