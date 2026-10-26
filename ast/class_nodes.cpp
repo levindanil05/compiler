@@ -662,7 +662,7 @@ void printTree(ProgramNode* root) {
             if (dec->rng) stack.push({TraversalTask::RANGE, dec->rng, task.depth + 1});
             if (dec->varrtype) stack.push({TraversalTask::TYPE, dec->varrtype, task.depth + 1});
             if (dec->vlist && dec->vlist->vars) {
-                for (auto it = dec->vlist->vars->rbegin(); it != dec->vlist->vars->rend(); ++it) {
+                for (auto it = dec->vlist->vars->begin(); it != dec->vlist->vars->end(); ++it) {
                     if (*it && (*it)->name) {
                          cout << string((task.depth + 1) * 2, ' ') << "Variable: " << *((*it)->name) << '\n';
                     }
