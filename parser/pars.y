@@ -309,8 +309,15 @@ exception_part:
       EXCEPTION exception_handler_list   { $$ = $2; }
     ;
 exception_handler_list:
-      exception_handler
-    | exception_handler_list exception_handler
+      exception_handler { $$ = $1; }
+    | exception_handler_list exception_handler { 
+        if ($1 && $2 && $2->stmts) {
+            for (auto s : *$2->stmts) {
+                $1->stmts->push_back(s);
+            }
+        }
+        $$ = $1 ? $1 : $2; 
+    }
     ;
 exception_handler:
       WHEN choice_list ARROW stmt_list   { $$ = $4; }
