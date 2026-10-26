@@ -188,7 +188,7 @@ declaration: type_declaration {$$ = $1;}
             ;
 type_declaration:
       TYPE ID IS ARRAY '(' array_index_list ')' OF var_type
-        {$$ = DeclarationNode::TypeDeclaration(DeclarationNode::type_dec, $2, nullptr, $8);}
+        {$$ = DeclarationNode::TypeDeclaration(DeclarationNode::type_dec, $2, nullptr, $9);}
     | TYPE ID IS '(' enum_id_list ')'
         {$$ = DeclarationNode::TypeDeclaration(DeclarationNode::type_dec, $2, nullptr, nullptr);}
     | TYPE ID IS RANGE range
