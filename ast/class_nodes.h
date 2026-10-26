@@ -160,7 +160,7 @@ class StmtNode : public Node {
 public:
     enum type {
         return_, whileloop, forloop, simpleLoop,
-        id_, if_, exit_, assigment_
+        id_, if_, exit_, assigment_, case_ 
     };
 
     type Type;
@@ -185,6 +185,7 @@ public:
         ElseStmtNode* else_stmt);
     static StmtNode* StmtFromExit(ExprNode* Expr);
     static StmtNode* StmtFromAssigment(ExprNode* left, ExprNode* right);
+	static StmtNode* StmtFromCase(ExprNode* Expr, StmtListNode* list);
 
     void toDot(string& dot);
 };

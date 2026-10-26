@@ -176,6 +176,15 @@ FuncParamListNode* FuncParamListNode::Append(
     return list;
 }
 
+StmtNode* StmtNode::StmtFromCase(ExprNode* Expr, StmtListNode* list) {
+    StmtNode* stmt = new StmtNode();
+    stmt->NodeId = ++globNodeId;
+    stmt->Type = case_;
+    stmt->Expr = Expr;
+    stmt->stmtlst = list; 
+    return stmt;
+}
+
 // Создаёт оператор возврата.
 StmtNode* StmtNode::StmtFromReturn(ExprNode* Expr) {
     StmtNode* stmt = new StmtNode();
@@ -569,6 +578,7 @@ void printTree(ProgramNode* root) {
             if (stmt->Type == StmtNode::exit_) label = "Exit";
             if (stmt->Type == StmtNode::assigment_) label = "Assignment";
             if (stmt->Type == StmtNode::id_) label = "Call: " + (stmt->Name ? *stmt->Name : string(""));
+			if (stmt->Type == StmtNode::case_) label = "Case statement";
             
             cout << indent << label << " [id=" << stmt->NodeId << "]\n";
 

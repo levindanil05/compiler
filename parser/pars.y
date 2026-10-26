@@ -130,6 +130,8 @@ ProgramNode* global_program;
 %type <v_type> var_type
 %type <prg> program_body
 %type <stmt> case_stmt
+%type <stmt_lst> case_alternative_list
+%type <stmt_lst> case_alternative
 %type <stmt_lst> exception_part
 %type <stmt_lst> exception_handler_list
 %type <stmt_lst> exception_handler
@@ -213,17 +215,17 @@ var_declaration:
       var_list ':' var_type
         {$$ = DeclarationNode::VarDeclaration (DeclarationNode::var_dec, $1,$3);}
     | var_list ':' IN var_type
-        {$$ = new DeclarationNode(DeclarationNode::var_dec);}
+        {$$ = DeclarationNode::VarDeclaration (DeclarationNode::var_dec, $1,$4);}
     | var_list ':' OUT var_type
-        {$$ = new DeclarationNode(DeclarationNode::var_dec);}
+        {$$ = DeclarationNode::VarDeclaration (DeclarationNode::var_dec, $1,$4);}
     | var_list ':' IN OUT var_type
-        {$$ = new DeclarationNode(DeclarationNode::var_dec);}
+        {$$ = DeclarationNode::VarDeclaration (DeclarationNode::var_dec, $1,$5);}
     | var_list ':' CONSTANT var_type
         {$$ = DeclarationNode::VarDeclaration (DeclarationNode::var_dec, $1,$4);}
     | var_list ':' CONSTANT var_type ASSIGNMENT expression
         {$$ = DeclarationNode::VarDeclarationAssignment (DeclarationNode::var_dec, $1,$4,$6);}
     | var_list ':' ARRAY '(' array_index_list ')' OF var_type
-        {$$ = new DeclarationNode(DeclarationNode::var_dec);}
+        {$$ = DeclarationNode::VarDeclaration (DeclarationNode::var_dec, $1,$8);} // Упростили, чтобы не плодить новые типы
     | var_list ':' var_type ASSIGNMENT expression
         {$$ = DeclarationNode::VarDeclarationAssignment (DeclarationNode::var_dec, $1,$3,$5);}
     ;
@@ -275,15 +277,27 @@ if_stmt: IF expression THEN stmt_list_empty elsif_stmt_list else_stmt END IF ';'
         ;
 case_stmt:
       CASE expression IS case_alternative_list END CASE ';'
-        {$$ = 0;}
+        {$$ = StmtNode::StmtFromCase($2, $4);}
     ;
 case_alternative_list:
-      case_alternative
-    | case_alternative_list case_alternative
+      case_alternative 
+        { $$ = $1; }
+    | case_alternative_list case_alternative 
+        { 
+            // Если список уже есть, просто добавляем в него новые операторы
+            if ($1 && $2) {
+                for (auto stmt : *$2->stmts) {
+                    $1->stmts->push_back(stmt);
+                }
+                $$ = $1;
+            } else {
+                $$ = $1 ? $1 : $2;
+            }
+        }
     ;
 case_alternative:
-      WHEN choice_list ARROW stmt_list
-    | WHEN OTHERS ARROW stmt_list
+      WHEN choice_list ARROW stmt_list { $$ = $4; }
+    | WHEN OTHERS ARROW stmt_list { $$ = $4; }
     ;
 exception_part:
       EXCEPTION exception_handler_list   { $$ = $2; }
