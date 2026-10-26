@@ -23,12 +23,13 @@ ProgramNode* global_program;
 %token ELSIF
 %token ELSE
 %token ASSIGNMENT
-%left OR AND XOR
+%left OR XOR
+%left AND
 %left '=' NOT_EQUAL '<' LESS_OR_EQUAL '>' MORE_OR_EQUAL
 %left '+' '-'
-%left '*' '/' ABS
-%left MOD REM
+%left '*' '/' MOD REM
 %precedence NOT
+%precedence ABS
 %precedence UMINUS
 %precedence '.'
 %token ARRAY
