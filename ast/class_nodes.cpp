@@ -598,6 +598,8 @@ void printTree(ProgramNode* root) {
             if (expr->Type == ExprNode::expr_minus_expr) label = "Operator: -";
             if (expr->Type == ExprNode::expr_mult_expr) label = "Operator: *";
             if (expr->Type == ExprNode::expr_div_expr) label = "Operator: /";
+			if (expr->Type == ExprNode::expr_mod_expr) label = "Operator: mod";
+            if (expr->Type == ExprNode::expr_rem_expr) label = "Operator: rem";
             if (expr->Type == ExprNode::expr_more_expr) label = "Operator: >";
             if (expr->Type == ExprNode::expr_less_expr) label = "Operator: <";
             if (expr->Type == ExprNode::expr_more_equal_expr) label = "Operator: >=";

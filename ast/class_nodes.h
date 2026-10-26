@@ -238,7 +238,7 @@ public:
         expr_less_equal_expr, expr_equal_expr, expr_not_equal_expr,
         expr_plus_expr, expr_minus_expr, expr_mult_expr, expr_div_expr,
         expr_abs_expr, uminus_expr, expr_or_expr, expr_and_expr,
-        expr_xor_expr, not_expr, func_call, literal
+        expr_xor_expr, not_expr, func_call, literal, expr_mod_expr, expr_rem_expr
     };
 
     type Type;

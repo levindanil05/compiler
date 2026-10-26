@@ -174,7 +174,7 @@ proc_implementation: PROCEDURE ID '(' func_param_list ')' IS declaration_list_em
                ;
 declaration_list_empty:
       %empty          { $$ = 0; }
-    | decl_body_list       { $$ = 0; }
+    | decl_body_list       { $$ = $1; }
     ;
 %type <decl_lst> decl_body_list
 decl_body_list:
@@ -321,7 +321,7 @@ expression_list:
     ;
 arg:
       expression                { $$ = $1; }
-    | ID ARROW expression       { $$ = ExprNode::ExprFromId (ExprNode::id_,$1); }
+    | ID ARROW expression       { $$ = ExprNode::ExprOperation(ExprNode::expr_equal_expr, ExprNode::ExprFromId(ExprNode::id_, $1), $3); }
     ;
 expression: CONST_BOOL {$$ = ExprNode::ExprFromBoolConst (ExprNode::const_bool,$1); }
           | CONST_CHARACTER {$$ = ExprNode::ExprFromCharConst (ExprNode::const_character,$1); }
@@ -338,8 +338,8 @@ expression: CONST_BOOL {$$ = ExprNode::ExprFromBoolConst (ExprNode::const_bool,$
           | expression '+' expression {$$ = ExprNode::ExprOperation (ExprNode::expr_plus_expr,$1,$3); }
           | expression '-' expression {$$ = ExprNode::ExprOperation (ExprNode::expr_minus_expr,$1,$3); }
           | expression '*' expression {$$ = ExprNode::ExprOperation (ExprNode::expr_mult_expr,$1,$3); }
-          | expression MOD expression {$$ = ExprNode::ExprOperation (ExprNode::expr_mult_expr,$1,$3); }
-          | expression REM expression {$$ = ExprNode::ExprOperation (ExprNode::expr_mult_expr,$1,$3); }
+          | expression MOD expression {$$ = ExprNode::ExprOperation (ExprNode::expr_mod_expr,$1,$3); }
+		  | expression REM expression {$$ = ExprNode::ExprOperation (ExprNode::expr_rem_expr,$1,$3); }
           | expression '/' expression {$$ = ExprNode::ExprOperation (ExprNode::expr_div_expr,$1,$3); }
           | ABS expression {$$ = ExprNode::ExprOperation (ExprNode::expr_abs_expr,$2, NULL); }
           | '-' expression %prec UMINUS {$$ = ExprNode::ExprOperation (ExprNode::uminus_expr,$2, NULL); }
@@ -348,14 +348,14 @@ expression: CONST_BOOL {$$ = ExprNode::ExprFromBoolConst (ExprNode::const_bool,$
           | expression XOR expression {$$ = ExprNode::ExprOperation (ExprNode::expr_xor_expr,$1,$3); }
           | NOT expression {$$ = ExprNode::ExprOperation (ExprNode::not_expr,$2, NULL); }
           | ID '(' expression_list_empty ')'  {$$ = ExprNode::ExprFromFuncCall (ExprNode::func_call,$1, $3); }
-          | INTEGER '(' expression_list_empty ')'  {$$ = 0; }
-          | FLOAT '(' expression_list_empty ')'    {$$ = 0; }
-          | BOOLEAN '(' expression_list_empty ')'  {$$ = 0; }
-          | CHARACTER '(' expression_list_empty ')' {$$ = 0; }
-          | STRING '(' expression_list_empty ')'   {$$ = 0; }
-          | expression '.' ID %prec '.' {$$ = ExprNode::ExprOperation (ExprNode::id_,$1, NULL); }
+		  | INTEGER '(' expression_list_empty ')'  {$$ = ExprNode::ExprFromFuncCall(ExprNode::func_call, new string("Integer"), $3); }
+		  | FLOAT '(' expression_list_empty ')'    {$$ = ExprNode::ExprFromFuncCall(ExprNode::func_call, new string("Float"), $3); }
+		  | BOOLEAN '(' expression_list_empty ')'  {$$ = ExprNode::ExprFromFuncCall(ExprNode::func_call, new string("Boolean"), $3); }
+		  | CHARACTER '(' expression_list_empty ')' {$$ = ExprNode::ExprFromFuncCall(ExprNode::func_call, new string("Character"), $3); }
+		  | STRING '(' expression_list_empty ')'   {$$ = ExprNode::ExprFromFuncCall(ExprNode::func_call, new string("String"), $3); }
+          | expression '.' ID %prec '.' {$$ = ExprNode::ExprFromFuncCall(ExprNode::func_call, $3, new ExprListNode($1)); }
           | ID '\'' ID {$$ = ExprNode::ExprFromId (ExprNode::id_,$1); }
-          | ID '\'' ID '(' expression_list ')' {$$ = ExprNode::ExprFromFuncCall (ExprNode::func_call,$1, $5); }
+          | ID '\'' ID '(' expression_list ')' {$$ = ExprNode::ExprFromFuncCall (ExprNode::func_call, new string(*$1 + "'" + *$3), $5); }
 		  | '(' expression_list ')' { 
 			if ($2 && $2->exprs->size() == 1) {
 			$$ = $2->exprs->front(); 

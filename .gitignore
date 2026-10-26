@@ -1,0 +1,14 @@
+# Скомпилированные бинарники и объектные файлы
+compiler.exe
+*.exe
+*.o
+*.obj
+
+# Файлы, сгенерированные Flex и Bison
+lex.yy.c
+pars.tab.c
+pars.tab.h
+pars.output
+
+# Файлы настроек VS Code (если не хочешь делиться ими)
+.vscode/
