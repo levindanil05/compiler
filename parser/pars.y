@@ -255,7 +255,7 @@ stmt: return_stmt  {$$ = $1;}
     | if_stmt  {$$ = $1;}
     | exit_stmt  {$$ = $1;}
     | assigment_stmt  {$$ = $1;}
-    | case_stmt {$$ = 1;}
+    | case_stmt {$$ = $1;}
     | ID ';' {$$ = StmtNode:: StmtFromIdAndExpr ($1, NULL);}
     ;
 return_stmt : RETURN expression ';' {$$ = StmtNode:: StmtFromReturn ($2);}
