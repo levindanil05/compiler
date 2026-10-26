@@ -238,7 +238,13 @@ func_param_list: var_declaration {$$ = new FuncParamListNode($1);}
 stmt_list_empty:
       %empty                    { $$ = 0; }
     | stmt_list                 { $$ = $1; }
-    | stmt_list exception_part  { $$ = $1; }
+    | stmt_list exception_part  { 
+	if ($1 && $2 && $2->stmts) {
+            for (auto s : *$2->stmts) {
+                $1->stmts->push_back(s);
+            }
+        }
+        $$ = $1 ? $1 : $2; 	}
     ;
 stmt_list : stmt { $$ = new StmtListNode($1); }
           | stmt_list stmt { $$ = StmtListNode::Append($1, $2); }
@@ -249,7 +255,7 @@ stmt: return_stmt  {$$ = $1;}
     | if_stmt  {$$ = $1;}
     | exit_stmt  {$$ = $1;}
     | assigment_stmt  {$$ = $1;}
-    | case_stmt {$$ = 0;}
+    | case_stmt {$$ = 1;}
     | ID ';' {$$ = StmtNode:: StmtFromIdAndExpr ($1, NULL);}
     ;
 return_stmt : RETURN expression ';' {$$ = StmtNode:: StmtFromReturn ($2);}
