@@ -9,6 +9,8 @@ lex.yy.c
 pars.tab.c
 pars.tab.h
 pars.output
+parser.exe
+parse_bin
 
 # Файлы настроек VS Code (если не хочешь делиться ими)
 .vscode/

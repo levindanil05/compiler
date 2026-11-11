@@ -4,6 +4,8 @@
 #include <iostream>
 #include <stack>
 
+#include "ast_extensions.h"
+
 using namespace std;
 
 int globNodeId = 0;
@@ -176,12 +178,15 @@ FuncParamListNode* FuncParamListNode::Append(
     return list;
 }
 
-StmtNode* StmtNode::StmtFromCase(ExprNode* Expr, StmtListNode* list) {
+StmtNode* StmtNode::StmtFromCase(
+    ExprNode* expression,
+    CaseAlternativeListNode* alternatives
+) {
     StmtNode* stmt = new StmtNode();
     stmt->NodeId = ++globNodeId;
-    stmt->Type = case_;
-    stmt->Expr = Expr;
-    stmt->stmtlst = list; 
+    stmt->Type = StmtNode::case_;
+    stmt->Expr = expression;
+    stmt->case_alternatives = alternatives;
     return stmt;
 }
 

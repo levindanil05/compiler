@@ -27,6 +27,9 @@ class ExprListNode;
 class RangeNode;
 class TypeNode;
 
+class TypeDefinitionNode;
+class CaseAlternativeListNode;
+
 // Вспомогательные функции для формирования графического представления AST.
 void connectVerticesDots(string& s, int parentId, int childId);
 void createVertexDot(string& s, int id, string value = "", string type = "", string pos = "");
@@ -90,6 +93,7 @@ public:
     RangeNode* rng = NULL;
     string* name = NULL;
     VarListNode* vlist = NULL;
+    TypeDefinitionNode* definition = nullptr;
 
     DeclarationNode(type Type);
 	
@@ -174,6 +178,8 @@ public:
     ElseStmtNode* else_stmt = NULL;
     ElsifStmtListNode* elsif_lst = NULL;
 
+    CaseAlternativeListNode* case_alternatives = nullptr;
+
     static StmtNode* StmtFromReturn(ExprNode* Expr);
     static StmtNode* StmtFromWhileLoop(ExprNode* Expr, StmtListNode* list);
     static StmtNode* StmtFromForLoop(string* name, RangeNode* range, StmtListNode* list);
@@ -185,10 +191,15 @@ public:
         ElseStmtNode* else_stmt);
     static StmtNode* StmtFromExit(ExprNode* Expr);
     static StmtNode* StmtFromAssigment(ExprNode* left, ExprNode* right);
-	static StmtNode* StmtFromCase(ExprNode* Expr, StmtListNode* list);
+	static StmtNode* StmtFromCase(
+    ExprNode* expression,
+    CaseAlternativeListNode* alternatives
+    );
 
     void toDot(string& dot);
 };
+
+
 
 // Список ветвей elsif.
 class ElsifStmtListNode : public Node {

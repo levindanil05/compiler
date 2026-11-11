@@ -448,8 +448,7 @@ int main(int argc, char **argv) {
         }
     }
 	
-	extern int yydebug; // Объявляем внешнюю переменную
-    yydebug = 1;        // Включаем дебаг Bison
+
 	
     int result = yyparse();
 
