@@ -54,7 +54,6 @@ public:
     ItemListNode* itemlist = nullptr;
 
     explicit ProgramNode(ItemListNode* itemlist);
-    void toDot(string& dot);
 };
 
 // Узел объявления или реализации функции/процедуры.
@@ -86,7 +85,6 @@ public:
         StmtListNode* stmtlst
     );
 
-    void toDot(string& dot);
 };
 
 // Список подпрограмм верхнего уровня.
@@ -102,7 +100,6 @@ public:
         SubProgramItemNode* item
     );
 
-    void toDot(string& dot);
 };
 
 // Узел объявления типа, переменной или вложенной подпрограммы.
@@ -166,6 +163,14 @@ public:
         TypeNode* varrtype
     );
 
+    // Создаёт объявление массива с полным описанием индексов.
+    static DeclarationNode* VarDeclarationArray(
+        type Type,
+        VarListNode* vlist,
+        TypeDefinitionNode* definition,
+        TypeNode* varrtype
+    );
+
     // Создаёт объявление переменных с начальным значением.
     static DeclarationNode* VarDeclarationAssignment(
         type Type,
@@ -180,7 +185,6 @@ public:
         bool constant = false
     );
 
-    void toDot(string& dot);
 };
 
 // Список объявлений в декларативной части.
@@ -196,7 +200,6 @@ public:
         DeclarationNode* dec
     );
 
-    void toDot(string& dot);
 };
 
 // Список имён переменных одного объявления.
@@ -212,7 +215,6 @@ public:
         string* name
     );
 
-    void toDot(string& dot);
 };
 
 // Имя отдельной переменной.
@@ -221,7 +223,6 @@ public:
     string* name = nullptr;
 
     explicit VarName(string* name);
-    void toDot(string& dot);
 };
 
 // Список параметров подпрограммы.
@@ -237,7 +238,6 @@ public:
         DeclarationNode* var_dec
     );
 
-    void toDot(string& dot);
 };
 
 // Узел оператора языка Ada.
@@ -331,7 +331,6 @@ public:
     // Создаёт пустой оператор null.
     static StmtNode* StmtFromNull();
 
-    void toDot(string& dot);
 };
 
 // Список ветвей ELSIF.
@@ -347,7 +346,6 @@ public:
         ElsifStmtNode* elsif
     );
 
-    void toDot(string& dot);
 };
 
 // Одна ветвь ELSIF.
@@ -357,7 +355,7 @@ public:
     StmtListNode* stmtlst = nullptr;
 
     ElsifStmtNode(ExprNode* expr, StmtListNode* lst);
-    void toDot(string& dot);
+
 };
 
 // Ветка ELSE.
@@ -366,7 +364,6 @@ public:
     StmtListNode* stmtlst = nullptr;
 
     explicit ElseStmtNode(StmtListNode* lst);
-    void toDot(string& dot);
 };
 
 // Список операторов.
@@ -382,7 +379,6 @@ public:
         StmtNode* stmt
     );
 
-    void toDot(string& dot);
 };
 
 // Узел выражения.
@@ -505,7 +501,6 @@ public:
         ExprNode* value
     );
 
-    void toDot(string& dot);
 };
 
 // Список выражений.
@@ -521,7 +516,6 @@ public:
         ExprNode* expr
     );
 
-    void toDot(string& dot);
 };
 
 // Диапазон значений.
@@ -531,7 +525,6 @@ public:
     ExprNode* Right_operator = nullptr;
 
     RangeNode(ExprNode* left, ExprNode* right);
-    void toDot(string& dot);
 };
 
 // Узел типа данных.
@@ -553,7 +546,6 @@ public:
     explicit TypeNode(type Type);
     TypeNode(type Type, string* Name);
 
-    void toDot(string& dot);
 };
 
 // Выводит абстрактное синтаксическое дерево в консоль.

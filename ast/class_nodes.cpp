@@ -125,18 +125,19 @@ DeclarationNode* DeclarationNode::VarDeclaration(
     return dec;
 }
 
-// Создаёт объявление массива с диапазоном.
+// Создаёт объявление массива с полным описанием индексов.
 DeclarationNode* DeclarationNode::VarDeclarationArray(
     type Type,
     VarListNode* vlist,
-    RangeNode* rng,
+    TypeDefinitionNode* definition,
     TypeNode* varrtype
 ) {
     DeclarationNode* dec = new DeclarationNode(var_dec);
     dec->Type = Type;
     dec->vlist = vlist;
-    dec->rng = rng;
     dec->varrtype = varrtype;
+    dec->definition = definition;
+
     return dec;
 }
 

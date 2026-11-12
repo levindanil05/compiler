@@ -1,24 +1,15 @@
 
-/*
-%define parse.trace
-*/
-
-%code requires {
-#include <string>
-#include <list>
-#include "class_nodes.h"
-#include "ast_extensions.h"
-using namespace std;
-}
-
 %{
 #include <stdio.h>
 #include <stdlib.h>
 #include <iterator>
 #include <string>
 #include <list>
+
 #include "class_nodes.h"
 #include "ast_extensions.h"
+
+using namespace std;
 
 void yyerror(char const* s);
 extern int yylex(void);
@@ -57,6 +48,14 @@ static StmtListNode* append_statement_lists(
 }
 %}
 
+%code requires {
+#include <string>
+#include <list>
+#include "class_nodes.h"
+#include "ast_extensions.h"
+using namespace std;
+}
+
 /* лексические токены. */
 %token INTEGER BOOLEAN FLOAT CHARACTER STRING
 %token WHILE FOR IN OF LOOP IF THEN ELSIF ELSE
@@ -70,15 +69,14 @@ static StmtListNode* append_statement_lists(
 %token OR XOR AND NOT ABS MOD REM
 %token NOT_EQUAL LESS_OR_EQUAL MORE_OR_EQUAL
 
-/* дополнительные токены расширенной грамматики. */
 %token POWER CONCAT NULL_TOKEN
 
 /* приоритеты логических и арифметических операций. */
 %left OR XOR
 %left AND
 
-/* операции сравнения. */
-%left '=' NOT_EQUAL '<' LESS_OR_EQUAL '>' MORE_OR_EQUAL
+/* сравнения не могут образовывать цепочки. */
+%nonassoc '=' NOT_EQUAL '<' LESS_OR_EQUAL '>' MORE_OR_EQUAL
 
 /* сложение, вычитание и конкатенация. */
 %left '+' '-'
@@ -95,9 +93,8 @@ static StmtListNode* append_statement_lists(
 %precedence ABS
 %precedence UMINUS
 
-/* выбор компонента и доступ к атрибуту. */
+/* выбор компонента. */
 %precedence '.'
-%precedence APOSTROPHE
 
 /* типы семантических значений. */
 %union {
@@ -146,7 +143,8 @@ static StmtListNode* append_statement_lists(
 %type <float_const> CONST_FLOAT
 %type <char_const> CONST_CHARACTER
 
-%type <item> item func_declaration proc_declaration
+%type <item> item nested_subprogram
+%type <item> func_declaration proc_declaration
 %type <item> func_implementation proc_implementation
 %type <itemlst> item_list
 
@@ -220,47 +218,105 @@ item_list:
       { $$ = ItemListNode::Append($1, $2); }
     ;
 
+/* элементы верхнего уровня. */
 item:
-      func_declaration      { $$ = $1; }
-    | proc_declaration      { $$ = $1; }
-    | func_implementation   { $$ = $1; }
-    | proc_implementation   { $$ = $1; }
+      func_declaration
+      { $$ = $1; }
+    | proc_declaration
+      { $$ = $1; }
+    | func_implementation
+      { $$ = $1; }
+    | proc_implementation
+      { $$ = $1; }
+    ;
+
+/* вложенная подпрограмма.
+   Она будет помещена в DeclarationListNode, а не в ItemListNode. */
+nested_subprogram:
+      func_declaration
+      { $$ = $1; }
+    | proc_declaration
+      { $$ = $1; }
+    | func_implementation
+      { $$ = $1; }
+    | proc_implementation
+      { $$ = $1; }
     ;
 
 /* объявление функции без тела. */
 func_declaration:
       FUNCTION ID '(' func_param_list ')' RETURN var_type ';'
-      { $$ = new SubProgramItemNode(SubProgramItemNode::func_dec, $2, $4, $7, NULL, NULL); }
+      {
+          $$ = new SubProgramItemNode(
+              SubProgramItemNode::func_dec,
+              $2, $4, $7, NULL, NULL
+          );
+      }
     | FUNCTION ID RETURN var_type ';'
-      { $$ = new SubProgramItemNode(SubProgramItemNode::func_dec, $2, NULL, $4, NULL, NULL); }
+      {
+          $$ = new SubProgramItemNode(
+              SubProgramItemNode::func_dec,
+              $2, NULL, $4, NULL, NULL
+          );
+      }
     ;
 
 /* объявление процедуры без тела. */
 proc_declaration:
       PROCEDURE ID '(' func_param_list ')' ';'
-      { $$ = new SubProgramItemNode(SubProgramItemNode::proc_dec, $2, $4, NULL, NULL, NULL); }
+      {
+          $$ = new SubProgramItemNode(
+              SubProgramItemNode::proc_dec,
+              $2, $4, NULL, NULL, NULL
+          );
+      }
     | PROCEDURE ID ';'
-      { $$ = new SubProgramItemNode(SubProgramItemNode::proc_dec, $2, NULL, NULL, NULL, NULL); }
+      {
+          $$ = new SubProgramItemNode(
+              SubProgramItemNode::proc_dec,
+              $2, NULL, NULL, NULL, NULL
+          );
+      }
     ;
 
 /* реализация функции с параметрами. */
 func_implementation:
       FUNCTION ID '(' func_param_list ')' RETURN var_type
       IS declaration_list_empty BEGIN_TOKEN stmt_list_empty END ID ';'
-      { $$ = new SubProgramItemNode(SubProgramItemNode::func_imp, $2, $4, $7, $9, $11); }
+      {
+          $$ = new SubProgramItemNode(
+              SubProgramItemNode::func_imp,
+              $2, $4, $7, $9, $11
+          );
+      }
     | FUNCTION ID RETURN var_type
       IS declaration_list_empty BEGIN_TOKEN stmt_list_empty END ID ';'
-      { $$ = new SubProgramItemNode(SubProgramItemNode::func_imp, $2, NULL, $4, $6, $8); }
+      {
+          $$ = new SubProgramItemNode(
+              SubProgramItemNode::func_imp,
+              $2, NULL, $4, $6, $8
+          );
+      }
     ;
 
 /* реализация процедуры с параметрами. */
 proc_implementation:
       PROCEDURE ID '(' func_param_list ')'
       IS declaration_list_empty BEGIN_TOKEN stmt_list_empty END ID ';'
-      { $$ = new SubProgramItemNode(SubProgramItemNode::proc_imp, $2, $4, NULL, $7, $9); }
+      {
+          $$ = new SubProgramItemNode(
+              SubProgramItemNode::proc_imp,
+              $2, $4, NULL, $7, $9
+          );
+      }
     | PROCEDURE ID
       IS declaration_list_empty BEGIN_TOKEN stmt_list_empty END ID ';'
-      { $$ = new SubProgramItemNode(SubProgramItemNode::proc_imp, $2, NULL, NULL, $4, $6); }
+      {
+          $$ = new SubProgramItemNode(
+              SubProgramItemNode::proc_imp,
+              $2, NULL, NULL, $4, $6
+          );
+      }
     ;
 
 /* декларативная часть может быть пустой. */
@@ -277,28 +333,50 @@ decl_body_list:
       { $$ = new DeclarationListNode($1); }
     | decl_body_list declaration ';'
       { $$ = DeclarationListNode::Append($1, $2); }
-    | item
-      { $$ = new DeclarationListNode(DeclarationNode::SubProgramDeclaration($1)); }
-    | decl_body_list item
-      { $$ = DeclarationListNode::Append($1, DeclarationNode::SubProgramDeclaration($2)); }
+    | nested_subprogram
+      {
+          $$ = new DeclarationListNode(
+              DeclarationNode::SubProgramDeclaration($1)
+          );
+      }
+    | decl_body_list nested_subprogram
+      {
+          $$ = DeclarationListNode::Append(
+              $1,
+              DeclarationNode::SubProgramDeclaration($2)
+          );
+      }
     ;
 
 /* объявления типов и переменных. */
 declaration:
-      type_declaration { $$ = $1; }
-    | var_declaration  { $$ = $1; }
+      type_declaration
+      { $$ = $1; }
+    | var_declaration
+      { $$ = $1; }
     ;
 
 /* определения пользовательских типов. */
 type_declaration:
       TYPE ID IS array_type_definition
-      { $$ = make_type_declaration($2, $4); }
+      {
+          $$ = make_type_declaration($2, $4);
+      }
     | TYPE ID IS '(' enum_id_list ')'
-      { $$ = make_type_declaration($2, $5); }
+      {
+          $$ = make_type_declaration($2, $5);
+      }
     | TYPE ID IS RANGE range
-      { $$ = DeclarationNode::TypeDeclaration(DeclarationNode::type_dec, $2, $5, nullptr); }
+      {
+          $$ = DeclarationNode::TypeDeclaration(
+              DeclarationNode::type_dec,
+              $2, $5, nullptr
+          );
+      }
     | TYPE ID IS RECORD record_field_list END RECORD
-      { $$ = make_type_declaration($2, $5); }
+      {
+          $$ = make_type_declaration($2, $5);
+      }
     ;
 
 /* определение массива. */
@@ -306,6 +384,7 @@ array_type_definition:
       ARRAY '(' array_index_list ')' OF var_type
       {
           $$ = $3;
+          $$->kind = TypeDefinitionNode::array_type;
           $$->element_type = $6;
       }
     ;
@@ -327,12 +406,22 @@ array_index_list:
 /* индекс массива: ограниченный или неограниченный. */
 array_index:
       range
-      { $$ = new ArrayIndexNode($1, nullptr, false); }
+      {
+          $$ = new ArrayIndexNode($1, nullptr, false);
+      }
+    | var_type
+      {
+          $$ = new ArrayIndexNode(nullptr, $1, false);
+      }
     | var_type RANGE '<' '>'
-      { $$ = new ArrayIndexNode(nullptr, $1, true); }
+      {
+          $$ = new ArrayIndexNode(nullptr, $1, true);
+      }
     | var_type RANGE range
-      { $$ = new ArrayIndexNode($3, $1, false); }
-    ;
+      {
+          $$ = new ArrayIndexNode($3, $1, false);
+      }
+;
 
 /* литералы перечислимого типа. */
 enum_id_list:
@@ -365,28 +454,65 @@ record_field_list:
 /* объявления переменных, параметров и констант. */
 var_declaration:
       var_list ':' var_type
-      { $$ = DeclarationNode::VarDeclaration(DeclarationNode::var_dec, $1, $3); }
+      {
+          $$ = DeclarationNode::VarDeclaration(
+              DeclarationNode::var_dec, $1, $3
+          );
+      }
     | var_list ':' IN var_type
-      { $$ = DeclarationNode::VarDeclaration(DeclarationNode::var_dec, $1, $4); }
+      {
+          $$ = DeclarationNode::VarDeclaration(
+              DeclarationNode::var_dec, $1, $4
+          );
+          $$->SetParameterProperties(DeclarationNode::mode_in);
+      }
     | var_list ':' OUT var_type
-      { $$ = DeclarationNode::VarDeclaration(DeclarationNode::var_dec, $1, $4); }
+      {
+          $$ = DeclarationNode::VarDeclaration(
+              DeclarationNode::var_dec, $1, $4
+          );
+          $$->SetParameterProperties(DeclarationNode::mode_out);
+      }
     | var_list ':' IN OUT var_type
-      { $$ = DeclarationNode::VarDeclaration(DeclarationNode::var_dec, $1, $5); }
+      {
+          $$ = DeclarationNode::VarDeclaration(
+              DeclarationNode::var_dec, $1, $5
+          );
+          $$->SetParameterProperties(DeclarationNode::mode_in_out);
+      }
     | var_list ':' CONSTANT var_type
-      { $$ = DeclarationNode::VarDeclaration(DeclarationNode::var_dec, $1, $4); }
+      {
+          $$ = DeclarationNode::VarDeclaration(
+              DeclarationNode::var_dec, $1, $4
+          );
+          $$->SetParameterProperties(
+              DeclarationNode::mode_default, true
+          );
+      }
     | var_list ':' CONSTANT var_type ASSIGNMENT expression
-      { $$ = DeclarationNode::VarDeclarationAssignment(DeclarationNode::var_dec, $1, $4, $6); }
+      {
+          $$ = DeclarationNode::VarDeclarationAssignment(
+              DeclarationNode::var_dec, $1, $4, $6
+          );
+          $$->SetParameterProperties(
+              DeclarationNode::mode_default, true
+          );
+      }
     | var_list ':' ARRAY '(' array_index_list ')' OF var_type
       {
-          DeclarationNode* declaration = DeclarationNode::VarDeclaration(
-              DeclarationNode::var_dec, $1, $8
+          $$ = DeclarationNode::VarDeclarationArray(
+              DeclarationNode::var_dec,
+              $1,
+              $5,
+              $8
           );
-          declaration->definition = $5;
-          declaration->definition->element_type = $8;
-          $$ = declaration;
       }
     | var_list ':' var_type ASSIGNMENT expression
-      { $$ = DeclarationNode::VarDeclarationAssignment(DeclarationNode::var_dec, $1, $3, $5); }
+      {
+          $$ = DeclarationNode::VarDeclarationAssignment(
+              DeclarationNode::var_dec, $1, $3, $5
+          );
+      }
     ;
 
 /* список имён переменных. */
@@ -405,7 +531,7 @@ func_param_list:
       { $$ = FuncParamListNode::Append($1, $3); }
     ;
 
-/* список операторов тела, включая необязательную секцию исключений. */
+/* список операторов тела, включая секцию исключений. */
 stmt_list_empty:
       %empty
       { $$ = nullptr; }
@@ -441,6 +567,8 @@ stmt:
       { $$ = $1; }
     | ID ';'
       { $$ = StmtNode::StmtFromIdAndExpr($1, nullptr); }
+    | NULL_TOKEN ';'
+      { $$ = StmtNode::StmtFromNull(); }
     ;
 
 /* оператор return с выражением или без него. */
@@ -492,9 +620,15 @@ exit_stmt:
 /* условный оператор if. */
 if_stmt:
       IF expression THEN stmt_list_empty elsif_stmt_list else_stmt END IF ';'
-      { $$ = StmtNode::StmtFromIfWithElsif($2, $4, $5, $6); }
+      {
+          $$ = StmtNode::StmtFromIfWithElsif(
+              $2, $4, $5, $6
+          );
+      }
     | IF expression THEN stmt_list_empty else_stmt END IF ';'
-      { $$ = StmtNode::StmtFromIf($2, $4, $5); }
+      {
+          $$ = StmtNode::StmtFromIf($2, $4, $5);
+      }
     ;
 
 /* оператор case. */
@@ -526,7 +660,11 @@ case_alternative:
           }
       }
     | WHEN OTHERS ARROW stmt_list
-      { $$ = new CaseAlternativeNode(new CaseChoiceNode(true), $4); }
+      {
+          $$ = new CaseAlternativeNode(
+              new CaseChoiceNode(true), $4
+          );
+      }
     ;
 
 /* секция обработчиков исключений. */
@@ -606,7 +744,7 @@ expression_list_empty:
       %empty
       { $$ = nullptr; }
     | expression_list
-      { $$ = new ExprListNode($1); }
+      { $$ = $1; }
     ;
 
 /* список аргументов вызова. */
@@ -623,11 +761,7 @@ arg:
       { $$ = $1; }
     | ID ARROW expression
       {
-          $$ = ExprNode::ExprOperation(
-              ExprNode::expr_equal_expr,
-              ExprNode::ExprFromId(ExprNode::id_, $1),
-              $3
-          );
+          $$ = ExprNode::ExprFromNamedAssociation($1, $3);
       }
     ;
 
@@ -710,13 +844,25 @@ expression:
 
     /* выбор компонента составного объекта. */
     | expression '.' ID %prec '.'
-      { $$ = ExprNode::ExprFromFuncCall(ExprNode::func_call, $3, new ExprListNode($1)); }
+      {
+          $$ = ExprNode::ExprFromSelectedComponent($1, $3);
+      }
 
     /* ссылка на атрибут объекта. */
     | ID '\'' ID
-      { $$ = ExprNode::ExprFromId(ExprNode::id_, $1); }
+      {
+          $$ = ExprNode::ExprFromAttribute(
+              ExprNode::ExprFromId(ExprNode::id_, $1),
+              $3
+          );
+      }
     | ID '\'' ID '(' expression_list ')'
       {
+          ExprNode* attribute = ExprNode::ExprFromAttribute(
+              ExprNode::ExprFromId(ExprNode::id_, $1),
+              $3
+          );
+
           $$ = ExprNode::ExprFromFuncCall(
               ExprNode::func_call,
               new string(*$1 + "'" + *$3),
@@ -730,7 +876,9 @@ expression:
           if ($2 && $2->exprs->size() == 1) {
               $$ = $2->exprs->front();
           } else {
-              $$ = ExprNode::ExprFromExprLiteral(ExprNode::literal, $2);
+              $$ = ExprNode::ExprFromExprLiteral(
+                  ExprNode::literal, $2
+              );
           }
       }
     ;
@@ -757,4 +905,4 @@ var_type:
       { $$ = new TypeNode(TypeNode::id_, $1); }
     ;
 
-%%
+%% 
