@@ -1,3 +1,4 @@
+
 #pragma once
 
 #include <iostream>
@@ -7,7 +8,7 @@
 
 using namespace std;
 
-// Предварительные объявления классов узлов AST.
+// Предварительные объявления классов AST.
 class Node;
 class ProgramNode;
 class SubProgramItemNode;
@@ -26,15 +27,21 @@ class ExprNode;
 class ExprListNode;
 class RangeNode;
 class TypeNode;
-
 class TypeDefinitionNode;
 class CaseAlternativeListNode;
+class ExceptionHandlerListNode;
 
-// Вспомогательные функции для формирования графического представления AST.
+// Вспомогательные функции для построения DOT-графа.
 void connectVerticesDots(string& s, int parentId, int childId);
-void createVertexDot(string& s, int id, string value = "", string type = "", string pos = "");
+void createVertexDot(
+    string& s,
+    int id,
+    string value = "",
+    string type = "",
+    string pos = ""
+);
 
-// Базовый класс узлов синтаксического дерева.
+// Базовый класс всех узлов абстрактного синтаксического дерева.
 class Node {
 public:
     virtual ~Node() = default;
@@ -44,203 +51,337 @@ public:
 // Корневой узел программы.
 class ProgramNode : public Node {
 public:
-    ItemListNode* itemlist = NULL;
+    ItemListNode* itemlist = nullptr;
 
-    ProgramNode(ItemListNode* itemlist);
+    explicit ProgramNode(ItemListNode* itemlist);
     void toDot(string& dot);
 };
 
-// Узел объявления или реализации подпрограммы.
+// Узел объявления или реализации функции/процедуры.
 class SubProgramItemNode : public Node {
 public:
-    enum type { func_dec, proc_dec, func_imp, proc_imp };
+    enum type {
+        func_dec,
+        proc_dec,
+        func_imp,
+        proc_imp
+    };
 
     type Type;
-    string* name = NULL;
-    FuncParamListNode* paramlist = NULL;
-    TypeNode* varrtype = NULL;
-    DeclarationListNode* decllist = NULL;
-    StmtListNode* stmtlst = NULL;
+    string* name = nullptr;
+    FuncParamListNode* paramlist = nullptr;
+    TypeNode* varrtype = nullptr;
+    DeclarationListNode* decllist = nullptr;
+    StmtListNode* stmtlst = nullptr;
 
-    SubProgramItemNode(type Type, string* name,
-        FuncParamListNode* paramlist, TypeNode* varrtype,
-        DeclarationListNode* decllist, StmtListNode* stmtlst);
+    // Обработчики EXCEPTION хранятся отдельно от обычных операторов.
+    ExceptionHandlerListNode* exception_handlers = nullptr;
+
+    SubProgramItemNode(
+        type Type,
+        string* name,
+        FuncParamListNode* paramlist,
+        TypeNode* varrtype,
+        DeclarationListNode* decllist,
+        StmtListNode* stmtlst
+    );
 
     void toDot(string& dot);
 };
 
-// Список подпрограмм программы.
+// Список подпрограмм верхнего уровня.
 class ItemListNode : public Node {
 public:
-    list<SubProgramItemNode*>* items = NULL;
+    list<SubProgramItemNode*>* items = nullptr;
 
-    ItemListNode(SubProgramItemNode* item);
-    ItemListNode(ItemListNode* list);
+    explicit ItemListNode(SubProgramItemNode* item);
+    explicit ItemListNode(ItemListNode* list);
 
-    static ItemListNode* Append(ItemListNode* list, SubProgramItemNode* item);
+    static ItemListNode* Append(
+        ItemListNode* list,
+        SubProgramItemNode* item
+    );
+
     void toDot(string& dot);
 };
 
-// Узел объявления типа или переменных.
+// Узел объявления типа, переменной или вложенной подпрограммы.
 class DeclarationNode : public Node {
 public:
-    enum type { type_dec, var_dec, subprog_dec };
-	SubProgramItemNode* subprog = NULL; 
+    enum type {
+        type_dec,
+        var_dec,
+        subprog_dec
+    };
+
+    // Режим передачи параметра подпрограммы.
+    enum ParameterMode {
+        mode_default,
+        mode_in,
+        mode_out,
+        mode_in_out
+    };
+
+    SubProgramItemNode* subprog = nullptr;
 
     type Type;
-    TypeNode* varrtype = NULL;
-    ExprNode* expr = NULL;
-    RangeNode* rng = NULL;
-    string* name = NULL;
-    VarListNode* vlist = NULL;
+    TypeNode* varrtype = nullptr;
+    ExprNode* expr = nullptr;
+    RangeNode* rng = nullptr;
+    string* name = nullptr;
+    VarListNode* vlist = nullptr;
     TypeDefinitionNode* definition = nullptr;
 
-    DeclarationNode(type Type);
-	
-	static DeclarationNode* SubProgramDeclaration(SubProgramItemNode* item);
+    // Дополнительные свойства объявления.
+    ParameterMode parameter_mode = mode_default;
+    bool is_constant = false;
 
-    static DeclarationNode* TypeDeclaration(type Type, string* name,
-        RangeNode* rng, TypeNode* varrtype);
+    explicit DeclarationNode(DeclarationNode::type Type);
 
-    static DeclarationNode* VarDeclaration(type Type,
-        VarListNode* vlist, TypeNode* varrtype);
+    // Создаёт объявление вложенной функции или процедуры.
+    static DeclarationNode* SubProgramDeclaration(
+        SubProgramItemNode* item
+    );
 
-    static DeclarationNode* VarDeclarationArray(type Type,
-        VarListNode* vlist, RangeNode* rng, TypeNode* varrtype);
+    // Создаёт объявление пользовательского типа.
+    static DeclarationNode* TypeDeclaration(
+        type Type,
+        string* name,
+        RangeNode* rng,
+        TypeNode* varrtype
+    );
 
-    static DeclarationNode* VarDeclarationAssignment(type Type,
-        VarListNode* vlist, TypeNode* varrtype, ExprNode* expr);
+    // Создаёт объявление переменных.
+    static DeclarationNode* VarDeclaration(
+        type Type,
+        VarListNode* vlist,
+        TypeNode* varrtype
+    );
+
+    // Создаёт объявление массива с диапазоном.
+    static DeclarationNode* VarDeclarationArray(
+        type Type,
+        VarListNode* vlist,
+        RangeNode* rng,
+        TypeNode* varrtype
+    );
+
+    // Создаёт объявление переменных с начальным значением.
+    static DeclarationNode* VarDeclarationAssignment(
+        type Type,
+        VarListNode* vlist,
+        TypeNode* varrtype,
+        ExprNode* expr
+    );
+
+    // Устанавливает режим параметра и признак константы.
+    void SetParameterProperties(
+        ParameterMode mode,
+        bool constant = false
+    );
 
     void toDot(string& dot);
 };
 
-// Список объявлений.
+// Список объявлений в декларативной части.
 class DeclarationListNode : public Node {
 public:
-    list<DeclarationNode*>* decs = NULL;
+    list<DeclarationNode*>* decs = nullptr;
 
-    DeclarationListNode(DeclarationNode* dec);
-    DeclarationListNode(DeclarationListNode* list);
+    explicit DeclarationListNode(DeclarationNode* dec);
+    explicit DeclarationListNode(DeclarationListNode* list);
 
-    static DeclarationListNode* Append(DeclarationListNode* list, DeclarationNode* dec);
+    static DeclarationListNode* Append(
+        DeclarationListNode* list,
+        DeclarationNode* dec
+    );
+
     void toDot(string& dot);
 };
 
-// Список имён переменных.
+// Список имён переменных одного объявления.
 class VarListNode : public Node {
 public:
-    list<VarName*>* vars = NULL;
+    list<VarName*>* vars = nullptr;
 
-    VarListNode(string* name);
-    VarListNode(VarListNode* varlst);
+    explicit VarListNode(string* name);
+    explicit VarListNode(VarListNode* varlst);
 
-    static VarListNode* Append(VarListNode* list, string* name);
+    static VarListNode* Append(
+        VarListNode* list,
+        string* name
+    );
+
     void toDot(string& dot);
 };
 
-// Имя переменной.
+// Имя отдельной переменной.
 class VarName : public Node {
 public:
-    string* name = NULL;
+    string* name = nullptr;
 
-    VarName(string* name);
+    explicit VarName(string* name);
     void toDot(string& dot);
 };
 
 // Список параметров подпрограммы.
 class FuncParamListNode : public Node {
 public:
-    list<DeclarationNode*>* params = NULL;
+    list<DeclarationNode*>* params = nullptr;
 
-    FuncParamListNode(DeclarationNode* var_dec);
-    FuncParamListNode(FuncParamListNode* list);
+    explicit FuncParamListNode(DeclarationNode* var_dec);
+    explicit FuncParamListNode(FuncParamListNode* list);
 
-    static FuncParamListNode* Append(FuncParamListNode* list, DeclarationNode* var_dec);
-    void toDot(string& dot);
-};
-
-// Узел оператора языка.
-class StmtNode : public Node {
-public:
-    enum type {
-        return_, whileloop, forloop, simpleLoop,
-        id_, if_, exit_, assigment_, case_ 
-    };
-
-    type Type;
-    ExprNode* Expr = NULL;
-    ExprListNode* Expr_list = NULL;
-    string* Name = NULL;
-    ExprNode* Left_operator = NULL;
-    ExprNode* Right_operator = NULL;
-    StmtListNode* stmtlst = NULL;
-    RangeNode* rng = NULL;
-    ElseStmtNode* else_stmt = NULL;
-    ElsifStmtListNode* elsif_lst = NULL;
-
-    CaseAlternativeListNode* case_alternatives = nullptr;
-
-    static StmtNode* StmtFromReturn(ExprNode* Expr);
-    static StmtNode* StmtFromWhileLoop(ExprNode* Expr, StmtListNode* list);
-    static StmtNode* StmtFromForLoop(string* name, RangeNode* range, StmtListNode* list);
-    static StmtNode* StmtFromSimpleLoop(StmtListNode* list);
-    static StmtNode* StmtFromIdAndExpr(string* Name, ExprListNode* Expr_list);
-    static StmtNode* StmtFromIfWithElsif(ExprNode* Expr, StmtListNode* list,
-        ElsifStmtListNode* elsif_lst, ElseStmtNode* else_stmt);
-    static StmtNode* StmtFromIf(ExprNode* Expr, StmtListNode* list,
-        ElseStmtNode* else_stmt);
-    static StmtNode* StmtFromExit(ExprNode* Expr);
-    static StmtNode* StmtFromAssigment(ExprNode* left, ExprNode* right);
-	static StmtNode* StmtFromCase(
-    ExprNode* expression,
-    CaseAlternativeListNode* alternatives
+    static FuncParamListNode* Append(
+        FuncParamListNode* list,
+        DeclarationNode* var_dec
     );
 
     void toDot(string& dot);
 };
 
-
-
-// Список ветвей elsif.
-class ElsifStmtListNode : public Node {
+// Узел оператора языка Ada.
+class StmtNode : public Node {
 public:
-    list<ElsifStmtNode*>* elsifs = NULL;
+    enum type {
+        return_,
+        whileloop,
+        forloop,
+        simpleLoop,
+        id_,
+        if_,
+        exit_,
+        assigment_,
+        case_,
+        null_
+    };
 
-    ElsifStmtListNode(ElsifStmtNode* elsif);
-    ElsifStmtListNode(ElsifStmtListNode* list);
+    type Type;
 
-    static ElsifStmtListNode* Append(ElsifStmtListNode* list, ElsifStmtNode* elsif);
+    ExprNode* Expr = nullptr;
+    ExprListNode* Expr_list = nullptr;
+    string* Name = nullptr;
+
+    ExprNode* Left_operator = nullptr;
+    ExprNode* Right_operator = nullptr;
+
+    StmtListNode* stmtlst = nullptr;
+    RangeNode* rng = nullptr;
+
+    ElseStmtNode* else_stmt = nullptr;
+    ElsifStmtListNode* elsif_lst = nullptr;
+
+    CaseAlternativeListNode* case_alternatives = nullptr;
+
+    // Создаёт оператор возврата.
+    static StmtNode* StmtFromReturn(ExprNode* Expr);
+
+    // Создаёт цикл WHILE.
+    static StmtNode* StmtFromWhileLoop(
+        ExprNode* Expr,
+        StmtListNode* list
+    );
+
+    // Создаёт цикл FOR.
+    static StmtNode* StmtFromForLoop(
+        string* name,
+        RangeNode* range,
+        StmtListNode* list
+    );
+
+    // Создаёт простой цикл LOOP.
+    static StmtNode* StmtFromSimpleLoop(StmtListNode* list);
+
+    // Создаёт вызов процедуры.
+    static StmtNode* StmtFromIdAndExpr(
+        string* Name,
+        ExprListNode* Expr_list
+    );
+
+    // Создаёт условный оператор с ветвями ELSIF и ELSE.
+    static StmtNode* StmtFromIfWithElsif(
+        ExprNode* Expr,
+        StmtListNode* list,
+        ElsifStmtListNode* elsif_lst,
+        ElseStmtNode* else_stmt
+    );
+
+    // Создаёт условный оператор IF с необязательной ветвью ELSE.
+    static StmtNode* StmtFromIf(
+        ExprNode* Expr,
+        StmtListNode* list,
+        ElseStmtNode* else_stmt
+    );
+
+    // Создаёт оператор EXIT.
+    static StmtNode* StmtFromExit(ExprNode* Expr);
+
+    // Создаёт оператор присваивания.
+    static StmtNode* StmtFromAssigment(
+        ExprNode* left,
+        ExprNode* right
+    );
+
+    // Создаёт оператор CASE.
+    static StmtNode* StmtFromCase(
+        ExprNode* expression,
+        CaseAlternativeListNode* alternatives
+    );
+
+    // Создаёт пустой оператор null.
+    static StmtNode* StmtFromNull();
+
     void toDot(string& dot);
 };
 
-// Одна ветвь elsif.
+// Список ветвей ELSIF.
+class ElsifStmtListNode : public Node {
+public:
+    list<ElsifStmtNode*>* elsifs = nullptr;
+
+    explicit ElsifStmtListNode(ElsifStmtNode* elsif);
+    explicit ElsifStmtListNode(ElsifStmtListNode* list);
+
+    static ElsifStmtListNode* Append(
+        ElsifStmtListNode* list,
+        ElsifStmtNode* elsif
+    );
+
+    void toDot(string& dot);
+};
+
+// Одна ветвь ELSIF.
 class ElsifStmtNode : public Node {
 public:
-    ExprNode* Expr = NULL;
-    StmtListNode* stmtlst = NULL;
+    ExprNode* Expr = nullptr;
+    StmtListNode* stmtlst = nullptr;
 
     ElsifStmtNode(ExprNode* expr, StmtListNode* lst);
     void toDot(string& dot);
 };
 
-// Ветка else.
+// Ветка ELSE.
 class ElseStmtNode : public Node {
 public:
-    StmtListNode* stmtlst = NULL;
+    StmtListNode* stmtlst = nullptr;
 
-    ElseStmtNode(StmtListNode* lst);
+    explicit ElseStmtNode(StmtListNode* lst);
     void toDot(string& dot);
 };
 
 // Список операторов.
 class StmtListNode : public Node {
 public:
-    list<StmtNode*>* stmts = NULL;
+    list<StmtNode*>* stmts = nullptr;
 
-    StmtListNode(StmtNode* stmt);
-    StmtListNode(StmtListNode* list);
+    explicit StmtListNode(StmtNode* stmt);
+    explicit StmtListNode(StmtListNode* list);
 
-    static StmtListNode* Append(StmtListNode* list, StmtNode* stmt);
+    static StmtListNode* Append(
+        StmtListNode* list,
+        StmtNode* stmt
+    );
+
     void toDot(string& dot);
 };
 
@@ -248,36 +389,121 @@ public:
 class ExprNode : public Node {
 public:
     enum type {
-        const_bool, const_character, const_string, const_integer, const_float,
-        id_, expr_more_expr, expr_less_expr, expr_more_equal_expr,
-        expr_less_equal_expr, expr_equal_expr, expr_not_equal_expr,
-        expr_plus_expr, expr_minus_expr, expr_mult_expr, expr_div_expr,
-        expr_abs_expr, uminus_expr, expr_or_expr, expr_and_expr,
-        expr_xor_expr, not_expr, func_call, literal, expr_mod_expr, expr_rem_expr
+        const_bool,
+        const_character,
+        const_string,
+        const_integer,
+        const_float,
+
+        id_,
+
+        expr_more_expr,
+        expr_less_expr,
+        expr_more_equal_expr,
+        expr_less_equal_expr,
+        expr_equal_expr,
+        expr_not_equal_expr,
+
+        expr_plus_expr,
+        expr_minus_expr,
+        expr_mult_expr,
+        expr_div_expr,
+        expr_power_expr,
+        expr_concat_expr,
+
+        expr_abs_expr,
+        uminus_expr,
+
+        expr_or_expr,
+        expr_and_expr,
+        expr_xor_expr,
+        not_expr,
+
+        func_call,
+        literal,
+        expr_mod_expr,
+        expr_rem_expr,
+
+        // Выбор компонента: Record.Field.
+        selected_component,
+
+        // Атрибут Ada: Type'First, Array'Range и т. п.
+        attribute_ref,
+
+        // Именованная ассоциация аргумента: Name => Value.
+        named_association
     };
 
     type Type;
 
     char Char = 0;
-    string* String = NULL;
+    string* String = nullptr;
     int Integer = 0;
     float Float = 0;
     bool Bool = false;
 
-    string* Name = NULL;
-    ExprNode* Left_operator = NULL;
-    ExprNode* Right_operator = NULL;
-    ExprListNode* Expr_list = NULL;
+    string* Name = nullptr;
+    string* Attribute = nullptr;
 
+    ExprNode* Left_operator = nullptr;
+    ExprNode* Right_operator = nullptr;
+    ExprListNode* Expr_list = nullptr;
+
+    // Создаёт символьную константу.
     static ExprNode* ExprFromCharConst(type Type, char value);
+
+    // Создаёт логическую константу.
     static ExprNode* ExprFromBoolConst(type Type, bool value);
+
+    // Создаёт строковую константу.
     static ExprNode* ExprFromStringConst(type Type, string* value);
+
+    // Создаёт целочисленную константу.
     static ExprNode* ExprFromIntConst(type Type, int value);
+
+    // Создаёт вещественную константу.
     static ExprNode* ExprFromFloatConst(type Type, float value);
+
+    // Создаёт выражение-идентификатор.
     static ExprNode* ExprFromId(type Type, string* Name);
-    static ExprNode* ExprOperation(type Type, ExprNode* left, ExprNode* right);
-    static ExprNode* ExprFromFuncCall(type Type, string* Name, ExprListNode* Expr_list);
-    static ExprNode* ExprFromExprLiteral(type Type, ExprListNode* Expr_list);
+
+    // Создаёт унарную или бинарную операцию.
+    static ExprNode* ExprOperation(
+        type Type,
+        ExprNode* left,
+        ExprNode* right
+    );
+
+    // Создаёт вызов функции.
+    static ExprNode* ExprFromFuncCall(
+        type Type,
+        string* Name,
+        ExprListNode* Expr_list
+    );
+
+    // Создаёт список выражений или агрегат.
+    static ExprNode* ExprFromExprLiteral(
+        type Type,
+        ExprListNode* Expr_list
+    );
+
+    // Создаёт выбор компонента вида Object.Field.
+    static ExprNode* ExprFromSelectedComponent(
+        ExprNode* prefix,
+        string* component
+    );
+
+    // Создаёт ссылку на атрибут вида Type'First.
+    static ExprNode* ExprFromAttribute(
+        ExprNode* prefix,
+        string* attribute
+    );
+
+    // Создаёт именованную ассоциацию Name => Value.
+    static ExprNode* ExprFromNamedAssociation(
+        string* name,
+        ExprNode* value
+    );
 
     void toDot(string& dot);
 };
@@ -285,38 +511,50 @@ public:
 // Список выражений.
 class ExprListNode : public Node {
 public:
-    list<ExprNode*>* exprs = NULL;
+    list<ExprNode*>* exprs = nullptr;
 
-    ExprListNode(ExprNode* expr);
-    ExprListNode(ExprListNode* exprs_list);
+    explicit ExprListNode(ExprNode* expr);
+    explicit ExprListNode(ExprListNode* exprs_list);
 
-    static ExprListNode* Append(ExprListNode* list, ExprNode* expr);
+    static ExprListNode* Append(
+        ExprListNode* list,
+        ExprNode* expr
+    );
+
     void toDot(string& dot);
 };
 
 // Диапазон значений.
 class RangeNode : public Node {
 public:
-    ExprNode* Left_operator = NULL;
-    ExprNode* Right_operator = NULL;
+    ExprNode* Left_operator = nullptr;
+    ExprNode* Right_operator = nullptr;
 
     RangeNode(ExprNode* left, ExprNode* right);
     void toDot(string& dot);
 };
 
-// Тип данных.
+// Узел типа данных.
 class TypeNode : public Node {
 public:
-    enum type { const_bool, const_character, const_string, const_integer, const_float, array_, id_ };
+    enum type {
+        const_bool,
+        const_character,
+        const_string,
+        const_integer,
+        const_float,
+        array_,
+        id_
+    };
 
     type Type;
-    string* Name = NULL;
+    string* Name = nullptr;
 
-    TypeNode(type Type);
+    explicit TypeNode(type Type);
     TypeNode(type Type, string* Name);
 
     void toDot(string& dot);
 };
 
-// Выводит абстрактное синтаксическое дерево программы в консоль.
+// Выводит абстрактное синтаксическое дерево в консоль.
 void printTree(ProgramNode* root);

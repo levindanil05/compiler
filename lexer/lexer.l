@@ -448,8 +448,6 @@ int main(int argc, char **argv) {
         }
     }
 	
-
-	yydebug = 1;
     int result = yyparse();
 
     if (argc > 1) {
