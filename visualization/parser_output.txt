@@ -1,0 +1,29 @@
+WITH                 with
+ID                   Ada
+.                    .
+ID                   Text_IO
+;                    ;
+USE                  use
+ID                   Ada
+.                    .
+ID                   Text_IO
+;                    ;
+PROCEDURE            procedure
+ID                   Hello_World
+IS                   is
+BEGIN_TOKEN          begin
+ID                   Put_Line
+(                    (
+CONST_STRING         Hello, world!
+)                    )
+;                    ;
+END                  end
+ID                   Hello_World
+;                    ;
+
+=== Abstract Syntax Tree ===
+Program [id=8]
+  Procedure implementation: Hello_World [id=6]
+    Call: Put_Line [id=4]
+      String: Hello, world! [id=1]
+=== End of AST ===

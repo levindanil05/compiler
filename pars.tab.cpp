@@ -67,7 +67,7 @@
 
 
 /* First part of user prologue.  */
-#line 9 "parser/pars.y"
+#line 10 "parser/pars.y"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -652,22 +652,22 @@ static const yytype_int8 yytranslate[] =
 /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_int16 yyrline[] =
 {
-       0,   158,   158,   164,   170,   171,   176,   177,   182,   183,
-     188,   190,   195,   196,   197,   198,   203,   205,   211,   213,
-     219,   222,   229,   232,   239,   240,   246,   248,   250,   252,
-     257,   258,   263,   265,   267,   269,   275,   284,   289,   304,
-     306,   308,   314,   319,   328,   333,   343,   345,   347,   349,
-     351,   353,   355,   364,   370,   371,   376,   377,   383,   384,
-     385,   391,   392,   397,   398,   399,   401,   402,   403,   404,
-     405,   410,   411,   416,   417,   418,   423,   425,   431,   437,
-     443,   444,   449,   451,   457,   464,   466,   472,   479,   485,
-     490,   491,   497,   498,   503,   508,   514,   515,   520,   521,
-     526,   532,   533,   538,   544,   545,   550,   551,   556,   557,
-     569,   570,   571,   572,   573,   574,   576,   578,   580,   582,
-     584,   586,   589,   591,   593,   595,   597,   599,   602,   604,
-     606,   608,   610,   612,   615,   617,   619,   621,   623,   625,
-     628,   630,   632,   638,   649,   655,   656,   657,   658,   659,
-     660
+       0,   159,   159,   165,   171,   172,   177,   178,   183,   184,
+     189,   191,   196,   197,   198,   199,   204,   206,   212,   214,
+     220,   223,   230,   233,   240,   241,   247,   249,   251,   253,
+     258,   259,   264,   266,   268,   270,   276,   285,   290,   305,
+     307,   309,   315,   320,   329,   334,   344,   346,   348,   350,
+     352,   354,   356,   365,   371,   372,   377,   378,   384,   385,
+     386,   392,   393,   398,   399,   400,   402,   403,   404,   405,
+     406,   411,   412,   417,   418,   419,   424,   426,   432,   438,
+     444,   445,   450,   452,   458,   465,   467,   473,   480,   486,
+     491,   492,   498,   499,   504,   509,   515,   516,   521,   522,
+     527,   533,   534,   539,   545,   546,   551,   552,   557,   558,
+     570,   571,   572,   573,   574,   575,   577,   579,   581,   583,
+     585,   587,   590,   592,   594,   596,   598,   600,   603,   605,
+     607,   609,   611,   613,   616,   618,   620,   622,   624,   626,
+     629,   631,   633,   639,   650,   656,   657,   658,   659,   660,
+     661
 };
 #endif
 
@@ -1167,37 +1167,37 @@ yy_symbol_value_print (FILE *yyo,
   switch (yykind)
     {
     case YYSYMBOL_ID: /* ID  */
-#line 113 "parser/pars.y"
+#line 114 "parser/pars.y"
          { fprintf(yyo, "%s", ((*yyvaluep).id_const) ? ((*yyvaluep).id_const)->c_str() : "null"); }
 #line 1173 "pars.tab.cpp"
         break;
 
     case YYSYMBOL_CONST_STRING: /* CONST_STRING  */
-#line 113 "parser/pars.y"
+#line 114 "parser/pars.y"
          { fprintf(yyo, "%s", ((*yyvaluep).string_const) ? ((*yyvaluep).string_const)->c_str() : "null"); }
 #line 1179 "pars.tab.cpp"
         break;
 
     case YYSYMBOL_CONST_INTEGER: /* CONST_INTEGER  */
-#line 114 "parser/pars.y"
+#line 115 "parser/pars.y"
          { fprintf(yyo, "%d", ((*yyvaluep).int_const)); }
 #line 1185 "pars.tab.cpp"
         break;
 
     case YYSYMBOL_CONST_FLOAT: /* CONST_FLOAT  */
-#line 115 "parser/pars.y"
+#line 116 "parser/pars.y"
          { fprintf(yyo, "%f", ((*yyvaluep).float_const)); }
 #line 1191 "pars.tab.cpp"
         break;
 
     case YYSYMBOL_CONST_CHARACTER: /* CONST_CHARACTER  */
-#line 116 "parser/pars.y"
+#line 117 "parser/pars.y"
          { fprintf(yyo, "%c", ((*yyvaluep).char_const)); }
 #line 1197 "pars.tab.cpp"
         break;
 
     case YYSYMBOL_CONST_BOOL: /* CONST_BOOL  */
-#line 114 "parser/pars.y"
+#line 115 "parser/pars.y"
          { fprintf(yyo, "%d", ((*yyvaluep).int_const)); }
 #line 1203 "pars.tab.cpp"
         break;
@@ -1587,175 +1587,175 @@ yyreduce:
   switch (yyn)
     {
   case 2: /* program: context_list program_body  */
-#line 159 "parser/pars.y"
+#line 160 "parser/pars.y"
       { (yyval.prg) = global_program = (yyvsp[0].prg); }
 #line 1593 "pars.tab.cpp"
     break;
 
   case 3: /* program_body: item_list  */
-#line 165 "parser/pars.y"
+#line 166 "parser/pars.y"
       { (yyval.prg) = new ProgramNode((yyvsp[0].itemlst)); }
 #line 1599 "pars.tab.cpp"
     break;
 
   case 10: /* item_list: item  */
-#line 189 "parser/pars.y"
+#line 190 "parser/pars.y"
       { (yyval.itemlst) = new ItemListNode((yyvsp[0].item)); }
 #line 1605 "pars.tab.cpp"
     break;
 
   case 11: /* item_list: item_list item  */
-#line 191 "parser/pars.y"
+#line 192 "parser/pars.y"
       { (yyval.itemlst) = ItemListNode::Append((yyvsp[-1].itemlst), (yyvsp[0].item)); }
 #line 1611 "pars.tab.cpp"
     break;
 
   case 12: /* item: func_declaration  */
-#line 195 "parser/pars.y"
+#line 196 "parser/pars.y"
                              { (yyval.item) = (yyvsp[0].item); }
 #line 1617 "pars.tab.cpp"
     break;
 
   case 13: /* item: proc_declaration  */
-#line 196 "parser/pars.y"
+#line 197 "parser/pars.y"
                              { (yyval.item) = (yyvsp[0].item); }
 #line 1623 "pars.tab.cpp"
     break;
 
   case 14: /* item: func_implementation  */
-#line 197 "parser/pars.y"
+#line 198 "parser/pars.y"
                              { (yyval.item) = (yyvsp[0].item); }
 #line 1629 "pars.tab.cpp"
     break;
 
   case 15: /* item: proc_implementation  */
-#line 198 "parser/pars.y"
+#line 199 "parser/pars.y"
                             { (yyval.item) = (yyvsp[0].item); }
 #line 1635 "pars.tab.cpp"
     break;
 
   case 16: /* func_declaration: FUNCTION ID '(' func_param_list ')' RETURN var_type ';'  */
-#line 204 "parser/pars.y"
+#line 205 "parser/pars.y"
       { (yyval.item) = new SubProgramItemNode(SubProgramItemNode::func_dec, (yyvsp[-6].id_const), (yyvsp[-4].param_lst), (yyvsp[-1].v_type), NULL, NULL); }
 #line 1641 "pars.tab.cpp"
     break;
 
   case 17: /* func_declaration: FUNCTION ID RETURN var_type ';'  */
-#line 206 "parser/pars.y"
+#line 207 "parser/pars.y"
       { (yyval.item) = new SubProgramItemNode(SubProgramItemNode::func_dec, (yyvsp[-3].id_const), NULL, (yyvsp[-1].v_type), NULL, NULL); }
 #line 1647 "pars.tab.cpp"
     break;
 
   case 18: /* proc_declaration: PROCEDURE ID '(' func_param_list ')' ';'  */
-#line 212 "parser/pars.y"
+#line 213 "parser/pars.y"
       { (yyval.item) = new SubProgramItemNode(SubProgramItemNode::proc_dec, (yyvsp[-4].id_const), (yyvsp[-2].param_lst), NULL, NULL, NULL); }
 #line 1653 "pars.tab.cpp"
     break;
 
   case 19: /* proc_declaration: PROCEDURE ID ';'  */
-#line 214 "parser/pars.y"
+#line 215 "parser/pars.y"
       { (yyval.item) = new SubProgramItemNode(SubProgramItemNode::proc_dec, (yyvsp[-1].id_const), NULL, NULL, NULL, NULL); }
 #line 1659 "pars.tab.cpp"
     break;
 
   case 20: /* func_implementation: FUNCTION ID '(' func_param_list ')' RETURN var_type IS declaration_list_empty BEGIN_TOKEN stmt_list_empty END ID ';'  */
-#line 221 "parser/pars.y"
+#line 222 "parser/pars.y"
       { (yyval.item) = new SubProgramItemNode(SubProgramItemNode::func_imp, (yyvsp[-12].id_const), (yyvsp[-10].param_lst), (yyvsp[-7].v_type), (yyvsp[-5].decl_lst), (yyvsp[-3].stmt_lst)); }
 #line 1665 "pars.tab.cpp"
     break;
 
   case 21: /* func_implementation: FUNCTION ID RETURN var_type IS declaration_list_empty BEGIN_TOKEN stmt_list_empty END ID ';'  */
-#line 224 "parser/pars.y"
+#line 225 "parser/pars.y"
       { (yyval.item) = new SubProgramItemNode(SubProgramItemNode::func_imp, (yyvsp[-9].id_const), NULL, (yyvsp[-7].v_type), (yyvsp[-5].decl_lst), (yyvsp[-3].stmt_lst)); }
 #line 1671 "pars.tab.cpp"
     break;
 
   case 22: /* proc_implementation: PROCEDURE ID '(' func_param_list ')' IS declaration_list_empty BEGIN_TOKEN stmt_list_empty END ID ';'  */
-#line 231 "parser/pars.y"
+#line 232 "parser/pars.y"
       { (yyval.item) = new SubProgramItemNode(SubProgramItemNode::proc_imp, (yyvsp[-10].id_const), (yyvsp[-8].param_lst), NULL, (yyvsp[-5].decl_lst), (yyvsp[-3].stmt_lst)); }
 #line 1677 "pars.tab.cpp"
     break;
 
   case 23: /* proc_implementation: PROCEDURE ID IS declaration_list_empty BEGIN_TOKEN stmt_list_empty END ID ';'  */
-#line 234 "parser/pars.y"
+#line 235 "parser/pars.y"
       { (yyval.item) = new SubProgramItemNode(SubProgramItemNode::proc_imp, (yyvsp[-7].id_const), NULL, NULL, (yyvsp[-5].decl_lst), (yyvsp[-3].stmt_lst)); }
 #line 1683 "pars.tab.cpp"
     break;
 
   case 24: /* declaration_list_empty: %empty  */
-#line 239 "parser/pars.y"
+#line 240 "parser/pars.y"
              { (yyval.decl_lst) = nullptr; }
 #line 1689 "pars.tab.cpp"
     break;
 
   case 25: /* declaration_list_empty: decl_body_list  */
-#line 240 "parser/pars.y"
+#line 241 "parser/pars.y"
                      { (yyval.decl_lst) = (yyvsp[0].decl_lst); }
 #line 1695 "pars.tab.cpp"
     break;
 
   case 26: /* decl_body_list: declaration ';'  */
-#line 247 "parser/pars.y"
+#line 248 "parser/pars.y"
       { (yyval.decl_lst) = new DeclarationListNode((yyvsp[-1].decl)); }
 #line 1701 "pars.tab.cpp"
     break;
 
   case 27: /* decl_body_list: decl_body_list declaration ';'  */
-#line 249 "parser/pars.y"
+#line 250 "parser/pars.y"
       { (yyval.decl_lst) = DeclarationListNode::Append((yyvsp[-2].decl_lst), (yyvsp[-1].decl)); }
 #line 1707 "pars.tab.cpp"
     break;
 
   case 28: /* decl_body_list: item  */
-#line 251 "parser/pars.y"
+#line 252 "parser/pars.y"
       { (yyval.decl_lst) = new DeclarationListNode(DeclarationNode::SubProgramDeclaration((yyvsp[0].item))); }
 #line 1713 "pars.tab.cpp"
     break;
 
   case 29: /* decl_body_list: decl_body_list item  */
-#line 253 "parser/pars.y"
+#line 254 "parser/pars.y"
       { (yyval.decl_lst) = DeclarationListNode::Append((yyvsp[-1].decl_lst), DeclarationNode::SubProgramDeclaration((yyvsp[0].item))); }
 #line 1719 "pars.tab.cpp"
     break;
 
   case 30: /* declaration: type_declaration  */
-#line 257 "parser/pars.y"
+#line 258 "parser/pars.y"
                        { (yyval.decl) = (yyvsp[0].decl); }
 #line 1725 "pars.tab.cpp"
     break;
 
   case 31: /* declaration: var_declaration  */
-#line 258 "parser/pars.y"
+#line 259 "parser/pars.y"
                        { (yyval.decl) = (yyvsp[0].decl); }
 #line 1731 "pars.tab.cpp"
     break;
 
   case 32: /* type_declaration: TYPE ID IS array_type_definition  */
-#line 264 "parser/pars.y"
+#line 265 "parser/pars.y"
       { (yyval.decl) = make_type_declaration((yyvsp[-2].id_const), (yyvsp[0].type_definition)); }
 #line 1737 "pars.tab.cpp"
     break;
 
   case 33: /* type_declaration: TYPE ID IS '(' enum_id_list ')'  */
-#line 266 "parser/pars.y"
+#line 267 "parser/pars.y"
       { (yyval.decl) = make_type_declaration((yyvsp[-4].id_const), (yyvsp[-1].type_definition)); }
 #line 1743 "pars.tab.cpp"
     break;
 
   case 34: /* type_declaration: TYPE ID IS RANGE range  */
-#line 268 "parser/pars.y"
+#line 269 "parser/pars.y"
       { (yyval.decl) = DeclarationNode::TypeDeclaration(DeclarationNode::type_dec, (yyvsp[-3].id_const), (yyvsp[0].rng), nullptr); }
 #line 1749 "pars.tab.cpp"
     break;
 
   case 35: /* type_declaration: TYPE ID IS RECORD record_field_list END RECORD  */
-#line 270 "parser/pars.y"
+#line 271 "parser/pars.y"
       { (yyval.decl) = make_type_declaration((yyvsp[-5].id_const), (yyvsp[-2].type_definition)); }
 #line 1755 "pars.tab.cpp"
     break;
 
   case 36: /* array_type_definition: ARRAY '(' array_index_list ')' OF var_type  */
-#line 276 "parser/pars.y"
+#line 277 "parser/pars.y"
       {
           (yyval.type_definition) = (yyvsp[-3].type_definition);
           (yyval.type_definition)->element_type = (yyvsp[0].v_type);
@@ -1764,7 +1764,7 @@ yyreduce:
     break;
 
   case 37: /* array_index_list: array_index  */
-#line 285 "parser/pars.y"
+#line 286 "parser/pars.y"
       {
           (yyval.type_definition) = new TypeDefinitionNode(TypeDefinitionNode::array_type);
           (yyval.type_definition)->addIndex((yyvsp[0].array_index));
@@ -1773,7 +1773,7 @@ yyreduce:
     break;
 
   case 38: /* array_index_list: array_index_list ',' array_index  */
-#line 290 "parser/pars.y"
+#line 291 "parser/pars.y"
       {
           (yyval.type_definition) = (yyvsp[-2].type_definition);
           (yyval.type_definition)->addIndex((yyvsp[0].array_index));
@@ -1782,25 +1782,25 @@ yyreduce:
     break;
 
   case 39: /* array_index: range  */
-#line 305 "parser/pars.y"
+#line 306 "parser/pars.y"
       { (yyval.array_index) = new ArrayIndexNode((yyvsp[0].rng), nullptr, false); }
 #line 1788 "pars.tab.cpp"
     break;
 
   case 40: /* array_index: var_type RANGE '<' '>'  */
-#line 307 "parser/pars.y"
+#line 308 "parser/pars.y"
       { (yyval.array_index) = new ArrayIndexNode(nullptr, (yyvsp[-3].v_type), true); }
 #line 1794 "pars.tab.cpp"
     break;
 
   case 41: /* array_index: var_type RANGE range  */
-#line 309 "parser/pars.y"
+#line 310 "parser/pars.y"
       { (yyval.array_index) = new ArrayIndexNode((yyvsp[0].rng), (yyvsp[-2].v_type), false); }
 #line 1800 "pars.tab.cpp"
     break;
 
   case 42: /* enum_id_list: ID  */
-#line 315 "parser/pars.y"
+#line 316 "parser/pars.y"
       {
           (yyval.type_definition) = new TypeDefinitionNode(TypeDefinitionNode::enum_type);
           (yyval.type_definition)->addLiteral((yyvsp[0].id_const));
@@ -1809,7 +1809,7 @@ yyreduce:
     break;
 
   case 43: /* enum_id_list: enum_id_list ',' ID  */
-#line 320 "parser/pars.y"
+#line 321 "parser/pars.y"
       {
           (yyval.type_definition) = (yyvsp[-2].type_definition);
           (yyval.type_definition)->addLiteral((yyvsp[0].id_const));
@@ -1818,7 +1818,7 @@ yyreduce:
     break;
 
   case 44: /* record_field_list: var_declaration ';'  */
-#line 329 "parser/pars.y"
+#line 330 "parser/pars.y"
       {
           (yyval.type_definition) = new TypeDefinitionNode(TypeDefinitionNode::record_type);
           (yyval.type_definition)->addField((yyvsp[-1].decl));
@@ -1827,7 +1827,7 @@ yyreduce:
     break;
 
   case 45: /* record_field_list: record_field_list var_declaration ';'  */
-#line 334 "parser/pars.y"
+#line 335 "parser/pars.y"
       {
           (yyval.type_definition) = (yyvsp[-2].type_definition);
           (yyval.type_definition)->addField((yyvsp[-1].decl));
@@ -1836,43 +1836,43 @@ yyreduce:
     break;
 
   case 46: /* var_declaration: var_list ':' var_type  */
-#line 344 "parser/pars.y"
+#line 345 "parser/pars.y"
       { (yyval.decl) = DeclarationNode::VarDeclaration(DeclarationNode::var_dec, (yyvsp[-2].var_lst), (yyvsp[0].v_type)); }
 #line 1842 "pars.tab.cpp"
     break;
 
   case 47: /* var_declaration: var_list ':' IN var_type  */
-#line 346 "parser/pars.y"
+#line 347 "parser/pars.y"
       { (yyval.decl) = DeclarationNode::VarDeclaration(DeclarationNode::var_dec, (yyvsp[-3].var_lst), (yyvsp[0].v_type)); }
 #line 1848 "pars.tab.cpp"
     break;
 
   case 48: /* var_declaration: var_list ':' OUT var_type  */
-#line 348 "parser/pars.y"
+#line 349 "parser/pars.y"
       { (yyval.decl) = DeclarationNode::VarDeclaration(DeclarationNode::var_dec, (yyvsp[-3].var_lst), (yyvsp[0].v_type)); }
 #line 1854 "pars.tab.cpp"
     break;
 
   case 49: /* var_declaration: var_list ':' IN OUT var_type  */
-#line 350 "parser/pars.y"
+#line 351 "parser/pars.y"
       { (yyval.decl) = DeclarationNode::VarDeclaration(DeclarationNode::var_dec, (yyvsp[-4].var_lst), (yyvsp[0].v_type)); }
 #line 1860 "pars.tab.cpp"
     break;
 
   case 50: /* var_declaration: var_list ':' CONSTANT var_type  */
-#line 352 "parser/pars.y"
+#line 353 "parser/pars.y"
       { (yyval.decl) = DeclarationNode::VarDeclaration(DeclarationNode::var_dec, (yyvsp[-3].var_lst), (yyvsp[0].v_type)); }
 #line 1866 "pars.tab.cpp"
     break;
 
   case 51: /* var_declaration: var_list ':' CONSTANT var_type ASSIGNMENT expression  */
-#line 354 "parser/pars.y"
+#line 355 "parser/pars.y"
       { (yyval.decl) = DeclarationNode::VarDeclarationAssignment(DeclarationNode::var_dec, (yyvsp[-5].var_lst), (yyvsp[-2].v_type), (yyvsp[0].expr)); }
 #line 1872 "pars.tab.cpp"
     break;
 
   case 52: /* var_declaration: var_list ':' ARRAY '(' array_index_list ')' OF var_type  */
-#line 356 "parser/pars.y"
+#line 357 "parser/pars.y"
       {
           DeclarationNode* declaration = DeclarationNode::VarDeclaration(
               DeclarationNode::var_dec, (yyvsp[-7].var_lst), (yyvsp[0].v_type)
@@ -1885,211 +1885,211 @@ yyreduce:
     break;
 
   case 53: /* var_declaration: var_list ':' var_type ASSIGNMENT expression  */
-#line 365 "parser/pars.y"
+#line 366 "parser/pars.y"
       { (yyval.decl) = DeclarationNode::VarDeclarationAssignment(DeclarationNode::var_dec, (yyvsp[-4].var_lst), (yyvsp[-2].v_type), (yyvsp[0].expr)); }
 #line 1891 "pars.tab.cpp"
     break;
 
   case 54: /* var_list: ID  */
-#line 370 "parser/pars.y"
+#line 371 "parser/pars.y"
          { (yyval.var_lst) = new VarListNode((yyvsp[0].id_const)); }
 #line 1897 "pars.tab.cpp"
     break;
 
   case 55: /* var_list: var_list ',' ID  */
-#line 371 "parser/pars.y"
+#line 372 "parser/pars.y"
                       { (yyval.var_lst) = VarListNode::Append((yyvsp[-2].var_lst), (yyvsp[0].id_const)); }
 #line 1903 "pars.tab.cpp"
     break;
 
   case 56: /* func_param_list: var_declaration  */
-#line 376 "parser/pars.y"
+#line 377 "parser/pars.y"
                       { (yyval.param_lst) = new FuncParamListNode((yyvsp[0].decl)); }
 #line 1909 "pars.tab.cpp"
     break;
 
   case 57: /* func_param_list: func_param_list ';' var_declaration  */
-#line 377 "parser/pars.y"
+#line 378 "parser/pars.y"
                                           { (yyval.param_lst) = FuncParamListNode::Append((yyvsp[-2].param_lst), (yyvsp[0].decl)); }
 #line 1915 "pars.tab.cpp"
     break;
 
   case 58: /* stmt_list_empty: %empty  */
-#line 383 "parser/pars.y"
+#line 384 "parser/pars.y"
              { (yyval.stmt_lst) = nullptr; }
 #line 1921 "pars.tab.cpp"
     break;
 
   case 59: /* stmt_list_empty: stmt_list  */
-#line 384 "parser/pars.y"
+#line 385 "parser/pars.y"
                 { (yyval.stmt_lst) = (yyvsp[0].stmt_lst); }
 #line 1927 "pars.tab.cpp"
     break;
 
   case 60: /* stmt_list_empty: stmt_list exception_part  */
-#line 386 "parser/pars.y"
+#line 387 "parser/pars.y"
       { (yyval.stmt_lst) = append_statement_lists((yyvsp[-1].stmt_lst), (yyvsp[0].stmt_lst)); }
 #line 1933 "pars.tab.cpp"
     break;
 
   case 61: /* stmt_list: stmt  */
-#line 391 "parser/pars.y"
+#line 392 "parser/pars.y"
            { (yyval.stmt_lst) = new StmtListNode((yyvsp[0].stmt)); }
 #line 1939 "pars.tab.cpp"
     break;
 
   case 62: /* stmt_list: stmt_list stmt  */
-#line 392 "parser/pars.y"
+#line 393 "parser/pars.y"
                      { (yyval.stmt_lst) = StmtListNode::Append((yyvsp[-1].stmt_lst), (yyvsp[0].stmt)); }
 #line 1945 "pars.tab.cpp"
     break;
 
   case 63: /* stmt: return_stmt  */
-#line 397 "parser/pars.y"
+#line 398 "parser/pars.y"
                   { (yyval.stmt) = (yyvsp[0].stmt); }
 #line 1951 "pars.tab.cpp"
     break;
 
   case 64: /* stmt: loop_stmt  */
-#line 398 "parser/pars.y"
+#line 399 "parser/pars.y"
                 { (yyval.stmt) = (yyvsp[0].stmt); }
 #line 1957 "pars.tab.cpp"
     break;
 
   case 65: /* stmt: ID '(' expression_list_empty ')' ';'  */
-#line 400 "parser/pars.y"
+#line 401 "parser/pars.y"
       { (yyval.stmt) = StmtNode::StmtFromIdAndExpr((yyvsp[-4].id_const), (yyvsp[-2].expr_list)); }
 #line 1963 "pars.tab.cpp"
     break;
 
   case 66: /* stmt: if_stmt  */
-#line 401 "parser/pars.y"
+#line 402 "parser/pars.y"
               { (yyval.stmt) = (yyvsp[0].stmt); }
 #line 1969 "pars.tab.cpp"
     break;
 
   case 67: /* stmt: exit_stmt  */
-#line 402 "parser/pars.y"
+#line 403 "parser/pars.y"
                 { (yyval.stmt) = (yyvsp[0].stmt); }
 #line 1975 "pars.tab.cpp"
     break;
 
   case 68: /* stmt: assigment_stmt  */
-#line 403 "parser/pars.y"
+#line 404 "parser/pars.y"
                      { (yyval.stmt) = (yyvsp[0].stmt); }
 #line 1981 "pars.tab.cpp"
     break;
 
   case 69: /* stmt: case_stmt  */
-#line 404 "parser/pars.y"
+#line 405 "parser/pars.y"
                 { (yyval.stmt) = (yyvsp[0].stmt); }
 #line 1987 "pars.tab.cpp"
     break;
 
   case 70: /* stmt: ID ';'  */
-#line 405 "parser/pars.y"
+#line 406 "parser/pars.y"
              { (yyval.stmt) = StmtNode::StmtFromIdAndExpr((yyvsp[-1].id_const), nullptr); }
 #line 1993 "pars.tab.cpp"
     break;
 
   case 71: /* return_stmt: RETURN expression ';'  */
-#line 410 "parser/pars.y"
+#line 411 "parser/pars.y"
                             { (yyval.stmt) = StmtNode::StmtFromReturn((yyvsp[-1].expr)); }
 #line 1999 "pars.tab.cpp"
     break;
 
   case 72: /* return_stmt: RETURN ';'  */
-#line 411 "parser/pars.y"
+#line 412 "parser/pars.y"
                  { (yyval.stmt) = StmtNode::StmtFromReturn(nullptr); }
 #line 2005 "pars.tab.cpp"
     break;
 
   case 73: /* loop_stmt: while_stmt  */
-#line 416 "parser/pars.y"
+#line 417 "parser/pars.y"
                  { (yyval.stmt) = (yyvsp[0].stmt); }
 #line 2011 "pars.tab.cpp"
     break;
 
   case 74: /* loop_stmt: for_stmt  */
-#line 417 "parser/pars.y"
+#line 418 "parser/pars.y"
                { (yyval.stmt) = (yyvsp[0].stmt); }
 #line 2017 "pars.tab.cpp"
     break;
 
   case 75: /* loop_stmt: simple_loop_stmt  */
-#line 418 "parser/pars.y"
+#line 419 "parser/pars.y"
                        { (yyval.stmt) = (yyvsp[0].stmt); }
 #line 2023 "pars.tab.cpp"
     break;
 
   case 76: /* for_stmt: FOR ID IN range LOOP stmt_list_empty END LOOP ';'  */
-#line 424 "parser/pars.y"
+#line 425 "parser/pars.y"
       { (yyval.stmt) = StmtNode::StmtFromForLoop((yyvsp[-7].id_const), (yyvsp[-5].rng), (yyvsp[-3].stmt_lst)); }
 #line 2029 "pars.tab.cpp"
     break;
 
   case 77: /* for_stmt: FOR ID IN expression LOOP stmt_list_empty END LOOP ';'  */
-#line 426 "parser/pars.y"
+#line 427 "parser/pars.y"
       { (yyval.stmt) = StmtNode::StmtFromForLoop((yyvsp[-7].id_const), nullptr, (yyvsp[-3].stmt_lst)); }
 #line 2035 "pars.tab.cpp"
     break;
 
   case 78: /* while_stmt: WHILE expression LOOP stmt_list_empty END LOOP ';'  */
-#line 432 "parser/pars.y"
+#line 433 "parser/pars.y"
       { (yyval.stmt) = StmtNode::StmtFromWhileLoop((yyvsp[-5].expr), (yyvsp[-3].stmt_lst)); }
 #line 2041 "pars.tab.cpp"
     break;
 
   case 79: /* simple_loop_stmt: LOOP stmt_list_empty END LOOP ';'  */
-#line 438 "parser/pars.y"
+#line 439 "parser/pars.y"
       { (yyval.stmt) = StmtNode::StmtFromSimpleLoop((yyvsp[-3].stmt_lst)); }
 #line 2047 "pars.tab.cpp"
     break;
 
   case 80: /* exit_stmt: EXIT ';'  */
-#line 443 "parser/pars.y"
+#line 444 "parser/pars.y"
                { (yyval.stmt) = StmtNode::StmtFromExit(nullptr); }
 #line 2053 "pars.tab.cpp"
     break;
 
   case 81: /* exit_stmt: EXIT WHEN expression ';'  */
-#line 444 "parser/pars.y"
+#line 445 "parser/pars.y"
                                { (yyval.stmt) = StmtNode::StmtFromExit((yyvsp[-1].expr)); }
 #line 2059 "pars.tab.cpp"
     break;
 
   case 82: /* if_stmt: IF expression THEN stmt_list_empty elsif_stmt_list else_stmt END IF ';'  */
-#line 450 "parser/pars.y"
+#line 451 "parser/pars.y"
       { (yyval.stmt) = StmtNode::StmtFromIfWithElsif((yyvsp[-7].expr), (yyvsp[-5].stmt_lst), (yyvsp[-4].elsf_lst_stmt), (yyvsp[-3].els_stmt)); }
 #line 2065 "pars.tab.cpp"
     break;
 
   case 83: /* if_stmt: IF expression THEN stmt_list_empty else_stmt END IF ';'  */
-#line 452 "parser/pars.y"
+#line 453 "parser/pars.y"
       { (yyval.stmt) = StmtNode::StmtFromIf((yyvsp[-6].expr), (yyvsp[-4].stmt_lst), (yyvsp[-3].els_stmt)); }
 #line 2071 "pars.tab.cpp"
     break;
 
   case 84: /* case_stmt: CASE expression IS case_alternative_list END CASE ';'  */
-#line 458 "parser/pars.y"
+#line 459 "parser/pars.y"
       { (yyval.stmt) = StmtNode::StmtFromCase((yyvsp[-5].expr), (yyvsp[-3].case_alternative_list)); }
 #line 2077 "pars.tab.cpp"
     break;
 
   case 85: /* case_alternative_list: case_alternative  */
-#line 465 "parser/pars.y"
+#line 466 "parser/pars.y"
       { (yyval.case_alternative_list) = new CaseAlternativeListNode((yyvsp[0].case_alternative)); }
 #line 2083 "pars.tab.cpp"
     break;
 
   case 86: /* case_alternative_list: case_alternative_list case_alternative  */
-#line 467 "parser/pars.y"
+#line 468 "parser/pars.y"
       { (yyval.case_alternative_list) = (yyvsp[-1].case_alternative_list); (yyval.case_alternative_list)->add((yyvsp[0].case_alternative)); }
 #line 2089 "pars.tab.cpp"
     break;
 
   case 87: /* case_alternative: WHEN choice_list ARROW stmt_list  */
-#line 473 "parser/pars.y"
+#line 474 "parser/pars.y"
       {
           auto it = (yyvsp[-2].choice_list)->begin();
           (yyval.case_alternative) = new CaseAlternativeNode(*it, (yyvsp[0].stmt_lst));
@@ -2100,43 +2100,43 @@ yyreduce:
     break;
 
   case 88: /* case_alternative: WHEN OTHERS ARROW stmt_list  */
-#line 480 "parser/pars.y"
+#line 481 "parser/pars.y"
       { (yyval.case_alternative) = new CaseAlternativeNode(new CaseChoiceNode(true), (yyvsp[0].stmt_lst)); }
 #line 2106 "pars.tab.cpp"
     break;
 
   case 89: /* exception_part: EXCEPTION exception_handler_list  */
-#line 485 "parser/pars.y"
+#line 486 "parser/pars.y"
                                        { (yyval.stmt_lst) = (yyvsp[0].stmt_lst); }
 #line 2112 "pars.tab.cpp"
     break;
 
   case 90: /* exception_handler_list: exception_handler  */
-#line 490 "parser/pars.y"
+#line 491 "parser/pars.y"
                         { (yyval.stmt_lst) = (yyvsp[0].stmt_lst); }
 #line 2118 "pars.tab.cpp"
     break;
 
   case 91: /* exception_handler_list: exception_handler_list exception_handler  */
-#line 492 "parser/pars.y"
+#line 493 "parser/pars.y"
       { (yyval.stmt_lst) = append_statement_lists((yyvsp[-1].stmt_lst), (yyvsp[0].stmt_lst)); }
 #line 2124 "pars.tab.cpp"
     break;
 
   case 92: /* exception_handler: WHEN choice_list ARROW stmt_list  */
-#line 497 "parser/pars.y"
+#line 498 "parser/pars.y"
                                        { (yyval.stmt_lst) = (yyvsp[0].stmt_lst); }
 #line 2130 "pars.tab.cpp"
     break;
 
   case 93: /* exception_handler: WHEN OTHERS ARROW stmt_list  */
-#line 498 "parser/pars.y"
+#line 499 "parser/pars.y"
                                   { (yyval.stmt_lst) = (yyvsp[0].stmt_lst); }
 #line 2136 "pars.tab.cpp"
     break;
 
   case 94: /* choice_list: case_choice  */
-#line 504 "parser/pars.y"
+#line 505 "parser/pars.y"
       {
           (yyval.choice_list) = new list<CaseChoiceNode*>();
           (yyval.choice_list)->push_back((yyvsp[0].case_choice));
@@ -2145,91 +2145,91 @@ yyreduce:
     break;
 
   case 95: /* choice_list: choice_list '|' case_choice  */
-#line 509 "parser/pars.y"
+#line 510 "parser/pars.y"
       { (yyval.choice_list) = (yyvsp[-2].choice_list); (yyval.choice_list)->push_back((yyvsp[0].case_choice)); }
 #line 2151 "pars.tab.cpp"
     break;
 
   case 96: /* case_choice: expression  */
-#line 514 "parser/pars.y"
+#line 515 "parser/pars.y"
                  { (yyval.case_choice) = new CaseChoiceNode((yyvsp[0].expr)); }
 #line 2157 "pars.tab.cpp"
     break;
 
   case 97: /* case_choice: range  */
-#line 515 "parser/pars.y"
+#line 516 "parser/pars.y"
             { (yyval.case_choice) = new CaseChoiceNode((yyvsp[0].rng)); }
 #line 2163 "pars.tab.cpp"
     break;
 
   case 98: /* elsif_stmt_list: elsif_stmt  */
-#line 520 "parser/pars.y"
+#line 521 "parser/pars.y"
                  { (yyval.elsf_lst_stmt) = new ElsifStmtListNode((yyvsp[0].elsf_stmt)); }
 #line 2169 "pars.tab.cpp"
     break;
 
   case 99: /* elsif_stmt_list: elsif_stmt_list elsif_stmt  */
-#line 521 "parser/pars.y"
+#line 522 "parser/pars.y"
                                  { (yyval.elsf_lst_stmt) = ElsifStmtListNode::Append((yyvsp[-1].elsf_lst_stmt), (yyvsp[0].elsf_stmt)); }
 #line 2175 "pars.tab.cpp"
     break;
 
   case 100: /* elsif_stmt: ELSIF expression THEN stmt_list_empty  */
-#line 527 "parser/pars.y"
+#line 528 "parser/pars.y"
       { (yyval.elsf_stmt) = new ElsifStmtNode((yyvsp[-2].expr), (yyvsp[0].stmt_lst)); }
 #line 2181 "pars.tab.cpp"
     break;
 
   case 101: /* else_stmt: %empty  */
-#line 532 "parser/pars.y"
+#line 533 "parser/pars.y"
              { (yyval.els_stmt) = nullptr; }
 #line 2187 "pars.tab.cpp"
     break;
 
   case 102: /* else_stmt: ELSE stmt_list_empty  */
-#line 533 "parser/pars.y"
+#line 534 "parser/pars.y"
                            { (yyval.els_stmt) = new ElseStmtNode((yyvsp[0].stmt_lst)); }
 #line 2193 "pars.tab.cpp"
     break;
 
   case 103: /* assigment_stmt: expression ASSIGNMENT expression ';'  */
-#line 539 "parser/pars.y"
+#line 540 "parser/pars.y"
       { (yyval.stmt) = StmtNode::StmtFromAssigment((yyvsp[-3].expr), (yyvsp[-1].expr)); }
 #line 2199 "pars.tab.cpp"
     break;
 
   case 104: /* expression_list_empty: %empty  */
-#line 544 "parser/pars.y"
+#line 545 "parser/pars.y"
              { (yyval.expr_list) = nullptr; }
 #line 2205 "pars.tab.cpp"
     break;
 
   case 105: /* expression_list_empty: expression_list  */
-#line 545 "parser/pars.y"
+#line 546 "parser/pars.y"
                       { (yyval.expr_list) = new ExprListNode((yyvsp[0].expr_list)); }
 #line 2211 "pars.tab.cpp"
     break;
 
   case 106: /* expression_list: arg  */
-#line 550 "parser/pars.y"
+#line 551 "parser/pars.y"
           { (yyval.expr_list) = new ExprListNode((yyvsp[0].expr)); }
 #line 2217 "pars.tab.cpp"
     break;
 
   case 107: /* expression_list: expression_list ',' arg  */
-#line 551 "parser/pars.y"
+#line 552 "parser/pars.y"
                               { (yyval.expr_list) = ExprListNode::Append((yyvsp[-2].expr_list), (yyvsp[0].expr)); }
 #line 2223 "pars.tab.cpp"
     break;
 
   case 108: /* arg: expression  */
-#line 556 "parser/pars.y"
+#line 557 "parser/pars.y"
                  { (yyval.expr) = (yyvsp[0].expr); }
 #line 2229 "pars.tab.cpp"
     break;
 
   case 109: /* arg: ID ARROW expression  */
-#line 558 "parser/pars.y"
+#line 559 "parser/pars.y"
       {
           (yyval.expr) = ExprNode::ExprOperation(
               ExprNode::expr_equal_expr,
@@ -2240,199 +2240,199 @@ yyreduce:
     break;
 
   case 110: /* expression: CONST_BOOL  */
-#line 569 "parser/pars.y"
+#line 570 "parser/pars.y"
                  { (yyval.expr) = ExprNode::ExprFromBoolConst(ExprNode::const_bool, (yyvsp[0].int_const)); }
 #line 2246 "pars.tab.cpp"
     break;
 
   case 111: /* expression: CONST_CHARACTER  */
-#line 570 "parser/pars.y"
+#line 571 "parser/pars.y"
                       { (yyval.expr) = ExprNode::ExprFromCharConst(ExprNode::const_character, (yyvsp[0].char_const)); }
 #line 2252 "pars.tab.cpp"
     break;
 
   case 112: /* expression: CONST_STRING  */
-#line 571 "parser/pars.y"
+#line 572 "parser/pars.y"
                    { (yyval.expr) = ExprNode::ExprFromStringConst(ExprNode::const_string, (yyvsp[0].string_const)); }
 #line 2258 "pars.tab.cpp"
     break;
 
   case 113: /* expression: CONST_INTEGER  */
-#line 572 "parser/pars.y"
+#line 573 "parser/pars.y"
                     { (yyval.expr) = ExprNode::ExprFromIntConst(ExprNode::const_integer, (yyvsp[0].int_const)); }
 #line 2264 "pars.tab.cpp"
     break;
 
   case 114: /* expression: CONST_FLOAT  */
-#line 573 "parser/pars.y"
+#line 574 "parser/pars.y"
                   { (yyval.expr) = ExprNode::ExprFromFloatConst(ExprNode::const_float, (yyvsp[0].float_const)); }
 #line 2270 "pars.tab.cpp"
     break;
 
   case 115: /* expression: ID  */
-#line 574 "parser/pars.y"
+#line 575 "parser/pars.y"
          { (yyval.expr) = ExprNode::ExprFromId(ExprNode::id_, (yyvsp[0].id_const)); }
 #line 2276 "pars.tab.cpp"
     break;
 
   case 116: /* expression: expression '>' expression  */
-#line 577 "parser/pars.y"
+#line 578 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprOperation(ExprNode::expr_more_expr, (yyvsp[-2].expr), (yyvsp[0].expr)); }
 #line 2282 "pars.tab.cpp"
     break;
 
   case 117: /* expression: expression '<' expression  */
-#line 579 "parser/pars.y"
+#line 580 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprOperation(ExprNode::expr_less_expr, (yyvsp[-2].expr), (yyvsp[0].expr)); }
 #line 2288 "pars.tab.cpp"
     break;
 
   case 118: /* expression: expression MORE_OR_EQUAL expression  */
-#line 581 "parser/pars.y"
+#line 582 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprOperation(ExprNode::expr_more_equal_expr, (yyvsp[-2].expr), (yyvsp[0].expr)); }
 #line 2294 "pars.tab.cpp"
     break;
 
   case 119: /* expression: expression LESS_OR_EQUAL expression  */
-#line 583 "parser/pars.y"
+#line 584 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprOperation(ExprNode::expr_less_equal_expr, (yyvsp[-2].expr), (yyvsp[0].expr)); }
 #line 2300 "pars.tab.cpp"
     break;
 
   case 120: /* expression: expression '=' expression  */
-#line 585 "parser/pars.y"
+#line 586 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprOperation(ExprNode::expr_equal_expr, (yyvsp[-2].expr), (yyvsp[0].expr)); }
 #line 2306 "pars.tab.cpp"
     break;
 
   case 121: /* expression: expression NOT_EQUAL expression  */
-#line 587 "parser/pars.y"
+#line 588 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprOperation(ExprNode::expr_not_equal_expr, (yyvsp[-2].expr), (yyvsp[0].expr)); }
 #line 2312 "pars.tab.cpp"
     break;
 
   case 122: /* expression: expression '+' expression  */
-#line 590 "parser/pars.y"
+#line 591 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprOperation(ExprNode::expr_plus_expr, (yyvsp[-2].expr), (yyvsp[0].expr)); }
 #line 2318 "pars.tab.cpp"
     break;
 
   case 123: /* expression: expression '-' expression  */
-#line 592 "parser/pars.y"
+#line 593 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprOperation(ExprNode::expr_minus_expr, (yyvsp[-2].expr), (yyvsp[0].expr)); }
 #line 2324 "pars.tab.cpp"
     break;
 
   case 124: /* expression: expression '*' expression  */
-#line 594 "parser/pars.y"
+#line 595 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprOperation(ExprNode::expr_mult_expr, (yyvsp[-2].expr), (yyvsp[0].expr)); }
 #line 2330 "pars.tab.cpp"
     break;
 
   case 125: /* expression: expression MOD expression  */
-#line 596 "parser/pars.y"
+#line 597 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprOperation(ExprNode::expr_mod_expr, (yyvsp[-2].expr), (yyvsp[0].expr)); }
 #line 2336 "pars.tab.cpp"
     break;
 
   case 126: /* expression: expression REM expression  */
-#line 598 "parser/pars.y"
+#line 599 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprOperation(ExprNode::expr_rem_expr, (yyvsp[-2].expr), (yyvsp[0].expr)); }
 #line 2342 "pars.tab.cpp"
     break;
 
   case 127: /* expression: expression '/' expression  */
-#line 600 "parser/pars.y"
+#line 601 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprOperation(ExprNode::expr_div_expr, (yyvsp[-2].expr), (yyvsp[0].expr)); }
 #line 2348 "pars.tab.cpp"
     break;
 
   case 128: /* expression: ABS expression  */
-#line 603 "parser/pars.y"
+#line 604 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprOperation(ExprNode::expr_abs_expr, (yyvsp[0].expr), nullptr); }
 #line 2354 "pars.tab.cpp"
     break;
 
   case 129: /* expression: '-' expression  */
-#line 605 "parser/pars.y"
+#line 606 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprOperation(ExprNode::uminus_expr, (yyvsp[0].expr), nullptr); }
 #line 2360 "pars.tab.cpp"
     break;
 
   case 130: /* expression: expression OR expression  */
-#line 607 "parser/pars.y"
+#line 608 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprOperation(ExprNode::expr_or_expr, (yyvsp[-2].expr), (yyvsp[0].expr)); }
 #line 2366 "pars.tab.cpp"
     break;
 
   case 131: /* expression: expression AND expression  */
-#line 609 "parser/pars.y"
+#line 610 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprOperation(ExprNode::expr_and_expr, (yyvsp[-2].expr), (yyvsp[0].expr)); }
 #line 2372 "pars.tab.cpp"
     break;
 
   case 132: /* expression: expression XOR expression  */
-#line 611 "parser/pars.y"
+#line 612 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprOperation(ExprNode::expr_xor_expr, (yyvsp[-2].expr), (yyvsp[0].expr)); }
 #line 2378 "pars.tab.cpp"
     break;
 
   case 133: /* expression: NOT expression  */
-#line 613 "parser/pars.y"
+#line 614 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprOperation(ExprNode::not_expr, (yyvsp[0].expr), nullptr); }
 #line 2384 "pars.tab.cpp"
     break;
 
   case 134: /* expression: ID '(' expression_list_empty ')'  */
-#line 616 "parser/pars.y"
+#line 617 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprFromFuncCall(ExprNode::func_call, (yyvsp[-3].id_const), (yyvsp[-1].expr_list)); }
 #line 2390 "pars.tab.cpp"
     break;
 
   case 135: /* expression: INTEGER '(' expression_list_empty ')'  */
-#line 618 "parser/pars.y"
+#line 619 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprFromFuncCall(ExprNode::func_call, new string("Integer"), (yyvsp[-1].expr_list)); }
 #line 2396 "pars.tab.cpp"
     break;
 
   case 136: /* expression: FLOAT '(' expression_list_empty ')'  */
-#line 620 "parser/pars.y"
+#line 621 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprFromFuncCall(ExprNode::func_call, new string("Float"), (yyvsp[-1].expr_list)); }
 #line 2402 "pars.tab.cpp"
     break;
 
   case 137: /* expression: BOOLEAN '(' expression_list_empty ')'  */
-#line 622 "parser/pars.y"
+#line 623 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprFromFuncCall(ExprNode::func_call, new string("Boolean"), (yyvsp[-1].expr_list)); }
 #line 2408 "pars.tab.cpp"
     break;
 
   case 138: /* expression: CHARACTER '(' expression_list_empty ')'  */
-#line 624 "parser/pars.y"
+#line 625 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprFromFuncCall(ExprNode::func_call, new string("Character"), (yyvsp[-1].expr_list)); }
 #line 2414 "pars.tab.cpp"
     break;
 
   case 139: /* expression: STRING '(' expression_list_empty ')'  */
-#line 626 "parser/pars.y"
+#line 627 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprFromFuncCall(ExprNode::func_call, new string("String"), (yyvsp[-1].expr_list)); }
 #line 2420 "pars.tab.cpp"
     break;
 
   case 140: /* expression: expression '.' ID  */
-#line 629 "parser/pars.y"
+#line 630 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprFromFuncCall(ExprNode::func_call, (yyvsp[0].id_const), new ExprListNode((yyvsp[-2].expr))); }
 #line 2426 "pars.tab.cpp"
     break;
 
   case 141: /* expression: ID '\'' ID  */
-#line 631 "parser/pars.y"
+#line 632 "parser/pars.y"
       { (yyval.expr) = ExprNode::ExprFromId(ExprNode::id_, (yyvsp[-2].id_const)); }
 #line 2432 "pars.tab.cpp"
     break;
 
   case 142: /* expression: ID '\'' ID '(' expression_list ')'  */
-#line 633 "parser/pars.y"
+#line 634 "parser/pars.y"
       {
           (yyval.expr) = ExprNode::ExprFromFuncCall(
               ExprNode::func_call, new string(*(yyvsp[-5].id_const) + "'" + *(yyvsp[-3].id_const)), (yyvsp[-1].expr_list)
@@ -2442,7 +2442,7 @@ yyreduce:
     break;
 
   case 143: /* expression: '(' expression_list ')'  */
-#line 639 "parser/pars.y"
+#line 640 "parser/pars.y"
       {
           if ((yyvsp[-1].expr_list) && (yyvsp[-1].expr_list)->exprs->size() == 1)
               (yyval.expr) = (yyvsp[-1].expr_list)->exprs->front();
@@ -2453,43 +2453,43 @@ yyreduce:
     break;
 
   case 144: /* range: expression DOUBLE_DOT expression  */
-#line 650 "parser/pars.y"
+#line 651 "parser/pars.y"
       { (yyval.rng) = new RangeNode((yyvsp[-2].expr), (yyvsp[0].expr)); }
 #line 2459 "pars.tab.cpp"
     break;
 
   case 145: /* var_type: INTEGER  */
-#line 655 "parser/pars.y"
+#line 656 "parser/pars.y"
               { (yyval.v_type) = new TypeNode(TypeNode::const_integer); }
 #line 2465 "pars.tab.cpp"
     break;
 
   case 146: /* var_type: BOOLEAN  */
-#line 656 "parser/pars.y"
+#line 657 "parser/pars.y"
               { (yyval.v_type) = new TypeNode(TypeNode::const_bool); }
 #line 2471 "pars.tab.cpp"
     break;
 
   case 147: /* var_type: FLOAT  */
-#line 657 "parser/pars.y"
+#line 658 "parser/pars.y"
             { (yyval.v_type) = new TypeNode(TypeNode::const_float); }
 #line 2477 "pars.tab.cpp"
     break;
 
   case 148: /* var_type: CHARACTER  */
-#line 658 "parser/pars.y"
+#line 659 "parser/pars.y"
                 { (yyval.v_type) = new TypeNode(TypeNode::const_character); }
 #line 2483 "pars.tab.cpp"
     break;
 
   case 149: /* var_type: STRING  */
-#line 659 "parser/pars.y"
+#line 660 "parser/pars.y"
              { (yyval.v_type) = new TypeNode(TypeNode::const_string); }
 #line 2489 "pars.tab.cpp"
     break;
 
   case 150: /* var_type: ID  */
-#line 660 "parser/pars.y"
+#line 661 "parser/pars.y"
          { (yyval.v_type) = new TypeNode(TypeNode::id_, (yyvsp[0].id_const)); }
 #line 2495 "pars.tab.cpp"
     break;
@@ -2688,4 +2688,4 @@ yyreturnlab:
   return yyresult;
 }
 
-#line 663 "parser/pars.y"
+#line 664 "parser/pars.y"

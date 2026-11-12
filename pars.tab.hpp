@@ -39,13 +39,13 @@
 # define YY_YY_PARS_TAB_HPP_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-# define YYDEBUG 0
+# define YYDEBUG 1
 #endif
 #if YYDEBUG
 extern int yydebug;
 #endif
 /* "%code requires" blocks.  */
-#line 1 "parser/pars.y"
+#line 2 "parser/pars.y"
 
 #include <string>
 #include <list>
@@ -125,7 +125,7 @@ using namespace std;
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 union YYSTYPE
 {
-#line 80 "parser/pars.y"
+#line 81 "parser/pars.y"
 
     ProgramNode* prg;
     int int_const;

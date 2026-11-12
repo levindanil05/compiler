@@ -1,3 +1,4 @@
+%define parse.trace
 %code requires {
 #include <string>
 #include <list>

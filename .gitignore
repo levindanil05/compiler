@@ -14,3 +14,13 @@ parse_bin
 
 # Файлы настроек VS Code (если не хочешь делиться ими)
 .vscode/
+
+# Временные файлы трассировки в корне проекта
+/bison_trace.txt
+/parser_output.txt
+/test_output.txt
+/test_trace.txt
+
+/pars.tab.c
+/pars.tab.h
+/pars.output

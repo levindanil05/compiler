@@ -653,7 +653,7 @@ char *yytext;
 #include <math.h>
 #include <string>
 
-#include "pars.tab.h"
+#include "pars.tab.hpp"
 
 #include "class_nodes.h"
 
@@ -2657,7 +2657,7 @@ int main(int argc, char **argv) {
     }
 	
 
-	
+	yydebug = 1;
     int result = yyparse();
 
     if (argc > 1) {

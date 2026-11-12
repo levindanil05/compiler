@@ -1,0 +1,1794 @@
+Starting parse
+Entering state 0
+Stack now 0
+Reducing stack by rule 3 (line 171):
+-> $$ = nterm context_list ()
+Entering state 2
+Stack now 0 2
+Reading a token
+Next token is token WITH ()
+Shifting token WITH ()
+Entering state 6
+Stack now 0 2 6
+Reading a token
+Next token is token ID (Ada)
+Shifting token ID (Ada)
+Entering state 18
+Stack now 0 2 6 18
+Reducing stack by rule 7 (line 183):
+   $1 = token ID (Ada)
+-> $$ = nterm dotted_name ()
+Entering state 19
+Stack now 0 2 6 19
+Reading a token
+Next token is token '.' ()
+Shifting token '.' ()
+Entering state 27
+Stack now 0 2 6 19 27
+Reading a token
+Next token is token ID (Text_IO)
+Shifting token ID (Text_IO)
+Entering state 49
+Stack now 0 2 6 19 27 49
+Reducing stack by rule 8 (line 184):
+   $1 = nterm dotted_name ()
+   $2 = token '.' ()
+   $3 = token ID (Text_IO)
+-> $$ = nterm dotted_name ()
+Entering state 19
+Stack now 0 2 6 19
+Reading a token
+Next token is token ';' ()
+Shifting token ';' ()
+Entering state 28
+Stack now 0 2 6 19 28
+Reducing stack by rule 5 (line 177):
+   $1 = token WITH ()
+   $2 = nterm dotted_name ()
+   $3 = token ';' ()
+-> $$ = nterm context_item ()
+Entering state 9
+Stack now 0 2 9
+Reducing stack by rule 4 (line 172):
+   $1 = nterm context_list ()
+   $2 = nterm context_item ()
+-> $$ = nterm context_list ()
+Entering state 2
+Stack now 0 2
+Reading a token
+Next token is token USE ()
+Shifting token USE ()
+Entering state 7
+Stack now 0 2 7
+Reading a token
+Next token is token ID (Ada)
+Shifting token ID (Ada)
+Entering state 18
+Stack now 0 2 7 18
+Reducing stack by rule 7 (line 183):
+   $1 = token ID (Ada)
+-> $$ = nterm dotted_name ()
+Entering state 20
+Stack now 0 2 7 20
+Reading a token
+Next token is token '.' ()
+Shifting token '.' ()
+Entering state 27
+Stack now 0 2 7 20 27
+Reading a token
+Next token is token ID (Text_IO)
+Shifting token ID (Text_IO)
+Entering state 49
+Stack now 0 2 7 20 27 49
+Reducing stack by rule 8 (line 184):
+   $1 = nterm dotted_name ()
+   $2 = token '.' ()
+   $3 = token ID (Text_IO)
+-> $$ = nterm dotted_name ()
+Entering state 20
+Stack now 0 2 7 20
+Reading a token
+Next token is token ';' ()
+Shifting token ';' ()
+Entering state 29
+Stack now 0 2 7 20 29
+Reducing stack by rule 6 (line 178):
+   $1 = token USE ()
+   $2 = nterm dotted_name ()
+   $3 = token ';' ()
+-> $$ = nterm context_item ()
+Entering state 9
+Stack now 0 2 9
+Reducing stack by rule 4 (line 172):
+   $1 = nterm context_list ()
+   $2 = nterm context_item ()
+-> $$ = nterm context_list ()
+Entering state 2
+Stack now 0 2
+Reading a token
+Next token is token WITH ()
+Shifting token WITH ()
+Entering state 6
+Stack now 0 2 6
+Reading a token
+Next token is token ID (Ada)
+Shifting token ID (Ada)
+Entering state 18
+Stack now 0 2 6 18
+Reducing stack by rule 7 (line 183):
+   $1 = token ID (Ada)
+-> $$ = nterm dotted_name ()
+Entering state 19
+Stack now 0 2 6 19
+Reading a token
+Next token is token '.' ()
+Shifting token '.' ()
+Entering state 27
+Stack now 0 2 6 19 27
+Reading a token
+Next token is token ID (Integer_Text_IO)
+Shifting token ID (Integer_Text_IO)
+Entering state 49
+Stack now 0 2 6 19 27 49
+Reducing stack by rule 8 (line 184):
+   $1 = nterm dotted_name ()
+   $2 = token '.' ()
+   $3 = token ID (Integer_Text_IO)
+-> $$ = nterm dotted_name ()
+Entering state 19
+Stack now 0 2 6 19
+Reading a token
+Next token is token ';' ()
+Shifting token ';' ()
+Entering state 28
+Stack now 0 2 6 19 28
+Reducing stack by rule 5 (line 177):
+   $1 = token WITH ()
+   $2 = nterm dotted_name ()
+   $3 = token ';' ()
+-> $$ = nterm context_item ()
+Entering state 9
+Stack now 0 2 9
+Reducing stack by rule 4 (line 172):
+   $1 = nterm context_list ()
+   $2 = nterm context_item ()
+-> $$ = nterm context_list ()
+Entering state 2
+Stack now 0 2
+Reading a token
+Next token is token USE ()
+Shifting token USE ()
+Entering state 7
+Stack now 0 2 7
+Reading a token
+Next token is token ID (Ada)
+Shifting token ID (Ada)
+Entering state 18
+Stack now 0 2 7 18
+Reducing stack by rule 7 (line 183):
+   $1 = token ID (Ada)
+-> $$ = nterm dotted_name ()
+Entering state 20
+Stack now 0 2 7 20
+Reading a token
+Next token is token '.' ()
+Shifting token '.' ()
+Entering state 27
+Stack now 0 2 7 20 27
+Reading a token
+Next token is token ID (Integer_Text_IO)
+Shifting token ID (Integer_Text_IO)
+Entering state 49
+Stack now 0 2 7 20 27 49
+Reducing stack by rule 8 (line 184):
+   $1 = nterm dotted_name ()
+   $2 = token '.' ()
+   $3 = token ID (Integer_Text_IO)
+-> $$ = nterm dotted_name ()
+Entering state 20
+Stack now 0 2 7 20
+Reading a token
+Next token is token ';' ()
+Shifting token ';' ()
+Entering state 29
+Stack now 0 2 7 20 29
+Reducing stack by rule 6 (line 178):
+   $1 = token USE ()
+   $2 = nterm dotted_name ()
+   $3 = token ';' ()
+-> $$ = nterm context_item ()
+Entering state 9
+Stack now 0 2 9
+Reducing stack by rule 4 (line 172):
+   $1 = nterm context_list ()
+   $2 = nterm context_item ()
+-> $$ = nterm context_list ()
+Entering state 2
+Stack now 0 2
+Reading a token
+Next token is token WITH ()
+Shifting token WITH ()
+Entering state 6
+Stack now 0 2 6
+Reading a token
+Next token is token ID (Ada)
+Shifting token ID (Ada)
+Entering state 18
+Stack now 0 2 6 18
+Reducing stack by rule 7 (line 183):
+   $1 = token ID (Ada)
+-> $$ = nterm dotted_name ()
+Entering state 19
+Stack now 0 2 6 19
+Reading a token
+Next token is token '.' ()
+Shifting token '.' ()
+Entering state 27
+Stack now 0 2 6 19 27
+Reading a token
+Next token is token ID (Float_Text_IO)
+Shifting token ID (Float_Text_IO)
+Entering state 49
+Stack now 0 2 6 19 27 49
+Reducing stack by rule 8 (line 184):
+   $1 = nterm dotted_name ()
+   $2 = token '.' ()
+   $3 = token ID (Float_Text_IO)
+-> $$ = nterm dotted_name ()
+Entering state 19
+Stack now 0 2 6 19
+Reading a token
+Next token is token ';' ()
+Shifting token ';' ()
+Entering state 28
+Stack now 0 2 6 19 28
+Reducing stack by rule 5 (line 177):
+   $1 = token WITH ()
+   $2 = nterm dotted_name ()
+   $3 = token ';' ()
+-> $$ = nterm context_item ()
+Entering state 9
+Stack now 0 2 9
+Reducing stack by rule 4 (line 172):
+   $1 = nterm context_list ()
+   $2 = nterm context_item ()
+-> $$ = nterm context_list ()
+Entering state 2
+Stack now 0 2
+Reading a token
+Next token is token USE ()
+Shifting token USE ()
+Entering state 7
+Stack now 0 2 7
+Reading a token
+Next token is token ID (Ada)
+Shifting token ID (Ada)
+Entering state 18
+Stack now 0 2 7 18
+Reducing stack by rule 7 (line 183):
+   $1 = token ID (Ada)
+-> $$ = nterm dotted_name ()
+Entering state 20
+Stack now 0 2 7 20
+Reading a token
+Next token is token '.' ()
+Shifting token '.' ()
+Entering state 27
+Stack now 0 2 7 20 27
+Reading a token
+Next token is token ID (Float_Text_IO)
+Shifting token ID (Float_Text_IO)
+Entering state 49
+Stack now 0 2 7 20 27 49
+Reducing stack by rule 8 (line 184):
+   $1 = nterm dotted_name ()
+   $2 = token '.' ()
+   $3 = token ID (Float_Text_IO)
+-> $$ = nterm dotted_name ()
+Entering state 20
+Stack now 0 2 7 20
+Reading a token
+Next token is token ';' ()
+Shifting token ';' ()
+Entering state 29
+Stack now 0 2 7 20 29
+Reducing stack by rule 6 (line 178):
+   $1 = token USE ()
+   $2 = nterm dotted_name ()
+   $3 = token ';' ()
+-> $$ = nterm context_item ()
+Entering state 9
+Stack now 0 2 9
+Reducing stack by rule 4 (line 172):
+   $1 = nterm context_list ()
+   $2 = nterm context_item ()
+-> $$ = nterm context_list ()
+Entering state 2
+Stack now 0 2
+Reading a token
+Next token is token WITH ()
+Shifting token WITH ()
+Entering state 6
+Stack now 0 2 6
+Reading a token
+Next token is token ID (Ada)
+Shifting token ID (Ada)
+Entering state 18
+Stack now 0 2 6 18
+Reducing stack by rule 7 (line 183):
+   $1 = token ID (Ada)
+-> $$ = nterm dotted_name ()
+Entering state 19
+Stack now 0 2 6 19
+Reading a token
+Next token is token '.' ()
+Shifting token '.' ()
+Entering state 27
+Stack now 0 2 6 19 27
+Reading a token
+Next token is token ID (Strings)
+Shifting token ID (Strings)
+Entering state 49
+Stack now 0 2 6 19 27 49
+Reducing stack by rule 8 (line 184):
+   $1 = nterm dotted_name ()
+   $2 = token '.' ()
+   $3 = token ID (Strings)
+-> $$ = nterm dotted_name ()
+Entering state 19
+Stack now 0 2 6 19
+Reading a token
+Next token is token '.' ()
+Shifting token '.' ()
+Entering state 27
+Stack now 0 2 6 19 27
+Reading a token
+Next token is token ID (Fixed)
+Shifting token ID (Fixed)
+Entering state 49
+Stack now 0 2 6 19 27 49
+Reducing stack by rule 8 (line 184):
+   $1 = nterm dotted_name ()
+   $2 = token '.' ()
+   $3 = token ID (Fixed)
+-> $$ = nterm dotted_name ()
+Entering state 19
+Stack now 0 2 6 19
+Reading a token
+Next token is token ';' ()
+Shifting token ';' ()
+Entering state 28
+Stack now 0 2 6 19 28
+Reducing stack by rule 5 (line 177):
+   $1 = token WITH ()
+   $2 = nterm dotted_name ()
+   $3 = token ';' ()
+-> $$ = nterm context_item ()
+Entering state 9
+Stack now 0 2 9
+Reducing stack by rule 4 (line 172):
+   $1 = nterm context_list ()
+   $2 = nterm context_item ()
+-> $$ = nterm context_list ()
+Entering state 2
+Stack now 0 2
+Reading a token
+Next token is token USE ()
+Shifting token USE ()
+Entering state 7
+Stack now 0 2 7
+Reading a token
+Next token is token ID (Ada)
+Shifting token ID (Ada)
+Entering state 18
+Stack now 0 2 7 18
+Reducing stack by rule 7 (line 183):
+   $1 = token ID (Ada)
+-> $$ = nterm dotted_name ()
+Entering state 20
+Stack now 0 2 7 20
+Reading a token
+Next token is token '.' ()
+Shifting token '.' ()
+Entering state 27
+Stack now 0 2 7 20 27
+Reading a token
+Next token is token ID (Strings)
+Shifting token ID (Strings)
+Entering state 49
+Stack now 0 2 7 20 27 49
+Reducing stack by rule 8 (line 184):
+   $1 = nterm dotted_name ()
+   $2 = token '.' ()
+   $3 = token ID (Strings)
+-> $$ = nterm dotted_name ()
+Entering state 20
+Stack now 0 2 7 20
+Reading a token
+Next token is token '.' ()
+Shifting token '.' ()
+Entering state 27
+Stack now 0 2 7 20 27
+Reading a token
+Next token is token ID (Fixed)
+Shifting token ID (Fixed)
+Entering state 49
+Stack now 0 2 7 20 27 49
+Reducing stack by rule 8 (line 184):
+   $1 = nterm dotted_name ()
+   $2 = token '.' ()
+   $3 = token ID (Fixed)
+-> $$ = nterm dotted_name ()
+Entering state 20
+Stack now 0 2 7 20
+Reading a token
+Next token is token ';' ()
+Shifting token ';' ()
+Entering state 29
+Stack now 0 2 7 20 29
+Reducing stack by rule 6 (line 178):
+   $1 = token USE ()
+   $2 = nterm dotted_name ()
+   $3 = token ';' ()
+-> $$ = nterm context_item ()
+Entering state 9
+Stack now 0 2 9
+Reducing stack by rule 4 (line 172):
+   $1 = nterm context_list ()
+   $2 = nterm context_item ()
+-> $$ = nterm context_list ()
+Entering state 2
+Stack now 0 2
+Reading a token
+Next token is token WITH ()
+Shifting token WITH ()
+Entering state 6
+Stack now 0 2 6
+Reading a token
+Next token is token ID (Ada)
+Shifting token ID (Ada)
+Entering state 18
+Stack now 0 2 6 18
+Reducing stack by rule 7 (line 183):
+   $1 = token ID (Ada)
+-> $$ = nterm dotted_name ()
+Entering state 19
+Stack now 0 2 6 19
+Reading a token
+Next token is token '.' ()
+Shifting token '.' ()
+Entering state 27
+Stack now 0 2 6 19 27
+Reading a token
+Next token is token ID (Numerics)
+Shifting token ID (Numerics)
+Entering state 49
+Stack now 0 2 6 19 27 49
+Reducing stack by rule 8 (line 184):
+   $1 = nterm dotted_name ()
+   $2 = token '.' ()
+   $3 = token ID (Numerics)
+-> $$ = nterm dotted_name ()
+Entering state 19
+Stack now 0 2 6 19
+Reading a token
+Next token is token '.' ()
+Shifting token '.' ()
+Entering state 27
+Stack now 0 2 6 19 27
+Reading a token
+Next token is token ID (Elementary_Functions)
+Shifting token ID (Elementary_Functions)
+Entering state 49
+Stack now 0 2 6 19 27 49
+Reducing stack by rule 8 (line 184):
+   $1 = nterm dotted_name ()
+   $2 = token '.' ()
+   $3 = token ID (Elementary_Functions)
+-> $$ = nterm dotted_name ()
+Entering state 19
+Stack now 0 2 6 19
+Reading a token
+Next token is token ';' ()
+Shifting token ';' ()
+Entering state 28
+Stack now 0 2 6 19 28
+Reducing stack by rule 5 (line 177):
+   $1 = token WITH ()
+   $2 = nterm dotted_name ()
+   $3 = token ';' ()
+-> $$ = nterm context_item ()
+Entering state 9
+Stack now 0 2 9
+Reducing stack by rule 4 (line 172):
+   $1 = nterm context_list ()
+   $2 = nterm context_item ()
+-> $$ = nterm context_list ()
+Entering state 2
+Stack now 0 2
+Reading a token
+Next token is token USE ()
+Shifting token USE ()
+Entering state 7
+Stack now 0 2 7
+Reading a token
+Next token is token ID (Ada)
+Shifting token ID (Ada)
+Entering state 18
+Stack now 0 2 7 18
+Reducing stack by rule 7 (line 183):
+   $1 = token ID (Ada)
+-> $$ = nterm dotted_name ()
+Entering state 20
+Stack now 0 2 7 20
+Reading a token
+Next token is token '.' ()
+Shifting token '.' ()
+Entering state 27
+Stack now 0 2 7 20 27
+Reading a token
+Next token is token ID (Numerics)
+Shifting token ID (Numerics)
+Entering state 49
+Stack now 0 2 7 20 27 49
+Reducing stack by rule 8 (line 184):
+   $1 = nterm dotted_name ()
+   $2 = token '.' ()
+   $3 = token ID (Numerics)
+-> $$ = nterm dotted_name ()
+Entering state 20
+Stack now 0 2 7 20
+Reading a token
+Next token is token '.' ()
+Shifting token '.' ()
+Entering state 27
+Stack now 0 2 7 20 27
+Reading a token
+Next token is token ID (Elementary_Functions)
+Shifting token ID (Elementary_Functions)
+Entering state 49
+Stack now 0 2 7 20 27 49
+Reducing stack by rule 8 (line 184):
+   $1 = nterm dotted_name ()
+   $2 = token '.' ()
+   $3 = token ID (Elementary_Functions)
+-> $$ = nterm dotted_name ()
+Entering state 20
+Stack now 0 2 7 20
+Reading a token
+Next token is token ';' ()
+Shifting token ';' ()
+Entering state 29
+Stack now 0 2 7 20 29
+Reducing stack by rule 6 (line 178):
+   $1 = token USE ()
+   $2 = nterm dotted_name ()
+   $3 = token ';' ()
+-> $$ = nterm context_item ()
+Entering state 9
+Stack now 0 2 9
+Reducing stack by rule 4 (line 172):
+   $1 = nterm context_list ()
+   $2 = nterm context_item ()
+-> $$ = nterm context_list ()
+Entering state 2
+Stack now 0 2
+Reading a token
+Next token is token PROCEDURE ()
+Shifting token PROCEDURE ()
+Entering state 5
+Stack now 0 2 5
+Reading a token
+Next token is token ID (Factory_Simulator_Test)
+Shifting token ID (Factory_Simulator_Test)
+Entering state 17
+Stack now 0 2 5 17
+Reading a token
+Next token is token IS ()
+Shifting token IS ()
+Entering state 24
+Stack now 0 2 5 17 24
+Reading a token
+Next token is token TYPE ()
+Shifting token TYPE ()
+Entering state 41
+Stack now 0 2 5 17 24 41
+Reading a token
+Next token is token ID (Part_Kind)
+Shifting token ID (Part_Kind)
+Entering state 56
+Stack now 0 2 5 17 24 41 56
+Reading a token
+Next token is token IS ()
+Shifting token IS ()
+Entering state 71
+Stack now 0 2 5 17 24 41 56 71
+Reading a token
+Next token is token '(' ()
+Shifting token '(' ()
+Entering state 121
+Stack now 0 2 5 17 24 41 56 71 121
+Reading a token
+Next token is token ID (Gear)
+Shifting token ID (Gear)
+Entering state 191
+Stack now 0 2 5 17 24 41 56 71 121 191
+Reducing stack by rule 41 (line 315):
+   $1 = token ID (Gear)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Shaft)
+Shifting token ID (Shaft)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Shaft)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Bearing)
+Shifting token ID (Bearing)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Bearing)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Bolt)
+Shifting token ID (Bolt)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Bolt)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Nut)
+Shifting token ID (Nut)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Nut)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Washer)
+Shifting token ID (Washer)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Washer)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Spring)
+Shifting token ID (Spring)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Spring)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Valve)
+Shifting token ID (Valve)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Valve)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Piston)
+Shifting token ID (Piston)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Piston)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Cylinder)
+Shifting token ID (Cylinder)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Cylinder)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Rotor)
+Shifting token ID (Rotor)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Rotor)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Stator)
+Shifting token ID (Stator)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Stator)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Coil)
+Shifting token ID (Coil)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Coil)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Core)
+Shifting token ID (Core)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Core)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Magnet)
+Shifting token ID (Magnet)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Magnet)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Sensor)
+Shifting token ID (Sensor)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Sensor)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Actuator)
+Shifting token ID (Actuator)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Actuator)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Relay)
+Shifting token ID (Relay)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Relay)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Switch)
+Shifting token ID (Switch)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Switch)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Fuse)
+Shifting token ID (Fuse)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Fuse)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Wire)
+Shifting token ID (Wire)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Wire)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Cable)
+Shifting token ID (Cable)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Cable)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Connector)
+Shifting token ID (Connector)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Connector)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Terminal)
+Shifting token ID (Terminal)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Terminal)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Board)
+Shifting token ID (Board)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Board)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Chip)
+Shifting token ID (Chip)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Chip)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Resistor)
+Shifting token ID (Resistor)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Resistor)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Capacitor)
+Shifting token ID (Capacitor)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Capacitor)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Diode)
+Shifting token ID (Diode)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Diode)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Transistor)
+Shifting token ID (Transistor)
+Entering state 285
+Stack now 0 2 5 17 24 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Transistor)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 41 56 71 121 192
+Reading a token
+Next token is token ')' ()
+Shifting token ')' ()
+Entering state 245
+Stack now 0 2 5 17 24 41 56 71 121 192 245
+Reducing stack by rule 32 (line 266):
+   $1 = token TYPE ()
+   $2 = token ID (Part_Kind)
+   $3 = token IS ()
+   $4 = token '(' ()
+   $5 = nterm enum_id_list ()
+   $6 = token ')' ()
+-> $$ = nterm type_declaration ()
+Entering state 46
+Stack now 0 2 5 17 24 46
+Reducing stack by rule 29 (line 258):
+   $1 = nterm type_declaration ()
+-> $$ = nterm declaration ()
+Entering state 45
+Stack now 0 2 5 17 24 45
+Reading a token
+Next token is token ';' ()
+Shifting token ';' ()
+Entering state 60
+Stack now 0 2 5 17 24 45 60
+Reducing stack by rule 25 (line 247):
+   $1 = nterm declaration ()
+   $2 = token ';' ()
+-> $$ = nterm decl_body_list ()
+Entering state 44
+Stack now 0 2 5 17 24 44
+Reading a token
+Next token is token TYPE ()
+Shifting token TYPE ()
+Entering state 41
+Stack now 0 2 5 17 24 44 41
+Reading a token
+Next token is token ID (Status_Type)
+Shifting token ID (Status_Type)
+Entering state 56
+Stack now 0 2 5 17 24 44 41 56
+Reading a token
+Next token is token IS ()
+Shifting token IS ()
+Entering state 71
+Stack now 0 2 5 17 24 44 41 56 71
+Reading a token
+Next token is token '(' ()
+Shifting token '(' ()
+Entering state 121
+Stack now 0 2 5 17 24 44 41 56 71 121
+Reading a token
+Next token is token ID (Idle)
+Shifting token ID (Idle)
+Entering state 191
+Stack now 0 2 5 17 24 44 41 56 71 121 191
+Reducing stack by rule 41 (line 315):
+   $1 = token ID (Idle)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 44 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 44 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Running)
+Shifting token ID (Running)
+Entering state 285
+Stack now 0 2 5 17 24 44 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Running)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 44 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 44 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Error)
+Shifting token ID (Error)
+Entering state 285
+Stack now 0 2 5 17 24 44 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Error)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 44 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 44 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Maintenance)
+Shifting token ID (Maintenance)
+Entering state 285
+Stack now 0 2 5 17 24 44 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Maintenance)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 44 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 44 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Offline)
+Shifting token ID (Offline)
+Entering state 285
+Stack now 0 2 5 17 24 44 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Offline)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 44 41 56 71 121 192
+Reading a token
+Next token is token ',' ()
+Shifting token ',' ()
+Entering state 246
+Stack now 0 2 5 17 24 44 41 56 71 121 192 246
+Reading a token
+Next token is token ID (Unknown)
+Shifting token ID (Unknown)
+Entering state 285
+Stack now 0 2 5 17 24 44 41 56 71 121 192 246 285
+Reducing stack by rule 42 (line 320):
+   $1 = nterm enum_id_list ()
+   $2 = token ',' ()
+   $3 = token ID (Unknown)
+-> $$ = nterm enum_id_list ()
+Entering state 192
+Stack now 0 2 5 17 24 44 41 56 71 121 192
+Reading a token
+Next token is token ')' ()
+Shifting token ')' ()
+Entering state 245
+Stack now 0 2 5 17 24 44 41 56 71 121 192 245
+Reducing stack by rule 32 (line 266):
+   $1 = token TYPE ()
+   $2 = token ID (Status_Type)
+   $3 = token IS ()
+   $4 = token '(' ()
+   $5 = nterm enum_id_list ()
+   $6 = token ')' ()
+-> $$ = nterm type_declaration ()
+Entering state 46
+Stack now 0 2 5 17 24 44 46
+Reducing stack by rule 29 (line 258):
+   $1 = nterm type_declaration ()
+-> $$ = nterm declaration ()
+Entering state 59
+Stack now 0 2 5 17 24 44 59
+Reading a token
+Next token is token ';' ()
+Shifting token ';' ()
+Entering state 107
+Stack now 0 2 5 17 24 44 59 107
+Reducing stack by rule 26 (line 249):
+   $1 = nterm decl_body_list ()
+   $2 = nterm declaration ()
+   $3 = token ';' ()
+-> $$ = nterm decl_body_list ()
+Entering state 44
+Stack now 0 2 5 17 24 44
+Reading a token
+Next token is token TYPE ()
+Shifting token TYPE ()
+Entering state 41
+Stack now 0 2 5 17 24 44 41
+Reading a token
+Next token is token ID (Station_ID)
+Shifting token ID (Station_ID)
+Entering state 56
+Stack now 0 2 5 17 24 44 41 56
+Reading a token
+Next token is token IS ()
+Shifting token IS ()
+Entering state 71
+Stack now 0 2 5 17 24 44 41 56 71
+Reading a token
+Next token is token RANGE ()
+Shifting token RANGE ()
+Entering state 119
+Stack now 0 2 5 17 24 44 41 56 71 119
+Reading a token
+Next token is token CONST_INTEGER (1)
+Shifting token CONST_INTEGER (1)
+Entering state 83
+Stack now 0 2 5 17 24 44 41 56 71 119 83
+Reducing stack by rule 112 (line 573):
+   $1 = token CONST_INTEGER (1)
+-> $$ = nterm expression ()
+Entering state 180
+Stack now 0 2 5 17 24 44 41 56 71 119 180
+Reading a token
+Next token is token DOUBLE_DOT ()
+Shifting token DOUBLE_DOT ()
+Entering state 237
+Stack now 0 2 5 17 24 44 41 56 71 119 180 237
+Reading a token
+Next token is token CONST_INTEGER (50)
+Shifting token CONST_INTEGER (50)
+Entering state 83
+Stack now 0 2 5 17 24 44 41 56 71 119 180 237 83
+Reducing stack by rule 112 (line 573):
+   $1 = token CONST_INTEGER (50)
+-> $$ = nterm expression ()
+Entering state 278
+Stack now 0 2 5 17 24 44 41 56 71 119 180 237 278
+Reading a token
+Next token is token ';' ()
+Reducing stack by rule 143 (line 650):
+   $1 = nterm expression ()
+   $2 = token DOUBLE_DOT ()
+   $3 = nterm expression ()
+-> $$ = nterm range ()
+Entering state 188
+Stack now 0 2 5 17 24 44 41 56 71 119 188
+Reducing stack by rule 33 (line 268):
+   $1 = token TYPE ()
+   $2 = token ID (Station_ID)
+   $3 = token IS ()
+   $4 = token RANGE ()
+   $5 = nterm range ()
+-> $$ = nterm type_declaration ()
+Entering state 46
+Stack now 0 2 5 17 24 44 46
+Reducing stack by rule 29 (line 258):
+   $1 = nterm type_declaration ()
+-> $$ = nterm declaration ()
+Entering state 59
+Stack now 0 2 5 17 24 44 59
+Next token is token ';' ()
+Shifting token ';' ()
+Entering state 107
+Stack now 0 2 5 17 24 44 59 107
+Reducing stack by rule 26 (line 249):
+   $1 = nterm decl_body_list ()
+   $2 = nterm declaration ()
+   $3 = token ';' ()
+-> $$ = nterm decl_body_list ()
+Entering state 44
+Stack now 0 2 5 17 24 44
+Reading a token
+Next token is token TYPE ()
+Shifting token TYPE ()
+Entering state 41
+Stack now 0 2 5 17 24 44 41
+Reading a token
+Next token is token ID (Matrix_Index)
+Shifting token ID (Matrix_Index)
+Entering state 56
+Stack now 0 2 5 17 24 44 41 56
+Reading a token
+Next token is token IS ()
+Shifting token IS ()
+Entering state 71
+Stack now 0 2 5 17 24 44 41 56 71
+Reading a token
+Next token is token RANGE ()
+Shifting token RANGE ()
+Entering state 119
+Stack now 0 2 5 17 24 44 41 56 71 119
+Reading a token
+Next token is token CONST_INTEGER (1)
+Shifting token CONST_INTEGER (1)
+Entering state 83
+Stack now 0 2 5 17 24 44 41 56 71 119 83
+Reducing stack by rule 112 (line 573):
+   $1 = token CONST_INTEGER (1)
+-> $$ = nterm expression ()
+Entering state 180
+Stack now 0 2 5 17 24 44 41 56 71 119 180
+Reading a token
+Next token is token DOUBLE_DOT ()
+Shifting token DOUBLE_DOT ()
+Entering state 237
+Stack now 0 2 5 17 24 44 41 56 71 119 180 237
+Reading a token
+Next token is token CONST_INTEGER (20)
+Shifting token CONST_INTEGER (20)
+Entering state 83
+Stack now 0 2 5 17 24 44 41 56 71 119 180 237 83
+Reducing stack by rule 112 (line 573):
+   $1 = token CONST_INTEGER (20)
+-> $$ = nterm expression ()
+Entering state 278
+Stack now 0 2 5 17 24 44 41 56 71 119 180 237 278
+Reading a token
+Next token is token ';' ()
+Reducing stack by rule 143 (line 650):
+   $1 = nterm expression ()
+   $2 = token DOUBLE_DOT ()
+   $3 = nterm expression ()
+-> $$ = nterm range ()
+Entering state 188
+Stack now 0 2 5 17 24 44 41 56 71 119 188
+Reducing stack by rule 33 (line 268):
+   $1 = token TYPE ()
+   $2 = token ID (Matrix_Index)
+   $3 = token IS ()
+   $4 = token RANGE ()
+   $5 = nterm range ()
+-> $$ = nterm type_declaration ()
+Entering state 46
+Stack now 0 2 5 17 24 44 46
+Reducing stack by rule 29 (line 258):
+   $1 = nterm type_declaration ()
+-> $$ = nterm declaration ()
+Entering state 59
+Stack now 0 2 5 17 24 44 59
+Next token is token ';' ()
+Shifting token ';' ()
+Entering state 107
+Stack now 0 2 5 17 24 44 59 107
+Reducing stack by rule 26 (line 249):
+   $1 = nterm decl_body_list ()
+   $2 = nterm declaration ()
+   $3 = token ';' ()
+-> $$ = nterm decl_body_list ()
+Entering state 44
+Stack now 0 2 5 17 24 44
+Reading a token
+Next token is token TYPE ()
+Shifting token TYPE ()
+Entering state 41
+Stack now 0 2 5 17 24 44 41
+Reading a token
+Next token is token ID (Station_Record)
+Shifting token ID (Station_Record)
+Entering state 56
+Stack now 0 2 5 17 24 44 41 56
+Reading a token
+Next token is token IS ()
+Shifting token IS ()
+Entering state 71
+Stack now 0 2 5 17 24 44 41 56 71
+Reading a token
+Next token is token RECORD ()
+Shifting token RECORD ()
+Entering state 120
+Stack now 0 2 5 17 24 44 41 56 71 120
+Reading a token
+Next token is token ID (ID)
+Shifting token ID (ID)
+Entering state 37
+Stack now 0 2 5 17 24 44 41 56 71 120 37
+Reducing stack by rule 53 (line 371):
+   $1 = token ID (ID)
+-> $$ = nterm var_list ()
+Entering state 39
+Stack now 0 2 5 17 24 44 41 56 71 120 39
+Reading a token
+Next token is token ':' ()
+Shifting token ':' ()
+Entering state 53
+Stack now 0 2 5 17 24 44 41 56 71 120 39 53
+Reading a token
+Next token is token ID (Station_ID)
+Shifting token ID (Station_ID)
+Entering state 35
+Stack now 0 2 5 17 24 44 41 56 71 120 39 53 35
+Reducing stack by rule 149 (line 661):
+   $1 = token ID (Station_ID)
+-> $$ = nterm var_type ()
+Entering state 68
+Stack now 0 2 5 17 24 44 41 56 71 120 39 53 68
+Reading a token
+Next token is token ';' ()
+Reducing stack by rule 45 (line 344):
+   $1 = nterm var_list ()
+   $2 = token ':' ()
+   $3 = nterm var_type ()
+-> $$ = nterm var_declaration ()
+Entering state 190
+Stack now 0 2 5 17 24 44 41 56 71 120 190
+Next token is token ';' ()
+Shifting token ';' ()
+Entering state 244
+Stack now 0 2 5 17 24 44 41 56 71 120 190 244
+Reducing stack by rule 43 (line 329):
+   $1 = nterm var_declaration ()
+   $2 = token ';' ()
+-> $$ = nterm record_field_list ()
+Entering state 189
+Stack now 0 2 5 17 24 44 41 56 71 120 189
+Reading a token
+Next token is token ID (Kind)
+Shifting token ID (Kind)
+Entering state 37
+Stack now 0 2 5 17 24 44 41 56 71 120 189 37
+Reducing stack by rule 53 (line 371):
+   $1 = token ID (Kind)
+-> $$ = nterm var_list ()
+Entering state 39
+Stack now 0 2 5 17 24 44 41 56 71 120 189 39
+Reading a token
+Next token is token ':' ()
+Shifting token ':' ()
+Entering state 53
+Stack now 0 2 5 17 24 44 41 56 71 120 189 39 53
+Reading a token
+Next token is token ID (Part_Kind)
+Shifting token ID (Part_Kind)
+Entering state 35
+Stack now 0 2 5 17 24 44 41 56 71 120 189 39 53 35
+Reducing stack by rule 149 (line 661):
+   $1 = token ID (Part_Kind)
+-> $$ = nterm var_type ()
+Entering state 68
+Stack now 0 2 5 17 24 44 41 56 71 120 189 39 53 68
+Reading a token
+Next token is token ';' ()
+Reducing stack by rule 45 (line 344):
+   $1 = nterm var_list ()
+   $2 = token ':' ()
+   $3 = nterm var_type ()
+-> $$ = nterm var_declaration ()
+Entering state 243
+Stack now 0 2 5 17 24 44 41 56 71 120 189 243
+Next token is token ';' ()
+Shifting token ';' ()
+Entering state 284
+Stack now 0 2 5 17 24 44 41 56 71 120 189 243 284
+Reducing stack by rule 44 (line 334):
+   $1 = nterm record_field_list ()
+   $2 = nterm var_declaration ()
+   $3 = token ';' ()
+-> $$ = nterm record_field_list ()
+Entering state 189
+Stack now 0 2 5 17 24 44 41 56 71 120 189
+Reading a token
+Next token is token ID (Status)
+Shifting token ID (Status)
+Entering state 37
+Stack now 0 2 5 17 24 44 41 56 71 120 189 37
+Reducing stack by rule 53 (line 371):
+   $1 = token ID (Status)
+-> $$ = nterm var_list ()
+Entering state 39
+Stack now 0 2 5 17 24 44 41 56 71 120 189 39
+Reading a token
+Next token is token ':' ()
+Shifting token ':' ()
+Entering state 53
+Stack now 0 2 5 17 24 44 41 56 71 120 189 39 53
+Reading a token
+Next token is token ID (Status_Type)
+Shifting token ID (Status_Type)
+Entering state 35
+Stack now 0 2 5 17 24 44 41 56 71 120 189 39 53 35
+Reducing stack by rule 149 (line 661):
+   $1 = token ID (Status_Type)
+-> $$ = nterm var_type ()
+Entering state 68
+Stack now 0 2 5 17 24 44 41 56 71 120 189 39 53 68
+Reading a token
+Next token is token ';' ()
+Reducing stack by rule 45 (line 344):
+   $1 = nterm var_list ()
+   $2 = token ':' ()
+   $3 = nterm var_type ()
+-> $$ = nterm var_declaration ()
+Entering state 243
+Stack now 0 2 5 17 24 44 41 56 71 120 189 243
+Next token is token ';' ()
+Shifting token ';' ()
+Entering state 284
+Stack now 0 2 5 17 24 44 41 56 71 120 189 243 284
+Reducing stack by rule 44 (line 334):
+   $1 = nterm record_field_list ()
+   $2 = nterm var_declaration ()
+   $3 = token ';' ()
+-> $$ = nterm record_field_list ()
+Entering state 189
+Stack now 0 2 5 17 24 44 41 56 71 120 189
+Reading a token
+Next token is token ID (Efficiency)
+Shifting token ID (Efficiency)
+Entering state 37
+Stack now 0 2 5 17 24 44 41 56 71 120 189 37
+Reducing stack by rule 53 (line 371):
+   $1 = token ID (Efficiency)
+-> $$ = nterm var_list ()
+Entering state 39
+Stack now 0 2 5 17 24 44 41 56 71 120 189 39
+Reading a token
+Next token is token ':' ()
+Shifting token ':' ()
+Entering state 53
+Stack now 0 2 5 17 24 44 41 56 71 120 189 39 53
+Reading a token
+Next token is token FLOAT ()
+Shifting token FLOAT ()
+Entering state 32
+Stack now 0 2 5 17 24 44 41 56 71 120 189 39 53 32
+Reducing stack by rule 146 (line 658):
+   $1 = token FLOAT ()
+-> $$ = nterm var_type ()
+Entering state 68
+Stack now 0 2 5 17 24 44 41 56 71 120 189 39 53 68
+Reading a token
+Next token is token ';' ()
+Reducing stack by rule 45 (line 344):
+   $1 = nterm var_list ()
+   $2 = token ':' ()
+   $3 = nterm var_type ()
+-> $$ = nterm var_declaration ()
+Entering state 243
+Stack now 0 2 5 17 24 44 41 56 71 120 189 243
+Next token is token ';' ()
+Shifting token ';' ()
+Entering state 284
+Stack now 0 2 5 17 24 44 41 56 71 120 189 243 284
+Reducing stack by rule 44 (line 334):
+   $1 = nterm record_field_list ()
+   $2 = nterm var_declaration ()
+   $3 = token ';' ()
+-> $$ = nterm record_field_list ()
+Entering state 189
+Stack now 0 2 5 17 24 44 41 56 71 120 189
+Reading a token
+Next token is token ID (Load)
+Shifting token ID (Load)
+Entering state 37
+Stack now 0 2 5 17 24 44 41 56 71 120 189 37
+Reducing stack by rule 53 (line 371):
+   $1 = token ID (Load)
+-> $$ = nterm var_list ()
+Entering state 39
+Stack now 0 2 5 17 24 44 41 56 71 120 189 39
+Reading a token
+Next token is token ':' ()
+Shifting token ':' ()
+Entering state 53
+Stack now 0 2 5 17 24 44 41 56 71 120 189 39 53
+Reading a token
+Next token is token INTEGER ()
+Shifting token INTEGER ()
+Entering state 30
+Stack now 0 2 5 17 24 44 41 56 71 120 189 39 53 30
+Reducing stack by rule 144 (line 656):
+   $1 = token INTEGER ()
+-> $$ = nterm var_type ()
+Entering state 68
+Stack now 0 2 5 17 24 44 41 56 71 120 189 39 53 68
+Reading a token
+Next token is token ';' ()
+Reducing stack by rule 45 (line 344):
+   $1 = nterm var_list ()
+   $2 = token ':' ()
+   $3 = nterm var_type ()
+-> $$ = nterm var_declaration ()
+Entering state 243
+Stack now 0 2 5 17 24 44 41 56 71 120 189 243
+Next token is token ';' ()
+Shifting token ';' ()
+Entering state 284
+Stack now 0 2 5 17 24 44 41 56 71 120 189 243 284
+Reducing stack by rule 44 (line 334):
+   $1 = nterm record_field_list ()
+   $2 = nterm var_declaration ()
+   $3 = token ';' ()
+-> $$ = nterm record_field_list ()
+Entering state 189
+Stack now 0 2 5 17 24 44 41 56 71 120 189
+Reading a token
+Next token is token END ()
+Shifting token END ()
+Entering state 242
+Stack now 0 2 5 17 24 44 41 56 71 120 189 242
+Reading a token
+Next token is token RECORD ()
+Shifting token RECORD ()
+Entering state 283
+Stack now 0 2 5 17 24 44 41 56 71 120 189 242 283
+Reducing stack by rule 34 (line 270):
+   $1 = token TYPE ()
+   $2 = token ID (Station_Record)
+   $3 = token IS ()
+   $4 = token RECORD ()
+   $5 = nterm record_field_list ()
+   $6 = token END ()
+   $7 = token RECORD ()
+-> $$ = nterm type_declaration ()
+Entering state 46
+Stack now 0 2 5 17 24 44 46
+Reducing stack by rule 29 (line 258):
+   $1 = nterm type_declaration ()
+-> $$ = nterm declaration ()
+Entering state 59
+Stack now 0 2 5 17 24 44 59
+Reading a token
+Next token is token ';' ()
+Shifting token ';' ()
+Entering state 107
+Stack now 0 2 5 17 24 44 59 107
+Reducing stack by rule 26 (line 249):
+   $1 = nterm decl_body_list ()
+   $2 = nterm declaration ()
+   $3 = token ';' ()
+-> $$ = nterm decl_body_list ()
+Entering state 44
+Stack now 0 2 5 17 24 44
+Reading a token
+Next token is token TYPE ()
+Shifting token TYPE ()
+Entering state 41
+Stack now 0 2 5 17 24 44 41
+Reading a token
+Next token is token ID (Station_Array)
+Shifting token ID (Station_Array)
+Entering state 56
+Stack now 0 2 5 17 24 44 41 56
+Reading a token
+Next token is token IS ()
+Shifting token IS ()
+Entering state 71
+Stack now 0 2 5 17 24 44 41 56 71
+Reading a token
+Next token is token ARRAY ()
+Shifting token ARRAY ()
+Entering state 118
+Stack now 0 2 5 17 24 44 41 56 71 118
+Reading a token
+Next token is token '(' ()
+Shifting token '(' ()
+Entering state 187
+Stack now 0 2 5 17 24 44 41 56 71 118 187
+Reading a token
+Next token is token ID (Station_ID)
+Shifting token ID (Station_ID)
+Entering state 177
+Stack now 0 2 5 17 24 44 41 56 71 118 187 177
+Reading a token
+Next token is token ')' ()
+Reducing stack by rule 114 (line 575):
+   $1 = token ID (Station_ID)
+-> $$ = nterm expression ()
+Entering state 180
+Stack now 0 2 5 17 24 44 41 56 71 118 187 180
+Next token is token ')' ()
+Parse error at line 30: syntax error
+Error: popping nterm expression ()
+Stack now 0 2 5 17 24 44 41 56 71 118 187
+Error: popping token '(' ()
+Stack now 0 2 5 17 24 44 41 56 71 118
+Error: popping token ARRAY ()
+Stack now 0 2 5 17 24 44 41 56 71
+Error: popping token IS ()
+Stack now 0 2 5 17 24 44 41 56
+Error: popping token ID (Station_Array)
+Stack now 0 2 5 17 24 44 41
+Error: popping token TYPE ()
+Stack now 0 2 5 17 24 44
+Error: popping nterm decl_body_list ()
+Stack now 0 2 5 17 24
+Error: popping token IS ()
+Stack now 0 2 5 17
+Error: popping token ID (Factory_Simulator_Test)
+Stack now 0 2 5
+Error: popping token PROCEDURE ()
+Stack now 0 2
+Error: popping nterm context_list ()
+Stack now 0
+Cleanup: discarding lookahead token ')' ()
+Stack now 0
